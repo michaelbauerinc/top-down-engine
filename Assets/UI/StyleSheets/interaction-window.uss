@@ -1,0 +1,45 @@
+.interaction-window-container {
+    background-color: rgb(255, 255, 255);
+    position: absolute;
+    width: 40%;
+    height: 20%;
+    left: 25%;
+    right: 25%;
+    top: 10%;
+    flex-direction: row;
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+    border-left-width: 8px;
+    border-right-width: 8px;
+    border-top-width: 8px;
+    border-bottom-width: 8px;
+    border-left-color: rgb(0, 0, 0);
+    border-right-color: rgb(0, 0, 0);
+    border-top-color: rgb(0, 0, 0);
+    border-bottom-color: rgb(0, 0, 0);
+}
+
+.interaction-window-picture {
+    background-color: rgba(243, 255, 0, 0);
+    width: 33%;
+    height: 100%;
+}
+
+.interaction-window-text-container {
+    width: 77%;
+    height: 100%;
+    background-color: rgb(170, 185, 167);
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    padding-left: 0;
+    padding-right: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+.hidden {
+    display: none;
+}

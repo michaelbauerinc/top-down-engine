@@ -1,0 +1,76 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="ui.uss" />
+    <ui:VisualElement name="Root" class="ui-container-open" style="margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; -unity-slice-left: 525; -unity-slice-top: 375; -unity-slice-right: 525; -unity-slice-bottom: 375;">
+        <ui:VisualElement class="ui-nav-bar" style="-unity-slice-left: 0; -unity-slice-top: 0; -unity-slice-right: 0; -unity-slice-bottom: 0;">
+            <ui:Label text="Inventory&#10;" display-tooltip-when-elided="true" name="Label" style="font-size: 25%; -unity-text-align: upper-left;" />
+        </ui:VisualElement>
+        <ui:ScrollView horizontal-scroller-visibility="Hidden" vertical-scroller-visibility="AlwaysVisible" class="ui-inventory-container">
+            <ui:VisualElement class="ui-inventory-row">
+                <ui:IMGUIContainer class="inventory-slot" />
+                <ui:IMGUIContainer class="inventory-slot" />
+                <ui:IMGUIContainer class="inventory-slot" />
+                <ui:IMGUIContainer class="inventory-slot" />
+            </ui:VisualElement>
+            <ui:VisualElement class="ui-inventory-row">
+                <ui:IMGUIContainer class="inventory-slot" />
+                <ui:IMGUIContainer class="inventory-slot" />
+                <ui:IMGUIContainer class="inventory-slot" />
+                <ui:IMGUIContainer class="inventory-slot" />
+            </ui:VisualElement>
+            <ui:VisualElement class="ui-inventory-row">
+                <ui:IMGUIContainer class="inventory-slot" />
+                <ui:IMGUIContainer class="inventory-slot" />
+                <ui:IMGUIContainer class="inventory-slot" />
+                <ui:IMGUIContainer class="inventory-slot" />
+            </ui:VisualElement>
+            <ui:VisualElement class="ui-inventory-row">
+                <ui:IMGUIContainer class="inventory-slot" />
+                <ui:IMGUIContainer class="inventory-slot" />
+                <ui:IMGUIContainer class="inventory-slot" />
+                <ui:IMGUIContainer class="inventory-slot" />
+            </ui:VisualElement>
+            <ui:VisualElement class="ui-inventory-row">
+                <ui:IMGUIContainer class="inventory-slot" />
+                <ui:IMGUIContainer class="inventory-slot" />
+                <ui:IMGUIContainer class="inventory-slot" />
+                <ui:IMGUIContainer class="inventory-slot" />
+            </ui:VisualElement>
+            <ui:VisualElement class="ui-inventory-row">
+                <ui:IMGUIContainer class="inventory-slot" />
+                <ui:IMGUIContainer class="inventory-slot" />
+                <ui:IMGUIContainer class="inventory-slot" />
+                <ui:IMGUIContainer class="inventory-slot" />
+            </ui:VisualElement>
+            <ui:VisualElement class="ui-inventory-row">
+                <ui:IMGUIContainer class="inventory-slot" />
+                <ui:IMGUIContainer class="inventory-slot" />
+                <ui:IMGUIContainer class="inventory-slot" />
+                <ui:IMGUIContainer class="inventory-slot" />
+            </ui:VisualElement>
+            <ui:VisualElement class="ui-inventory-row">
+                <ui:IMGUIContainer class="inventory-slot" />
+                <ui:IMGUIContainer class="inventory-slot" />
+                <ui:IMGUIContainer class="inventory-slot" />
+                <ui:IMGUIContainer class="inventory-slot" />
+            </ui:VisualElement>
+            <ui:VisualElement class="ui-inventory-row">
+                <ui:IMGUIContainer class="inventory-slot" />
+                <ui:IMGUIContainer class="inventory-slot" />
+                <ui:IMGUIContainer class="inventory-slot" />
+                <ui:IMGUIContainer class="inventory-slot" />
+            </ui:VisualElement>
+            <ui:VisualElement class="ui-inventory-row">
+                <ui:IMGUIContainer class="inventory-slot" />
+                <ui:IMGUIContainer class="inventory-slot" />
+                <ui:IMGUIContainer class="inventory-slot" />
+                <ui:IMGUIContainer class="inventory-slot" />
+            </ui:VisualElement>
+            <ui:VisualElement class="ui-inventory-row">
+                <ui:IMGUIContainer class="inventory-slot" />
+                <ui:IMGUIContainer class="inventory-slot" />
+                <ui:IMGUIContainer class="inventory-slot" />
+                <ui:IMGUIContainer class="inventory-slot" />
+            </ui:VisualElement>
+        </ui:ScrollView>
+    </ui:VisualElement>
+</ui:UXML>

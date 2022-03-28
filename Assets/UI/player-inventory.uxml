@@ -1,0 +1,98 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="StyleSheets/player-inventory.uss" />
+    <ui:VisualElement name="Root" class="player-inventory-container">
+        <ui:VisualElement class="player-inventory-navbar">
+            <ui:IMGUIContainer class="player-inventory-navbar-item" style="background-image: url(&apos;/Assets/Simple Fantasy GUI/PNG/Inventory/bag.png&apos;);" />
+            <ui:IMGUIContainer class="player-inventory-navbar-item" style="background-image: url(&apos;/Assets/Simple Fantasy GUI/PNG/Inventory/sword.png&apos;);" />
+            <ui:IMGUIContainer class="player-inventory-navbar-item" style="background-image: url(&apos;/Assets/Simple Fantasy GUI/PNG/Inventory/key.png&apos;);" />
+        </ui:VisualElement>
+        <ui:ScrollView vertical-scroller-visibility="AlwaysVisible" class="player-inventory-item-container player-inventory-scrollview" style="overflow: visible;">
+            <ui:VisualElement name="InventoryContainer" class="player-inventory-item-container">
+                <ui:VisualElement name="InventoryContainerRow" class="player-inventory-item-row">
+                    <ui:VisualElement name="InventorySlot" class="player-inventory-item-slot">
+                        <ui:Button display-tooltip-when-elided="true" name="InventoryContent" class="player-inventory-item-slot-content" style="border-left-width: 0; border-right-width: 0; border-top-width: 0; border-bottom-width: 0;" />
+                    </ui:VisualElement>
+                    <ui:VisualElement name="InventorySlot" class="player-inventory-item-slot">
+                        <ui:Button display-tooltip-when-elided="true" name="InventoryContent" class="player-inventory-item-slot-content" style="border-left-width: 0; border-right-width: 0; border-top-width: 0; border-bottom-width: 0;" />
+                    </ui:VisualElement>
+                    <ui:VisualElement name="InventorySlot" class="player-inventory-item-slot">
+                        <ui:Button display-tooltip-when-elided="true" name="InventoryContent" class="player-inventory-item-slot-content" style="border-left-width: 0; border-right-width: 0; border-top-width: 0; border-bottom-width: 0;" />
+                    </ui:VisualElement>
+                    <ui:VisualElement name="InventorySlot" class="player-inventory-item-slot">
+                        <ui:Button display-tooltip-when-elided="true" name="InventoryContent" class="player-inventory-item-slot-content" style="border-left-width: 0; border-right-width: 0; border-top-width: 0; border-bottom-width: 0;" />
+                    </ui:VisualElement>
+                </ui:VisualElement>
+                <ui:VisualElement name="InventoryContainerRow" class="player-inventory-item-row">
+                    <ui:VisualElement name="InventorySlot" class="player-inventory-item-slot">
+                        <ui:Button display-tooltip-when-elided="true" name="InventoryContent" class="player-inventory-item-slot-content" style="border-left-width: 0; border-right-width: 0; border-top-width: 0; border-bottom-width: 0;" />
+                    </ui:VisualElement>
+                    <ui:VisualElement name="InventorySlot" class="player-inventory-item-slot">
+                        <ui:Button display-tooltip-when-elided="true" name="InventoryContent" class="player-inventory-item-slot-content" style="border-left-width: 0; border-right-width: 0; border-top-width: 0; border-bottom-width: 0;" />
+                    </ui:VisualElement>
+                    <ui:VisualElement name="InventorySlot" class="player-inventory-item-slot">
+                        <ui:Button display-tooltip-when-elided="true" name="InventoryContent" class="player-inventory-item-slot-content" style="border-left-width: 0; border-right-width: 0; border-top-width: 0; border-bottom-width: 0;" />
+                    </ui:VisualElement>
+                    <ui:VisualElement name="InventorySlot" class="player-inventory-item-slot">
+                        <ui:Button display-tooltip-when-elided="true" name="InventoryContent" class="player-inventory-item-slot-content" style="border-left-width: 0; border-right-width: 0; border-top-width: 0; border-bottom-width: 0;" />
+                    </ui:VisualElement>
+                </ui:VisualElement>
+                <ui:VisualElement name="InventoryContainerRow" class="player-inventory-item-row">
+                    <ui:VisualElement name="InventorySlot" class="player-inventory-item-slot">
+                        <ui:Button display-tooltip-when-elided="true" name="InventoryContent" class="player-inventory-item-slot-content" style="border-left-width: 0; border-right-width: 0; border-top-width: 0; border-bottom-width: 0;" />
+                    </ui:VisualElement>
+                    <ui:VisualElement name="InventorySlot" class="player-inventory-item-slot">
+                        <ui:Button display-tooltip-when-elided="true" name="InventoryContent" class="player-inventory-item-slot-content" style="border-left-width: 0; border-right-width: 0; border-top-width: 0; border-bottom-width: 0;" />
+                    </ui:VisualElement>
+                    <ui:VisualElement name="InventorySlot" class="player-inventory-item-slot">
+                        <ui:Button display-tooltip-when-elided="true" name="InventoryContent" class="player-inventory-item-slot-content" style="border-left-width: 0; border-right-width: 0; border-top-width: 0; border-bottom-width: 0;" />
+                    </ui:VisualElement>
+                    <ui:VisualElement name="InventorySlot" class="player-inventory-item-slot">
+                        <ui:Button display-tooltip-when-elided="true" name="InventoryContent" class="player-inventory-item-slot-content" style="border-left-width: 0; border-right-width: 0; border-top-width: 0; border-bottom-width: 0;" />
+                    </ui:VisualElement>
+                </ui:VisualElement>
+                <ui:VisualElement name="InventoryContainerRow" class="player-inventory-item-row">
+                    <ui:VisualElement name="InventorySlot" class="player-inventory-item-slot">
+                        <ui:Button display-tooltip-when-elided="true" name="InventoryContent" class="player-inventory-item-slot-content" style="border-left-width: 0; border-right-width: 0; border-top-width: 0; border-bottom-width: 0;" />
+                    </ui:VisualElement>
+                    <ui:VisualElement name="InventorySlot" class="player-inventory-item-slot">
+                        <ui:Button display-tooltip-when-elided="true" name="InventoryContent" class="player-inventory-item-slot-content" style="border-left-width: 0; border-right-width: 0; border-top-width: 0; border-bottom-width: 0;" />
+                    </ui:VisualElement>
+                    <ui:VisualElement name="InventorySlot" class="player-inventory-item-slot">
+                        <ui:Button display-tooltip-when-elided="true" name="InventoryContent" class="player-inventory-item-slot-content" style="border-left-width: 0; border-right-width: 0; border-top-width: 0; border-bottom-width: 0;" />
+                    </ui:VisualElement>
+                    <ui:VisualElement name="InventorySlot" class="player-inventory-item-slot">
+                        <ui:Button display-tooltip-when-elided="true" name="InventoryContent" class="player-inventory-item-slot-content" style="border-left-width: 0; border-right-width: 0; border-top-width: 0; border-bottom-width: 0;" />
+                    </ui:VisualElement>
+                </ui:VisualElement>
+                <ui:VisualElement name="InventoryContainerRow" class="player-inventory-item-row">
+                    <ui:VisualElement name="InventorySlot" class="player-inventory-item-slot">
+                        <ui:Button display-tooltip-when-elided="true" name="InventoryContent" class="player-inventory-item-slot-content" style="border-left-width: 0; border-right-width: 0; border-top-width: 0; border-bottom-width: 0;" />
+                    </ui:VisualElement>
+                    <ui:VisualElement name="InventorySlot" class="player-inventory-item-slot">
+                        <ui:Button display-tooltip-when-elided="true" name="InventoryContent" class="player-inventory-item-slot-content" style="border-left-width: 0; border-right-width: 0; border-top-width: 0; border-bottom-width: 0;" />
+                    </ui:VisualElement>
+                    <ui:VisualElement name="InventorySlot" class="player-inventory-item-slot">
+                        <ui:Button display-tooltip-when-elided="true" name="InventoryContent" class="player-inventory-item-slot-content" style="border-left-width: 0; border-right-width: 0; border-top-width: 0; border-bottom-width: 0;" />
+                    </ui:VisualElement>
+                    <ui:VisualElement name="InventorySlot" class="player-inventory-item-slot">
+                        <ui:Button display-tooltip-when-elided="true" name="InventoryContent" class="player-inventory-item-slot-content" style="border-left-width: 0; border-right-width: 0; border-top-width: 0; border-bottom-width: 0;" />
+                    </ui:VisualElement>
+                </ui:VisualElement>
+                <ui:VisualElement name="InventoryContainerRow" class="player-inventory-item-row">
+                    <ui:VisualElement name="InventorySlot" class="player-inventory-item-slot">
+                        <ui:Button display-tooltip-when-elided="true" name="InventoryContent" class="player-inventory-item-slot-content" style="border-left-width: 0; border-right-width: 0; border-top-width: 0; border-bottom-width: 0;" />
+                    </ui:VisualElement>
+                    <ui:VisualElement name="InventorySlot" class="player-inventory-item-slot">
+                        <ui:Button display-tooltip-when-elided="true" name="InventoryContent" class="player-inventory-item-slot-content" style="border-left-width: 0; border-right-width: 0; border-top-width: 0; border-bottom-width: 0;" />
+                    </ui:VisualElement>
+                    <ui:VisualElement name="InventorySlot" class="player-inventory-item-slot">
+                        <ui:Button display-tooltip-when-elided="true" name="InventoryContent" class="player-inventory-item-slot-content" style="border-left-width: 0; border-right-width: 0; border-top-width: 0; border-bottom-width: 0;" />
+                    </ui:VisualElement>
+                    <ui:VisualElement name="InventorySlot" class="player-inventory-item-slot">
+                        <ui:Button display-tooltip-when-elided="true" name="InventoryContent" class="player-inventory-item-slot-content" style="border-left-width: 0; border-right-width: 0; border-top-width: 0; border-bottom-width: 0;" />
+                    </ui:VisualElement>
+                </ui:VisualElement>
+            </ui:VisualElement>
+        </ui:ScrollView>
+    </ui:VisualElement>
+</ui:UXML>
