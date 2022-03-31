@@ -1,6 +1,6 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="StyleSheets/player-inventory.uss" />
-    <ui:VisualElement name="Root" class="player-inventory-container">
+    <ui:VisualElement name="Root" class="player-inventory-container hidden">
         <ui:VisualElement class="player-inventory-navbar">
             <ui:IMGUIContainer class="player-inventory-navbar-item" style="background-image: url(&apos;/Assets/Simple Fantasy GUI/PNG/Inventory/bag.png&apos;);" />
             <ui:IMGUIContainer class="player-inventory-navbar-item" style="background-image: url(&apos;/Assets/Simple Fantasy GUI/PNG/Inventory/sword.png&apos;);" />
