@@ -9,7 +9,7 @@
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace></RootNamespace>
-    <ProjectGuid>{e2bdb453-a3ec-fb8f-68bb-aa587ad8fde9}</ProjectGuid>
+    <ProjectGuid>{3f3189b5-f54e-76ee-9c22-9e54794867d0}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <AssemblyName>NewAssembly</AssemblyName>
@@ -45,7 +45,14 @@
      <Compile Include="Assets\Scripts\Interactable.cs" />
      <Compile Include="Assets\Scripts\CollisionEnv.cs" />
      <Compile Include="Assets\Scripts\CollisionPlayer.cs" />
-     <None Include="Assets\Scripts\NewAssembly.asmdef" />
+     <None Include="Assets\UI\StyleSheets\interaction-window.uss" />
+     <None Include="Assets\UI\interaction-window.uxml" />
+     <None Include="Assets\NewAssembly.asmdef" />
+     <None Include="Assets\UI\StyleSheets\ui.uss" />
+     <None Include="Assets\UI\player_general_ui.uxml" />
+     <None Include="Assets\stylesheets\test.uss" />
+     <None Include="Assets\UI\StyleSheets\player-inventory.uss" />
+     <None Include="Assets\UI\player-inventory.uxml" />
     <Reference Include="UnityEngine">
         <HintPath>C:\Program Files\Unity\Hub\Editor\2020.3.23f1\Editor\Data\Managed\UnityEngine\UnityEngine.dll</HintPath>
     </Reference>
@@ -182,7 +189,7 @@
         <HintPath>C:\Program Files\Unity\Hub\Editor\2020.3.23f1\Editor\Data\Managed\UnityEngine\UnityEngine.UIModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.UIElementsModule">
-        <HintPath>C:\Users\Bauer\Downloads\DustyTrail-20211214T001157Z-001\DustyTrail\Library\ScriptAssemblies\UnityEngine.UIElementsModule.dll</HintPath>
+        <HintPath>C:\Users\Bauer\dev\top-down-engine\Library\ScriptAssemblies\UnityEngine.UIElementsModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.UIElementsNativeModule">
         <HintPath>C:\Program Files\Unity\Hub\Editor\2020.3.23f1\Editor\Data\Managed\UnityEngine\UnityEngine.UIElementsNativeModule.dll</HintPath>
@@ -257,7 +264,7 @@
         <HintPath>C:\Program Files\Unity\Hub\Editor\2020.3.23f1\Editor\Data\Managed\UnityEngine\UnityEditor.SceneTemplateModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEditor.UIElementsModule">
-        <HintPath>C:\Users\Bauer\Downloads\DustyTrail-20211214T001157Z-001\DustyTrail\Library\ScriptAssemblies\UnityEditor.UIElementsModule.dll</HintPath>
+        <HintPath>C:\Users\Bauer\dev\top-down-engine\Library\ScriptAssemblies\UnityEditor.UIElementsModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEditor.UIElementsSamplesModule">
         <HintPath>C:\Program Files\Unity\Hub\Editor\2020.3.23f1\Editor\Data\Managed\UnityEngine\UnityEditor.UIElementsSamplesModule.dll</HintPath>
@@ -275,19 +282,19 @@
         <HintPath>C:\Program Files\Unity\Hub\Editor\2020.3.23f1\Editor\Data\PlaybackEngines\WindowsStandaloneSupport\UnityEditor.WindowsStandalone.Extensions.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Plastic.Newtonsoft.Json">
-        <HintPath>C:\Users\Bauer\Downloads\DustyTrail-20211214T001157Z-001\DustyTrail\Library\PackageCache\com.unity.collab-proxy@1.15.1\Lib\Editor\PlasticSCM\Unity.Plastic.Newtonsoft.Json.dll</HintPath>
+        <HintPath>C:\Users\Bauer\dev\top-down-engine\Library\PackageCache\com.unity.collab-proxy@1.15.1\Lib\Editor\PlasticSCM\Unity.Plastic.Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Plastic.Antlr3.Runtime">
-        <HintPath>C:\Users\Bauer\Downloads\DustyTrail-20211214T001157Z-001\DustyTrail\Library\PackageCache\com.unity.collab-proxy@1.15.1\Lib\Editor\PlasticSCM\Unity.Plastic.Antlr3.Runtime.dll</HintPath>
+        <HintPath>C:\Users\Bauer\dev\top-down-engine\Library\PackageCache\com.unity.collab-proxy@1.15.1\Lib\Editor\PlasticSCM\Unity.Plastic.Antlr3.Runtime.dll</HintPath>
     </Reference>
     <Reference Include="unityplastic">
-        <HintPath>C:\Users\Bauer\Downloads\DustyTrail-20211214T001157Z-001\DustyTrail\Library\PackageCache\com.unity.collab-proxy@1.15.1\Lib\Editor\PlasticSCM\unityplastic.dll</HintPath>
+        <HintPath>C:\Users\Bauer\dev\top-down-engine\Library\PackageCache\com.unity.collab-proxy@1.15.1\Lib\Editor\PlasticSCM\unityplastic.dll</HintPath>
     </Reference>
     <Reference Include="log4netPlastic">
-        <HintPath>C:\Users\Bauer\Downloads\DustyTrail-20211214T001157Z-001\DustyTrail\Library\PackageCache\com.unity.collab-proxy@1.15.1\Lib\Editor\PlasticSCM\log4netPlastic.dll</HintPath>
+        <HintPath>C:\Users\Bauer\dev\top-down-engine\Library\PackageCache\com.unity.collab-proxy@1.15.1\Lib\Editor\PlasticSCM\log4netPlastic.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json">
-        <HintPath>C:\Users\Bauer\Downloads\DustyTrail-20211214T001157Z-001\DustyTrail\Library\PackageCache\com.unity.nuget.newtonsoft-json@2.0.0\Runtime\Newtonsoft.Json.dll</HintPath>
+        <HintPath>C:\Users\Bauer\dev\top-down-engine\Library\PackageCache\com.unity.nuget.newtonsoft-json@2.0.0\Runtime\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="netstandard">
         <HintPath>C:\Program Files\Unity\Hub\Editor\2020.3.23f1\Editor\Data\NetStandard\ref\2.0.0\netstandard.dll</HintPath>
@@ -635,10 +642,10 @@
         <HintPath>C:\Program Files\Unity\Hub\Editor\2020.3.23f1\Editor\Data\NetStandard\compat\2.0.0\shims\netfx\System.Xml.Serialization.dll</HintPath>
     </Reference>
     <Reference Include="UnityEditor.UI">
-        <HintPath>C:\Users\Bauer\Downloads\DustyTrail-20211214T001157Z-001\DustyTrail\Library\ScriptAssemblies\UnityEditor.UI.dll</HintPath>
+        <HintPath>C:\Users\Bauer\dev\top-down-engine\Library\ScriptAssemblies\UnityEditor.UI.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.UI">
-        <HintPath>C:\Users\Bauer\Downloads\DustyTrail-20211214T001157Z-001\DustyTrail\Library\ScriptAssemblies\UnityEngine.UI.dll</HintPath>
+        <HintPath>C:\Users\Bauer\dev\top-down-engine\Library\ScriptAssemblies\UnityEngine.UI.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
