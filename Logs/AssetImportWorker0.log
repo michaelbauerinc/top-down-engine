@@ -867,3 +867,11 @@ AssetImportParameters requested are different than current active one (requested
   custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
   custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
   custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+========================================================================
+Received Import Request.
+  Time since last request: 870.619643 seconds.
+  path: Assets/Barren Land/Preview1.jpg
+  artifactKey: Guid(ad14b4b33e5a6684fbd29d1bc253efd7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Barren Land/Preview1.jpg using Guid(ad14b4b33e5a6684fbd29d1bc253efd7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '3e0dbc88f006878eb29421f59819e134') in 0.069611 seconds 
+  Import took 0.078279 seconds .
+
