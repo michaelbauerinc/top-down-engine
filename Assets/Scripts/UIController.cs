@@ -5,14 +5,20 @@ using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using UnityEngine;
 using UnityEngine.UIElements;
-
 public class UIController : MonoBehaviour
 {
     VisualElement rootContainer;
     VisualElement inventory;
     VisualElement interactionWindow;
-    List<Item> inventoryContent = new List<Item>();
+    // List<Item> inventoryContent = new List<Item>();
 
+    // {
+    //     0: {
+    //         'item': <Item>,
+    //         'slot': <Button>
+    //     }
+    // }
+    Dictionary<int, Dictionary<string, dynamic>> inventoryContent = new Dictionary<int, Dictionary<string, dynamic>>();
     public bool inventoryOpen = false;
 
 
@@ -39,18 +45,22 @@ public class UIController : MonoBehaviour
 
     public void AddItemToInventory(Item item)
     {
-        inventoryContent.Add(item);
+        inventoryContent.Add(inventoryContent.Count, new Dictionary<string, dynamic>(){
+        {"item", item}});
         MapInventory();
         item.pickedUp = true;
     }
 
-    public void EquipItem(int indexToEquip)
+    public void UseItem(int indexToEquip)
     {
-        inventoryContent[indexToEquip].isEquipped = true;
-        inventoryContent[indexToEquip].gameObject.SetActive(true);
+        var entry = inventoryContent[indexToEquip];
+        Item toUse = entry["item"];
+        Button slot = entry["slot"];
+        toUse.isEquipped = !toUse.isEquipped;
+        slot.style.backgroundColor = toUse.isEquipped ? new Color(229, 255, 0, 0.5f) : new Color(229, 255, 0, 0f);
         Vector3 playerPos = GameObject.Find("Player").transform.position;
         gameObject.transform.position = playerPos;
-        MapInventory();
+        toUse.gameObject.SetActive(true);
     }
 
     private void MapInventory()
@@ -58,17 +68,18 @@ public class UIController : MonoBehaviour
         VisualElement inventoryContainer = inventory.Q<VisualElement>("InventoryContainer");
         int i = 0;
         int j = 0;
-        foreach (Item item in inventoryContent)
+        foreach (KeyValuePair<int, Dictionary<string, dynamic>> entry in inventoryContent)
         {
-
-            var row = inventoryContainer.ElementAt(i);
+            VisualElement row = inventoryContainer.ElementAt(i);
             Button slotToFill = row.ElementAt(j).Q<Button>("InventoryContent");
-            slotToFill.clicked += delegate { EquipItem(i); };
-            slotToFill.style.backgroundImage = new StyleBackground(item.image);
-            if (item.isEquipped == true)
+            // Only delegate the clickhandler when a new item is added to the inventory
+            if (!entry.Value.ContainsKey("slot"))
             {
-                slotToFill.style.backgroundColor = new Color(229, 255, 0, 0.5f);
+                slotToFill.clicked += delegate { UseItem(entry.Key); };
             }
+            entry.Value["slot"] = slotToFill;
+            Button backgroundToModify = entry.Value["slot"];
+            backgroundToModify.style.backgroundImage = new StyleBackground(entry.Value["item"].image);
             j++;
             if (j == row.childCount)
             {

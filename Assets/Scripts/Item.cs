@@ -45,6 +45,8 @@ public class Item : Interactable
         }
         else if (pickedUp)
         {
+            canPickUp = false;
+            canInteract = false;
             itemRenderer.enabled = false;
             player = GameObject.Find("Player");
             playerControls = GameObject.Find("Player").GetComponent<PlayerControls>();

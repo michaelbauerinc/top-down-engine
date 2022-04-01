@@ -135,14 +135,18 @@ public class PlayerControls : MonoBehaviour
             {
                 case "interacting":
                     bool isItem = interactionTarget.GetComponent<Item>() != null;
-                    if (isItem)
+                    if (interactionTarget.canInteract)
                     {
-                        uiController.AddItemToInventory(interactionTarget.GetComponent<Item>());
+                        uiController.ToggleInteractionBox(interactionTarget.toSay, interactionTarget.image);
+                        if (isItem && interactionTarget.canPickUp)
+                        {
+                            uiController.AddItemToInventory(interactionTarget.GetComponent<Item>());
+
+                        }
+                        canMove = false;
+                        horizontal = 0;
+                        vertical = 0;
                     }
-                    uiController.ToggleInteractionBox(interactionTarget.toSay, interactionTarget.image);
-                    canMove = false;
-                    horizontal = 0;
-                    vertical = 0;
                     break;
                 case "shooting":
                     playerAction = shootFrames > 0 ? "shooting" : "idle";
