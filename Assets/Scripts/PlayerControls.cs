@@ -79,8 +79,6 @@ public class PlayerControls : MonoBehaviour
     {
         if (canMove)
         {
-            horizontal = Input.GetAxisRaw("Horizontal");
-            vertical = Input.GetAxisRaw("Vertical");
             if (!isJumping())
             {
                 if (Input.GetKeyDown("space"))
@@ -102,6 +100,11 @@ public class PlayerControls : MonoBehaviour
                 else if (Input.GetKeyDown("1") && !isShooting())
                 {
                     playerAction = "shooting";
+                }
+                else if (isShooting())
+                {
+                    playerAction = shootFrames >= 0 ? "shooting" : "idle";
+
                 }
                 else if (isMoving() && !isSliding() && !isShooting())
                 {
@@ -125,11 +128,18 @@ public class PlayerControls : MonoBehaviour
         }
     }
 
+    void ShootWeapon()
+    {
+        Instantiate(uiController.ammo, new Vector3(transform.position.x, transform.position.y + .5f, transform.position.z), Quaternion.identity).gameObject.AddComponent<Ammo>().Shoot(currentDirection, gameObject.GetComponent<SpriteRenderer>().flipX);
+    }
+
     void Update()
     {
         // Inventory is not open and we are not interacting
         if (canMove)
         {
+            horizontal = Input.GetAxisRaw("Horizontal");
+            vertical = Input.GetAxisRaw("Vertical");
             setPlayerAction();
             switch (playerAction)
             {
@@ -149,7 +159,10 @@ public class PlayerControls : MonoBehaviour
                     }
                     break;
                 case "shooting":
-                    playerAction = shootFrames > 0 ? "shooting" : "idle";
+                    if (shootFrames == 0)
+                    {
+                        ShootWeapon();
+                    }
                     break;
                 case "jumping":
                     slideFrames = 45;

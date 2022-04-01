@@ -20,6 +20,7 @@ public class UIController : MonoBehaviour
     // }
     Dictionary<int, Dictionary<string, dynamic>> inventoryContent = new Dictionary<int, Dictionary<string, dynamic>>();
     public bool inventoryOpen = false;
+    public GameObject ammo;
 
 
     private void Awake()
