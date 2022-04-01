@@ -17,21 +17,22 @@ public class Ammo : MonoBehaviour
 
     public void Shoot(string direction, bool flipped)
     {
-        gameObject.GetComponent<SpriteRenderer>().flipX = flipped;
         int x = 0;
         int y = 0;
         switch (direction)
         {
+            case "down":
+                y = -1;
+                gameObject.transform.eulerAngles = new Vector3(0, 0, 90);
+                break;
             case "up":
                 y = 1;
-                gameObject.GetComponent<SpriteRenderer>().transform.Rotate(new Vector3(0, 0, -90));
+                gameObject.transform.eulerAngles = new Vector3(0, 0, -90);
                 gameObject.transform.position = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y, 4);
-                break;
-            case "down":
-                gameObject.GetComponent<SpriteRenderer>().transform.Rotate(new Vector3(0, 0, 90));
-                y = -1;
+
                 break;
             default:
+                gameObject.GetComponent<SpriteRenderer>().flipX = flipped;
                 x = flipped ? 1 : -1;
                 break;
         }
