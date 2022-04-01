@@ -7,13 +7,7 @@ public class PlayerControls : MonoBehaviour
     Rigidbody2D body;
     Animator animator;
     UIController uiController;
-
-    public bool canMove = true;
-
-    float moveLimiter = 0.7f;
-
-    float horizontal;
-    float vertical;
+    Interactable interactionTarget = null;
     Dictionary<string, string> animationMappings = new Dictionary<string, string>(){
         {"idle", "idle"},
         {"walking", "walk"},
@@ -22,31 +16,31 @@ public class PlayerControls : MonoBehaviour
         {"sliding", "slide"},
         {"interacting", "idle"}
     };
-
-
-    string playerAction = "idle";
-    public bool inventoryOpen = false;
-    Interactable interactionTarget = null;
-
+    public string playerAction = "idle";
     public string currentDirection = "down";
-
+    // Movement
+    public bool canMove = true;
+    float moveLimiter = 0.7f;
+    float horizontal;
+    float vertical;
     public float runSpeed = 20.0f;
-    int jumpTimer = 35;
-    float slideTimer = 45f;
-    int shootTimer = 35;
+    // Action durations
+    int jumpFrames = 35;
+    int slideFrames = 45;
+    int shootFrames = 35;
 
-
-
-    void Start()
+    void Awake()
     {
         body = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         uiController = GameObject.Find("UI").GetComponent<UIController>();
     }
+    void Start()
+    {
+    }
 
     void Animate()
     {
-        Debug.Log(playerAction);
         string prefix = animationMappings[playerAction];
         string nextDirection = currentDirection;
         if (horizontal == 1f)
@@ -81,85 +75,102 @@ public class PlayerControls : MonoBehaviour
         animator.Play(prefix + "_" + currentDirection);
     }
 
+    private void setPlayerAction()
+    {
+        if (canMove)
+        {
+            horizontal = Input.GetAxisRaw("Horizontal");
+            vertical = Input.GetAxisRaw("Vertical");
+            if (!isJumping())
+            {
+                if (Input.GetKeyDown("space"))
+                {
+                    playerAction = "jumping";
+                }
+                else if (!isSliding() && !isJumping() && Input.GetKeyDown("m"))
+                {
+                    playerAction = "sliding";
+                }
+                else if (isSliding() && slideFrames == 0)
+                {
+                    playerAction = "idle";
+                }
+                else if (!isInteracting() && Input.GetKeyDown("n") && interactionTarget)
+                {
+                    playerAction = "interacting";
+                }
+                else if (Input.GetKeyDown("1") && !isShooting())
+                {
+                    playerAction = "shooting";
+                }
+                else if (isMoving() && !isSliding() && !isShooting())
+                {
+                    playerAction = "walking";
+
+                }
+                else if (!isMoving() && !isSliding() && !isShooting())
+                {
+                    playerAction = "idle";
+                }
+
+            }
+            else if (isJumping() && jumpFrames == 0)
+            {
+                playerAction = "idle";
+            }
+        }
+        else if (!canMove && isInteracting() && Input.GetKeyDown("n"))
+        {
+            playerAction = "idle";
+        }
+    }
+
     void Update()
     {
         // Inventory is not open and we are not interacting
         if (canMove)
         {
-            horizontal = Input.GetAxisRaw("Horizontal");
-            vertical = Input.GetAxisRaw("Vertical");
-            if (isMoving() && !isSliding() && !isJumping())
+            setPlayerAction();
+            switch (playerAction)
             {
-                playerAction = "walking";
-            }
-            else if (!isMoving() && !isSliding() && !isJumping())
-            {
-                playerAction = "idle";
-            }
-            if (!isJumping())
-            {
-                if (!isInteracting() && Input.GetKeyDown("n"))
-                {
-                    if (interactionTarget)
+                case "interacting":
+                    bool isItem = interactionTarget.GetComponent<Item>() != null;
+                    if (isItem)
                     {
-                        bool isItem = interactionTarget.GetComponent<Item>() != null;
-                        if (isItem)
-                        {
-                            uiController.AddItemToInventory(interactionTarget.GetComponent<Item>());
-                        }
-                        uiController.ToggleInteractionBox(interactionTarget.toSay, interactionTarget.image);
-                        playerAction = "interacting";
-                        canMove = false;
-                        horizontal = 0;
-                        vertical = 0;
-                        animator.Play("idle_" + currentDirection);
+                        uiController.AddItemToInventory(interactionTarget.GetComponent<Item>());
                     }
-                }
-                else if (Input.GetKeyDown("1"))
-                {
-                    playerAction = "shooting";
-                }
-                else if (isShooting())
-                {
-                    playerAction = shootTimer > 0 ? "shooting" : playerAction;
-                    shootTimer = playerAction == "shooting" ? shootTimer -= 1 : 35;
-                }
-                else if (Input.GetKeyDown("space"))
-                {
-                    playerAction = "jumping";
-                    slideTimer = 45;
-                }
-                else if (!isSliding() && Input.GetKeyDown("m"))
-                {
-                    playerAction = "sliding";
-                }
-                else if (isSliding() && slideTimer == 0)
-                {
-                    playerAction = "idle";
-                    slideTimer = 45;
-                }
+                    uiController.ToggleInteractionBox(interactionTarget.toSay, interactionTarget.image);
+                    canMove = false;
+                    horizontal = 0;
+                    vertical = 0;
+                    break;
+                case "shooting":
+                    playerAction = shootFrames > 0 ? "shooting" : "idle";
+                    break;
+                case "jumping":
+                    slideFrames = 45;
+                    break;
+                case "sliding":
+                    break;
+                default:
+                    break;
             }
-            else if (isJumping() && jumpTimer == 0)
-            {
-                playerAction = "idle";
-                jumpTimer = 35;
-            }
-            Animate();
         }
-        else if (!canMove && isInteracting() && Input.GetKeyDown("n"))
+        else if (!canMove)
         {
-            uiController.ToggleInteractionBox("");
-            playerAction = "idle";
-            canMove = true;
+            if (isInteracting() && Input.GetKeyDown("n"))
+            {
+                uiController.ToggleInteractionBox("");
+                canMove = true;
+            }
         }
         if (Input.GetKeyDown("return"))
         {
-            inventoryOpen = !inventoryOpen;
+            uiController.inventoryOpen = !uiController.inventoryOpen;
             uiController.ToggleUi();
         }
-
+        Animate();
     }
-
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -186,35 +197,26 @@ public class PlayerControls : MonoBehaviour
     }
     private void FixedUpdate()
     {
-        if (!isSliding() && Input.GetKeyDown("m"))
+        switch (playerAction)
         {
-            playerAction = "sliding";
+            case "shooting":
+                shootFrames = playerAction == "shooting" ? shootFrames -= 1 : 35;
+                break;
+            case "jumping":
+                slideFrames = 45;
+                jumpFrames = jumpFrames > 0 ? jumpFrames -= 1 : 35;
+                break;
+            case "sliding":
+                slideFrames = slideFrames > 0 ? slideFrames -= 1 : 45;
+
+                break;
+            default:
+                slideFrames = 45;
+                jumpFrames = 35;
+                shootFrames = 35;
+                break;
         }
-        else if (isSliding())
-        {
-            if (slideTimer == 0)
-            {
-                playerAction = "idle";
-                slideTimer = 45;
-            }
-            else
-            {
-                slideTimer--;
-            }
-        }
-        else if (isJumping())
-        {
-            if (jumpTimer == 0)
-            {
-                playerAction = "idle";
-                jumpTimer = 35;
-            }
-            else
-            {
-                jumpTimer--;
-            }
-        }
-        if (horizontal != 0 && vertical != 0) // Check for diagonal movement
+        if (isMoving("diagonally"))
         {
             // limit movement speed diagonally, so you move at 70% speed
             horizontal *= moveLimiter;
@@ -223,9 +225,12 @@ public class PlayerControls : MonoBehaviour
         body.velocity = new Vector2(horizontal * runSpeed, vertical * runSpeed);
     }
 
-    public bool isMoving()
+    // Optional arg to get direction
+    public bool isMoving(string direction = "")
     {
-        return Mathf.Abs(horizontal) > 0 | Mathf.Abs(vertical) > 0;
+        float v = Mathf.Abs(vertical);
+        float h = Mathf.Abs(horizontal);
+        return direction != "diagonally" ? h > 0 | v > 0 : horizontal != 0 && vertical != 0;
     }
 
     public bool isJumping()

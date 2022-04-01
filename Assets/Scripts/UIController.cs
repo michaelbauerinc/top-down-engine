@@ -13,6 +13,8 @@ public class UIController : MonoBehaviour
     VisualElement interactionWindow;
     List<Item> inventoryContent = new List<Item>();
 
+    public bool inventoryOpen = false;
+
 
     private void Awake()
     {
