@@ -145,7 +145,11 @@
 .player-inventory-item-slot-content {
     width: 100%;
     height: 100%;
-    -unity-background-scale-mode: scale-to-fit;
+    -unity-background-scale-mode: scale-and-crop;
     background-image: none;
     background-color: rgba(229, 255, 0, 0);
+    -unity-slice-left: 0;
+    -unity-slice-top: 0;
+    -unity-slice-right: 0;
+    -unity-slice-bottom: 0;
 }

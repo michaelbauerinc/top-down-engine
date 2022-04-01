@@ -26,7 +26,7 @@ public class PlayerControls : MonoBehaviour
     public float runSpeed = 20.0f;
     int jumpTimer = 35;
     float slideTimer = 45f;
-    int shootTimer = 50;
+    int shootTimer = 35;
 
 
 
@@ -123,7 +123,7 @@ public class PlayerControls : MonoBehaviour
                 else if (shooting)
                 {
                     shooting = shootTimer > 0;
-                    shootTimer = shooting == true ? shootTimer -= 1 : 50;
+                    shootTimer = shooting == true ? shootTimer -= 1 : 35;
                 }
                 else if (Input.GetKeyDown("space"))
                 {

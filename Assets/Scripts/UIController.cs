@@ -48,6 +48,7 @@ public class UIController : MonoBehaviour
         inventoryContent[indexToEquip].gameObject.SetActive(true);
         Vector3 playerPos = GameObject.Find("Player").transform.position;
         gameObject.transform.position = playerPos;
+        MapInventory();
     }
 
     private void MapInventory()
@@ -57,10 +58,15 @@ public class UIController : MonoBehaviour
         int j = 0;
         foreach (Item item in inventoryContent)
         {
+
             var row = inventoryContainer.ElementAt(i);
             Button slotToFill = row.ElementAt(j).Q<Button>("InventoryContent");
             slotToFill.clicked += delegate { EquipItem(i); };
             slotToFill.style.backgroundImage = new StyleBackground(item.image);
+            if (item.isEquipped == true)
+            {
+                slotToFill.style.backgroundColor = new Color(229, 255, 0, 0.5f);
+            }
             j++;
             if (j == row.childCount)
             {
@@ -72,6 +78,5 @@ public class UIController : MonoBehaviour
 
     void Update()
     {
-        // Debug.Log(inventoryContent[0].isEquipped);
     }
 }
