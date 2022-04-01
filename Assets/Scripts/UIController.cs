@@ -37,33 +37,29 @@ public class UIController : MonoBehaviour
 
     public void AddItemToInventory(Item item)
     {
-        // gameObject.AddComponent<Item>(new Item(item));
-        // UnityEditorInternal.ComponentUtility.CopyComponent(item);
-        // Debug.Log(UnityEditorInternal.ComponentUtility.
-
-        // inventoryContent.Add(gameObject.GetComponent<Item>());
         inventoryContent.Add(item);
         MapInventory();
         item.pickedUp = true;
     }
 
-    public void EquipItem()
+    public void EquipItem(int indexToEquip)
     {
-        inventoryContent[0].isEquipped = true;
+        inventoryContent[indexToEquip].isEquipped = true;
+        inventoryContent[indexToEquip].gameObject.SetActive(true);
+        Vector3 playerPos = GameObject.Find("Player").transform.position;
+        gameObject.transform.position = playerPos;
     }
 
     private void MapInventory()
     {
         VisualElement inventoryContainer = inventory.Q<VisualElement>("InventoryContainer");
-        // int totalRows = inventoryContainer.childCount;
-        // int totalItems = inventoryContent.Count;
         int i = 0;
         int j = 0;
         foreach (Item item in inventoryContent)
         {
             var row = inventoryContainer.ElementAt(i);
             Button slotToFill = row.ElementAt(j).Q<Button>("InventoryContent");
-            // slotToFill.clicked += EquipItem;
+            slotToFill.clicked += delegate { EquipItem(i); };
             slotToFill.style.backgroundImage = new StyleBackground(item.image);
             j++;
             if (j == row.childCount)
@@ -76,5 +72,6 @@ public class UIController : MonoBehaviour
 
     void Update()
     {
+        // Debug.Log(inventoryContent[0].isEquipped);
     }
 }

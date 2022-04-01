@@ -18,13 +18,15 @@ public class PlayerControls : MonoBehaviour
     public bool sliding = false;
     bool interacting = false;
     public bool inventoryOpen = false;
+    public bool shooting = false;
     Interactable interactionTarget = null;
 
-    string currentDirection = "down";
+    public string currentDirection = "down";
 
     public float runSpeed = 20.0f;
-    int jumpTimer = 45;
+    int jumpTimer = 35;
     float slideTimer = 45f;
+    int shootTimer = 50;
 
 
 
@@ -42,6 +44,10 @@ public class PlayerControls : MonoBehaviour
         if (jumping)
         {
             prefix = "jump";
+        }
+        else if (shooting)
+        {
+            prefix = "player_bow";
         }
         else if (sliding)
         {
@@ -110,6 +116,15 @@ public class PlayerControls : MonoBehaviour
                         animator.Play("idle_" + currentDirection);
                     }
                 }
+                else if (Input.GetKeyDown("1"))
+                {
+                    shooting = true;
+                }
+                else if (shooting)
+                {
+                    shooting = shootTimer > 0;
+                    shootTimer = shooting == true ? shootTimer -= 1 : 50;
+                }
                 else if (Input.GetKeyDown("space"))
                 {
                     jumping = true;
@@ -129,7 +144,7 @@ public class PlayerControls : MonoBehaviour
             else if (jumping && jumpTimer == 0)
             {
                 jumping = false;
-                jumpTimer = 45;
+                jumpTimer = 35;
             }
             Animate();
         }
@@ -185,8 +200,8 @@ public class PlayerControls : MonoBehaviour
         {
             if (slideTimer == 0)
             {
-                // sliding = false;
-                // slideTimer = 45;
+                sliding = false;
+                slideTimer = 45;
             }
             else
             {
@@ -197,8 +212,8 @@ public class PlayerControls : MonoBehaviour
         {
             if (jumpTimer == 0)
             {
-                // jumping = false;
-                // jumpTimer = 45;
+                jumping = false;
+                jumpTimer = 35;
             }
             else
             {
