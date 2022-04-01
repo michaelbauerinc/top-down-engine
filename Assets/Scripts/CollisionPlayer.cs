@@ -22,7 +22,7 @@ public class CollisionPlayer : MonoBehaviour
     {
         foreach (GameObject collision in collisions)
         {
-            if (collision.gameObject.GetComponent<PlayerControls>().sliding)
+            if (collision.gameObject.GetComponent<PlayerControls>().isSliding())
             {
                 hitStun = 0;
             }

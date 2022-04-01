@@ -32,7 +32,7 @@ public class Item : Interactable
             Vector3 playerPos = player.transform.position;
             gameObject.transform.position = new Vector3(playerPos.x, playerPos.y, currentDirection != "up" ? playerPos.z - 1 : playerPos.z + 1);
             gameObject.GetComponent<SpriteRenderer>().flipX = player.GetComponent<SpriteRenderer>().flipX;
-            if (playerControls.shooting == true)
+            if (playerControls.isShooting())
             {
                 itemRenderer.enabled = true;
                 animator.Play("weapon_bow_" + currentDirection);

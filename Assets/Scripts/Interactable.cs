@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Interactable : MonoBehaviour
 {
-    public string name = "sign";
+    public string interactableName = "sign";
     public bool canInteract = true;
     public string toSay = "Hello";
     public bool canPickUp = false;

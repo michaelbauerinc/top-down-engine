@@ -14,11 +14,18 @@ public class PlayerControls : MonoBehaviour
 
     float horizontal;
     float vertical;
-    bool jumping = false;
-    public bool sliding = false;
-    bool interacting = false;
+    Dictionary<string, string> animationMappings = new Dictionary<string, string>(){
+        {"idle", "idle"},
+        {"walking", "walk"},
+        {"jumping", "jump"},
+        {"shooting", "player_bow"},
+        {"sliding", "slide"},
+        {"interacting", "idle"}
+    };
+
+
+    string playerAction = "idle";
     public bool inventoryOpen = false;
-    public bool shooting = false;
     Interactable interactionTarget = null;
 
     public string currentDirection = "down";
@@ -39,28 +46,12 @@ public class PlayerControls : MonoBehaviour
 
     void Animate()
     {
-        string prefix = "idle";
+        Debug.Log(playerAction);
+        string prefix = animationMappings[playerAction];
         string nextDirection = currentDirection;
-        if (jumping)
-        {
-            prefix = "jump";
-        }
-        else if (shooting)
-        {
-            prefix = "player_bow";
-        }
-        else if (sliding)
-        {
-            prefix = "slide";
-        }
-        else if (!jumping && (Mathf.Abs(horizontal) > 0) | (!jumping && Mathf.Abs(vertical) > 0))
-        {
-            prefix = "walk";
-        }
         if (horizontal == 1f)
         {
-
-            if (!jumping)
+            if (!isJumping())
             {
                 gameObject.GetComponent<SpriteRenderer>().flipX = true;
             }
@@ -68,7 +59,7 @@ public class PlayerControls : MonoBehaviour
         }
         else if (horizontal == -1f)
         {
-            if (!jumping)
+            if (!isJumping())
             {
                 gameObject.GetComponent<SpriteRenderer>().flipX = false;
             }
@@ -82,7 +73,7 @@ public class PlayerControls : MonoBehaviour
         {
             nextDirection = "down";
         }
-        if (jumping)
+        if (isJumping())
         {
             nextDirection = currentDirection;
         }
@@ -97,9 +88,17 @@ public class PlayerControls : MonoBehaviour
         {
             horizontal = Input.GetAxisRaw("Horizontal");
             vertical = Input.GetAxisRaw("Vertical");
-            if (!jumping)
+            if (isMoving() && !isSliding() && !isJumping())
             {
-                if (!interacting && Input.GetKeyDown("n"))
+                playerAction = "walking";
+            }
+            else if (!isMoving() && !isSliding() && !isJumping())
+            {
+                playerAction = "idle";
+            }
+            if (!isJumping())
+            {
+                if (!isInteracting() && Input.GetKeyDown("n"))
                 {
                     if (interactionTarget)
                     {
@@ -109,7 +108,7 @@ public class PlayerControls : MonoBehaviour
                             uiController.AddItemToInventory(interactionTarget.GetComponent<Item>());
                         }
                         uiController.ToggleInteractionBox(interactionTarget.toSay, interactionTarget.image);
-                        interacting = true;
+                        playerAction = "interacting";
                         canMove = false;
                         horizontal = 0;
                         vertical = 0;
@@ -118,45 +117,41 @@ public class PlayerControls : MonoBehaviour
                 }
                 else if (Input.GetKeyDown("1"))
                 {
-                    shooting = true;
+                    playerAction = "shooting";
                 }
-                else if (shooting)
+                else if (isShooting())
                 {
-                    shooting = shootTimer > 0;
-                    shootTimer = shooting == true ? shootTimer -= 1 : 35;
+                    playerAction = shootTimer > 0 ? "shooting" : playerAction;
+                    shootTimer = playerAction == "shooting" ? shootTimer -= 1 : 35;
                 }
                 else if (Input.GetKeyDown("space"))
                 {
-                    jumping = true;
-                    sliding = false;
+                    playerAction = "jumping";
                     slideTimer = 45;
                 }
-                else if (!sliding && Input.GetKeyDown("m"))
+                else if (!isSliding() && Input.GetKeyDown("m"))
                 {
-                    sliding = true;
+                    playerAction = "sliding";
                 }
-                else if (sliding && slideTimer == 0)
+                else if (isSliding() && slideTimer == 0)
                 {
-                    sliding = false;
+                    playerAction = "idle";
                     slideTimer = 45;
                 }
             }
-            else if (jumping && jumpTimer == 0)
+            else if (isJumping() && jumpTimer == 0)
             {
-                jumping = false;
+                playerAction = "idle";
                 jumpTimer = 35;
             }
             Animate();
         }
-        else if (!canMove && interacting && Input.GetKeyDown("n"))
+        else if (!canMove && isInteracting() && Input.GetKeyDown("n"))
         {
             uiController.ToggleInteractionBox("");
-            interacting = false;
+            playerAction = "idle";
             canMove = true;
         }
-        // else if (interacting)
-        // {
-        // }
         if (Input.GetKeyDown("return"))
         {
             inventoryOpen = !inventoryOpen;
@@ -188,19 +183,18 @@ public class PlayerControls : MonoBehaviour
     private void OnCollisionExit2D(Collision2D collision)
     {
         interactionTarget = null;
-        interacting = false;
     }
     private void FixedUpdate()
     {
-        if (!sliding && Input.GetKeyDown("m"))
+        if (!isSliding() && Input.GetKeyDown("m"))
         {
-            sliding = true;
+            playerAction = "sliding";
         }
-        else if (sliding)
+        else if (isSliding())
         {
             if (slideTimer == 0)
             {
-                sliding = false;
+                playerAction = "idle";
                 slideTimer = 45;
             }
             else
@@ -208,11 +202,11 @@ public class PlayerControls : MonoBehaviour
                 slideTimer--;
             }
         }
-        else if (jumping)
+        else if (isJumping())
         {
             if (jumpTimer == 0)
             {
-                jumping = false;
+                playerAction = "idle";
                 jumpTimer = 35;
             }
             else
@@ -227,5 +221,30 @@ public class PlayerControls : MonoBehaviour
             vertical *= moveLimiter;
         }
         body.velocity = new Vector2(horizontal * runSpeed, vertical * runSpeed);
+    }
+
+    public bool isMoving()
+    {
+        return Mathf.Abs(horizontal) > 0 | Mathf.Abs(vertical) > 0;
+    }
+
+    public bool isJumping()
+    {
+        return playerAction == "jumping";
+    }
+
+    public bool isSliding()
+    {
+        return playerAction == "sliding";
+    }
+
+    public bool isInteracting()
+    {
+        return playerAction == "interacting";
+    }
+
+    public bool isShooting()
+    {
+        return playerAction == "shooting";
     }
 }
