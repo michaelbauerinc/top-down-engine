@@ -13686,7 +13686,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactableName: sign
   canInteract: 1
-  toSay: Hello
+  toSay: ur a fuckin faggot
   canPickUp: 0
   image: {fileID: 0}
 --- !u!222 &1562253327
@@ -16841,6 +16841,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inventoryOpen: 0
+  weaponEquipped: 0
   ammo: {fileID: 3991415595812809241, guid: 15fc4a97cc13c1c4892286d91194282b, type: 3}
 --- !u!1 &2054462925
 GameObject:

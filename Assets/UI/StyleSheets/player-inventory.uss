@@ -29,7 +29,6 @@
     padding-top: 5px;
     padding-bottom: 5px;
     overflow: visible;
-    display: none;
 }
 
 .player-inventory-navbar {
@@ -45,14 +44,6 @@
     background-color: rgb(147, 46, 33);
     width: 10%;
     height: 80%;
-    padding-left: 0;
-    padding-right: 0;
-    padding-top: 0;
-    padding-bottom: 0;
-    margin-top: 0;
-    margin-bottom: 0;
-    margin-left: 0;
-    margin-right: 0;
     border-left-width: 5px;
     border-right-width: 5px;
     border-top-width: 5px;
@@ -89,7 +80,7 @@
     border-right-width: 0;
     border-top-width: 0;
     border-bottom-width: 0;
-    align-items: stretch;
+    align-items: center;
     justify-content: flex-start;
     flex-direction: column;
     flex-basis: 100%;
@@ -101,45 +92,42 @@
 
 .player-inventory-item-row {
     background-color: rgba(71, 255, 0, 0);
-    height: 100px;
     margin-left: 0;
     margin-right: 0;
     margin-top: 0;
     margin-bottom: 0;
     align-items: stretch;
     justify-content: space-around;
-    flex-grow: 1;
+    min-height: 100px;
+    width: 100%;
     flex-shrink: 1;
     flex-direction: row;
-    max-height: 100px;
-    width: 100%;
+    margin: 5px;
 }
 
 .player-inventory-item-slot {
     background-color: rgba(254, 255, 0, 0);
-    width: 20%;
-    height: 90%;
-    margin-left: 0;
-    margin-right: 0;
-    margin-top: 0;
-    margin-bottom: 0;
+    width: auto;
+    height: auto;
     background-image: url('/Assets/Simple Fantasy GUI/PNG/Inventory/Inventory_Slot.png');
     -unity-background-scale-mode: scale-and-crop;
-    justify-content: flex-start;
+    justify-content: center;
     -unity-slice-left: 1;
     -unity-slice-top: 1;
     -unity-slice-right: 1;
     -unity-slice-bottom: 1;
-    max-height: none;
-    flex-basis: auto;
-    flex-grow: 0;
-    padding-left: 0;
-    padding-right: 0;
-    padding-top: 0;
-    padding-bottom: 0;
-    flex-shrink: 1;
-    min-height: auto;
     max-width: 200px;
+    flex-basis: 20%;
+    min-width: 100px;
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    height: 100%;
+    flex-grow: 0;
+    flex-shrink: 1;
+    align-items: center;
+    -unity-background-image-tint-color: rgba(0, 0, 0, 0);
 }
 
 .player-inventory-item-slot-content {

@@ -6,7 +6,7 @@ public class Item : Interactable
 {
     public bool pickedUp = false;
     public bool isEquipped = false;
-
+    public string category;
     Animator animator;
 
     GameObject player;

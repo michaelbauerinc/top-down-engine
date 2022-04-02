@@ -20,6 +20,7 @@ public class UIController : MonoBehaviour
     // }
     Dictionary<int, Dictionary<string, dynamic>> inventoryContent = new Dictionary<int, Dictionary<string, dynamic>>();
     public bool inventoryOpen = false;
+    public bool weaponEquipped = false;
     public GameObject ammo;
 
 
@@ -56,9 +57,10 @@ public class UIController : MonoBehaviour
     {
         var entry = inventoryContent[indexToEquip];
         Item toUse = entry["item"];
-        Button slot = entry["slot"];
+        VisualElement slot = entry["slot"];
         toUse.isEquipped = !toUse.isEquipped;
-        slot.style.backgroundColor = toUse.isEquipped ? new Color(229, 255, 0, 0.5f) : new Color(229, 255, 0, 0f);
+        weaponEquipped = toUse.category == "weapon" ? !weaponEquipped : false;
+        slot.style.unityBackgroundImageTintColor = toUse.isEquipped ? new Color(255, 250, 0, 230) : new Color(0, 0, 0, 0);
         Vector3 playerPos = GameObject.Find("Player").transform.position;
         gameObject.transform.position = playerPos;
         toUse.gameObject.SetActive(true);
@@ -72,15 +74,17 @@ public class UIController : MonoBehaviour
         foreach (KeyValuePair<int, Dictionary<string, dynamic>> entry in inventoryContent)
         {
             VisualElement row = inventoryContainer.ElementAt(i);
-            Button slotToFill = row.ElementAt(j).Q<Button>("InventoryContent");
+            Button button = row.ElementAt(j).Q<Button>("InventoryContent");
+            VisualElement slotToFill = row.ElementAt(j);
+
             // Only delegate the clickhandler when a new item is added to the inventory
             if (!entry.Value.ContainsKey("slot"))
             {
-                slotToFill.clicked += delegate { UseItem(entry.Key); };
+                button.clicked += delegate { UseItem(entry.Key); };
             }
             entry.Value["slot"] = slotToFill;
-            Button backgroundToModify = entry.Value["slot"];
-            backgroundToModify.style.backgroundImage = new StyleBackground(entry.Value["item"].image);
+            // Button backgroundToModify = entry.Value["slot"];
+            button.style.backgroundImage = new StyleBackground(entry.Value["item"].image);
             j++;
             if (j == row.childCount)
             {

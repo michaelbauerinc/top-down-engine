@@ -97,7 +97,7 @@ public class PlayerControls : MonoBehaviour
                 {
                     playerAction = "interacting";
                 }
-                else if (Input.GetKeyDown("1") && !isShooting())
+                else if (Input.GetKeyDown("1") && !isShooting() && uiController.weaponEquipped)
                 {
                     playerAction = "shooting";
                 }
@@ -140,7 +140,6 @@ public class PlayerControls : MonoBehaviour
         {
             horizontal = Input.GetAxisRaw("Horizontal");
             vertical = Input.GetAxisRaw("Vertical");
-            setPlayerAction();
             switch (playerAction)
             {
                 case "interacting":
@@ -186,7 +185,10 @@ public class PlayerControls : MonoBehaviour
             uiController.inventoryOpen = !uiController.inventoryOpen;
             uiController.ToggleUi();
         }
-        Animate();
+        if (slideFrames >= 40)
+        {
+            Animate();
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -214,6 +216,31 @@ public class PlayerControls : MonoBehaviour
     }
     private void FixedUpdate()
     {
+
+        if (canMove)
+        {
+            setPlayerAction();
+        }
+        if (isMoving("diagonally"))
+        {
+            // limit movement speed diagonally, so you move at 70% speed
+            horizontal *= moveLimiter;
+            vertical *= moveLimiter;
+        }
+        if (isJumping())
+        {
+            // Reduce speed by log 
+            double modifier = 1 - System.Math.Log(jumpFrames, 35) * .95;
+            float v = Mathf.Sign(vertical) * (float)modifier;
+            float h = Mathf.Sign(horizontal) * (float)modifier;
+
+            vertical -= Mathf.Abs(vertical) > 0 ? v : 0;
+            horizontal -= Mathf.Abs(horizontal) > 0 ? h : 0;
+        }
+        if (slideFrames >= 44)
+        {
+            body.velocity = new Vector2(horizontal * runSpeed, vertical * runSpeed);
+        }
         switch (playerAction)
         {
             case "shooting":
@@ -225,7 +252,6 @@ public class PlayerControls : MonoBehaviour
                 break;
             case "sliding":
                 slideFrames = slideFrames > 0 ? slideFrames -= 1 : 45;
-
                 break;
             default:
                 slideFrames = 45;
@@ -233,13 +259,6 @@ public class PlayerControls : MonoBehaviour
                 shootFrames = 35;
                 break;
         }
-        if (isMoving("diagonally"))
-        {
-            // limit movement speed diagonally, so you move at 70% speed
-            horizontal *= moveLimiter;
-            vertical *= moveLimiter;
-        }
-        body.velocity = new Vector2(horizontal * runSpeed, vertical * runSpeed);
     }
 
     // Optional arg to get direction

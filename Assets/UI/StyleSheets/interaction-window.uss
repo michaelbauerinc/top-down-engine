@@ -32,6 +32,7 @@
     height: 100%;
     background-color: rgb(170, 185, 167);
     justify-content: center;
+    font-size: 300%;
     align-items: center;
     overflow: hidden;
     padding-left: 0;
