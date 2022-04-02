@@ -5,7 +5,17 @@ using UnityEngine;
 public class LayerSwapper : MonoBehaviour
 {
     public List<GameObject> swapObjects = new List<GameObject>();
-    
+    void Awake()
+    {
+        var tags = Object.FindObjectsOfType<MultiTag>();
+        foreach (MultiTag tag in tags)
+        {
+            if (tag.HasTag("swap-object"))
+            {
+                swapObjects.Add(tag.gameObject);
+            }
+        }
+    }
     // Start is called before the first frame update
     void Start()
     {
@@ -16,16 +26,17 @@ public class LayerSwapper : MonoBehaviour
     {
         swapObjects.Sort(SortByPos);
         var i = 0;
-        foreach (GameObject toSwap in swapObjects) {
+        foreach (GameObject toSwap in swapObjects)
+        {
             toSwap.transform.position = new Vector3(toSwap.transform.position.x, toSwap.transform.position.y, i);
             // toSwap.transform.Find("shadow").gameObject.transform.position = new Vector3(toSwap.transform.Find("shadow").position.x, toSwap.transform.Find("shadow").position.y, i);
             i++;
         }
     }
-    
+
 
     static int SortByPos(GameObject obj1, GameObject obj2)
-     {
-         return obj1.transform.position.y.CompareTo(obj2.transform.position.y);
-     }
+    {
+        return obj1.transform.position.y.CompareTo(obj2.transform.position.y);
+    }
 }
