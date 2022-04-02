@@ -29,6 +29,7 @@
     padding-top: 5px;
     padding-bottom: 5px;
     overflow: visible;
+    display: none;
 }
 
 .player-inventory-navbar {
@@ -132,12 +133,20 @@
 
 .player-inventory-item-slot-content {
     width: 100%;
-    height: 100%;
-    -unity-background-scale-mode: scale-and-crop;
+    height: 90%;
+    -unity-background-scale-mode: scale-to-fit;
     background-image: none;
     background-color: rgba(229, 255, 0, 0);
     -unity-slice-left: 0;
     -unity-slice-top: 0;
     -unity-slice-right: 0;
     -unity-slice-bottom: 0;
+    padding-top: 0;
+    padding-left: 0;
+    padding-right: 0;
+    padding-bottom: 0;
+    margin-left: 0;
+    margin-right: 0;
+    margin-top: 0;
+    margin-bottom: 0;
 }

@@ -47,10 +47,10 @@ public class UIController : MonoBehaviour
 
     public void AddItemToInventory(Item item)
     {
+        item.pickedUp = true;
         inventoryContent.Add(inventoryContent.Count, new Dictionary<string, dynamic>(){
         {"item", item}});
         MapInventory();
-        item.pickedUp = true;
     }
 
     public void UseItem(int indexToEquip)
@@ -61,8 +61,6 @@ public class UIController : MonoBehaviour
         toUse.isEquipped = !toUse.isEquipped;
         weaponEquipped = toUse.category == "weapon" ? !weaponEquipped : false;
         slot.style.unityBackgroundImageTintColor = toUse.isEquipped ? new Color(255, 250, 0, 230) : new Color(0, 0, 0, 0);
-        Vector3 playerPos = GameObject.Find("Player").transform.position;
-        gameObject.transform.position = playerPos;
         toUse.gameObject.SetActive(true);
     }
 

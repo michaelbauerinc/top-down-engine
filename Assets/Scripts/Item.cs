@@ -13,14 +13,14 @@ public class Item : Interactable
 
     PlayerControls playerControls;
 
-    Renderer itemRenderer;
+    SpriteRenderer itemRenderer;
 
 
     // Start is called before the first frame update
     void Start()
     {
         animator = GetComponent<Animator>();
-        itemRenderer = GetComponent<Renderer>();
+        itemRenderer = GetComponent<SpriteRenderer>();
         canPickUp = true;
     }
     // Update is called once per frame
@@ -30,16 +30,21 @@ public class Item : Interactable
         {
             string currentDirection = playerControls.currentDirection;
             Vector3 playerPos = player.transform.position;
-            gameObject.transform.position = new Vector3(playerPos.x, playerPos.y, currentDirection != "up" ? playerPos.z - 1 : playerPos.z + 1);
-            gameObject.GetComponent<SpriteRenderer>().flipX = player.GetComponent<SpriteRenderer>().flipX;
+
+            // Position bow vertically
+            float v = currentDirection == "down" ? .2f : .5f;
+            // if player is not facing the side, move item 0, if they are, move it .5f based on flipx
+            float h = currentDirection == "side" ? player.GetComponent<SpriteRenderer>().flipX ? .5f : -.5f : 0;
+
+            gameObject.transform.position = new Vector3(playerPos.x + h, playerPos.y + v, currentDirection != "up" ? playerPos.z - 1 : playerPos.z + 1);
+            itemRenderer.flipX = player.GetComponent<SpriteRenderer>().flipX;
             if (playerControls.isShooting())
             {
                 itemRenderer.enabled = true;
-                animator.Play("weapon_bow_" + currentDirection);
+                animator.Play("weapon_bow_shoot_" + currentDirection);
             }
             else
             {
-                animator.Play("weapon_bow_idle");
                 itemRenderer.enabled = false;
             }
         }
@@ -47,6 +52,7 @@ public class Item : Interactable
         {
             canPickUp = false;
             canInteract = false;
+            gameObject.SetActive(false);
             itemRenderer.enabled = false;
             player = GameObject.Find("Player");
             playerControls = GameObject.Find("Player").GetComponent<PlayerControls>();

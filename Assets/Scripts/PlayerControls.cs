@@ -21,8 +21,8 @@ public class PlayerControls : MonoBehaviour
     // Movement
     public bool canMove = true;
     float moveLimiter = 0.7f;
-    float horizontal;
-    float vertical;
+    public float horizontal;
+    public float vertical;
     public float runSpeed = 20.0f;
     // Action durations
     int jumpFrames = 35;
@@ -45,7 +45,7 @@ public class PlayerControls : MonoBehaviour
         string nextDirection = currentDirection;
         if (horizontal == 1f)
         {
-            if (!isJumping())
+            if (jumpFrames > 30)
             {
                 gameObject.GetComponent<SpriteRenderer>().flipX = true;
             }
@@ -53,7 +53,7 @@ public class PlayerControls : MonoBehaviour
         }
         else if (horizontal == -1f)
         {
-            if (!isJumping())
+            if (jumpFrames > 30)
             {
                 gameObject.GetComponent<SpriteRenderer>().flipX = false;
             }
@@ -67,7 +67,7 @@ public class PlayerControls : MonoBehaviour
         {
             nextDirection = "down";
         }
-        if (isJumping())
+        if (jumpFrames < 30)
         {
             nextDirection = currentDirection;
         }
