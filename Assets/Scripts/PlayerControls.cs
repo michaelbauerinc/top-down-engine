@@ -26,7 +26,7 @@ public class PlayerControls : MonoBehaviour
     public float runSpeed = 20.0f;
     // Action durations
     int jumpFrames = 35;
-    int slideFrames = 45;
+    public int slideFrames = 45;
     int shootFrames = 35;
 
     void Awake()

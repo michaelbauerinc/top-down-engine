@@ -7,7 +7,7 @@ public class CollisionBasic : MonoBehaviour
     public Rigidbody2D body;
     public Animator animator;
     public SpriteRenderer sprite;
-    public int hitStun = 10;
+    public int hitStun = 40;
     List<GameObject> collisions = new List<GameObject>();
 
     // Start is called before the first frame update
@@ -22,16 +22,17 @@ public class CollisionBasic : MonoBehaviour
     {
         foreach (GameObject collision in collisions)
         {
-            if (collision.gameObject.GetComponent<PlayerControls>().isSliding())
+            PlayerControls player = collision.gameObject.GetComponent<PlayerControls>();
+            if (player.isSliding())
             {
-                hitStun = 0;
+                hitStun = 30;
             }
         }
     }
 
     private void FixedUpdate()
     {
-        if (hitStun < 10)
+        if (hitStun < 40)
         {
             animator.Play("hit_side");
             hitStun++;
@@ -50,6 +51,16 @@ public class CollisionBasic : MonoBehaviour
         if (collision.gameObject.tag == "Player")
         {
             collisions.Add(collision.gameObject);
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        bool isAmmo = other.gameObject.GetComponent<Ammo>() != null;
+        if (isAmmo)
+        {
+            hitStun = 0;
+
         }
     }
 
