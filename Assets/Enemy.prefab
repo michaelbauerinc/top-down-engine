@@ -13,8 +13,8 @@ GameObject:
   - component: {fileID: 8070756624651434483}
   - component: {fileID: 8070756624651434486}
   - component: {fileID: 8070756624651434487}
-  - component: {fileID: 8097547703779362575}
-  - component: {fileID: 1038262671972457237}
+  - component: {fileID: 4429924013701410913}
+  - component: {fileID: 3049910917007984871}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -153,7 +153,7 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &8097547703779362575
+--- !u!114 &4429924013701410913
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -169,7 +169,7 @@ MonoBehaviour:
   animator: {fileID: 0}
   sprite: {fileID: 0}
   hitStun: 40
---- !u!114 &1038262671972457237
+--- !u!114 &3049910917007984871
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

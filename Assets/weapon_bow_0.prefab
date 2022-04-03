@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6739969015353888168}
   - component: {fileID: 6739969015353888214}
   - component: {fileID: 6739969015353888170}
-  - component: {fileID: 4281736439199777934}
+  - component: {fileID: 7830727457217099906}
   m_Layer: 0
   m_Name: weapon_bow_0
   m_TagString: Untagged
@@ -130,7 +130,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.83015156, y: 1.3883259}
   m_EdgeRadius: 0
---- !u!114 &4281736439199777934
+--- !u!114 &7830727457217099906
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -149,5 +149,5 @@ MonoBehaviour:
   image: {fileID: 0}
   pickedUp: 0
   isEquipped: 0
-  category: weapon
-  ammo: {fileID: 6110581804851610693, guid: a649774e6bbb5594988158e481a8418b, type: 3}
+  category: 
+  ammo: {fileID: 5867420779026249972, guid: 15fc4a97cc13c1c4892286d91194282b, type: 3}
