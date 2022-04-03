@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerControls : MonoBehaviour
+public class PlayerController : MonoBehaviour
 {
     Rigidbody2D body;
     Animator animator;
@@ -23,11 +23,11 @@ public class PlayerControls : MonoBehaviour
     float moveLimiter = 0.7f;
     public float horizontal;
     public float vertical;
-    public float runSpeed = 20.0f;
+    public float runSpeed = 5.0f;
     // Action durations
-    int jumpFrames = 35;
+    public int jumpFrames = 35;
     public int slideFrames = 45;
-    int shootFrames = 35;
+    public int shootFrames = 35;
 
     void Awake()
     {
@@ -130,7 +130,7 @@ public class PlayerControls : MonoBehaviour
 
     void ShootWeapon()
     {
-        Instantiate(uiController.ammo, new Vector3(transform.position.x, transform.position.y + .5f, transform.position.z), Quaternion.identity).gameObject.AddComponent<Ammo>().Shoot(currentDirection, gameObject.GetComponent<SpriteRenderer>().flipX);
+        // var test = uiController.currentWeapon.ammo;
     }
 
     void Update()

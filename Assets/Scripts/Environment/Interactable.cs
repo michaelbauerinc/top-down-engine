@@ -10,7 +10,7 @@ public class Interactable : MonoBehaviour
     public bool canPickUp = false;
     public Sprite image;
     // Start is called before the first frame update
-    void Awake()
+    public virtual void Awake()
     {
         image = gameObject.GetComponent<SpriteRenderer>().sprite;
     }

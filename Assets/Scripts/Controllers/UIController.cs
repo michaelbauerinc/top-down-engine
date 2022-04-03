@@ -21,7 +21,7 @@ public class UIController : MonoBehaviour
     Dictionary<int, Dictionary<string, dynamic>> inventoryContent = new Dictionary<int, Dictionary<string, dynamic>>();
     public bool inventoryOpen = false;
     public bool weaponEquipped = false;
-    public GameObject ammo;
+    public Item currentWeapon;
 
 
     private void Awake()
@@ -47,21 +47,29 @@ public class UIController : MonoBehaviour
 
     public void AddItemToInventory(Item item)
     {
-        item.pickedUp = true;
         inventoryContent.Add(inventoryContent.Count, new Dictionary<string, dynamic>(){
         {"item", item}});
+        if (item.canPickUp)
+        {
+            item.PickUpItem();
+
+        }
         MapInventory();
     }
 
     public void UseItem(int indexToEquip)
     {
+
         var entry = inventoryContent[indexToEquip];
         Item toUse = entry["item"];
+        toUse.UseItem();
+
         VisualElement slot = entry["slot"];
-        toUse.isEquipped = !toUse.isEquipped;
+        // set currentWeapon
+        currentWeapon = toUse.category == "weapon" ? toUse : null;
+        // toUse.isEquipped = !toUse.isEquipped;
         weaponEquipped = toUse.category == "weapon" ? !weaponEquipped : false;
         slot.style.unityBackgroundImageTintColor = toUse.isEquipped ? new Color(255, 250, 0, 230) : new Color(0, 0, 0, 0);
-        toUse.gameObject.SetActive(true);
     }
 
     private void MapInventory()

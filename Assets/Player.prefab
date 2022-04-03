@@ -13,8 +13,8 @@ GameObject:
   - component: {fileID: 4753248391869724573}
   - component: {fileID: 5744605414517709835}
   - component: {fileID: 5744605414517709828}
-  - component: {fileID: 5744605414517709834}
-  - component: {fileID: 5744605414517709829}
+  - component: {fileID: 7418140207077613520}
+  - component: {fileID: 3201791502825458038}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -154,7 +154,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.8155289, y: 0.4102901}
   m_EdgeRadius: 0
---- !u!114 &5744605414517709834
+--- !u!114 &7418140207077613520
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -163,14 +163,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 4753248391869724572}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4918de524d94144dabcaec3aecc977a7, type: 3}
+  m_Script: {fileID: 11500000, guid: 9ce26b4d1c198bc43bd0f1b08092ef93, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerAction: idle
+  currentDirection: down
   canMove: 1
-  sliding: 0
-  inventoryOpen: 0
-  runSpeed: 6
---- !u!114 &5744605414517709829
+  horizontal: 0
+  vertical: 0
+  runSpeed: 5
+  jumpFrames: 35
+  slideFrames: 45
+  shootFrames: 35
+--- !u!114 &3201791502825458038
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -179,13 +184,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 4753248391869724572}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 27413cefc2e0e4dd9a82f60bdc7775e4, type: 3}
+  m_Script: {fileID: 11500000, guid: b319c69c251dfb647907e4cb255d9edb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  body: {fileID: 5744605414517709835}
-  animator: {fileID: 4753248391869724573}
-  sprite: {fileID: 0}
-  hitStun: 10
+  tags:
+  - player
+  - layer-swap-object
 --- !u!1 &4753248392300287684
 GameObject:
   m_ObjectHideFlags: 0
