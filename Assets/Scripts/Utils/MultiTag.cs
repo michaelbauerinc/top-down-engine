@@ -1,33 +1,36 @@
 using UnityEngine;
 using System.Collections.Generic;
 
-public class MultiTag : MonoBehaviour
+namespace Core.Utils
 {
-    [SerializeField]
-    private List<string> tags = new List<string>();
-
-    public bool HasTag(string tag)
+    public class MultiTag : MonoBehaviour
     {
-        return tags.Contains(tag);
-    }
+        [SerializeField]
+        private List<string> tags = new List<string>();
 
-    public IEnumerable<string> GetTags()
-    {
-        return tags;
-    }
+        public bool HasTag(string tag)
+        {
+            return tags.Contains(tag);
+        }
 
-    public void Rename(int index, string tagName)
-    {
-        tags[index] = tagName;
-    }
+        public IEnumerable<string> GetTags()
+        {
+            return tags;
+        }
 
-    public string GetAtIndex(int index)
-    {
-        return tags[index];
-    }
+        public void Rename(int index, string tagName)
+        {
+            tags[index] = tagName;
+        }
 
-    public int Count
-    {
-        get { return tags.Count; }
+        public string GetAtIndex(int index)
+        {
+            return tags[index];
+        }
+
+        public int Count
+        {
+            get { return tags.Count; }
+        }
     }
 }

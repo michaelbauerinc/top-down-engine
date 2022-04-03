@@ -1,67 +1,71 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Core.Controllers;
 
-public class CollisionPlayer : MonoBehaviour
+namespace Core.Physics
 {
-    public Rigidbody2D body;
-    public Animator animator;
-    public SpriteRenderer sprite;
-    public int hitStun = 10;
-    List<GameObject> collisions = new List<GameObject>();
-
-    // Start is called before the first frame update
-    void Start()
+    public class CollisionPlayer : MonoBehaviour
     {
-        sprite = gameObject.GetComponent<SpriteRenderer>();
-        animator = gameObject.GetComponent<Animator>();
-    }
+        public Rigidbody2D body;
+        public Animator animator;
+        public SpriteRenderer sprite;
+        public int hitStun = 10;
+        List<GameObject> collisions = new List<GameObject>();
 
-    // Update is called once per frame
-    void Update()
-    {
-        foreach (GameObject collision in collisions)
+        // Start is called before the first frame update
+        void Start()
         {
-            if (collision.gameObject.GetComponent<PlayerController>().isSliding())
+            sprite = gameObject.GetComponent<SpriteRenderer>();
+            animator = gameObject.GetComponent<Animator>();
+        }
+
+        // Update is called once per frame
+        void Update()
+        {
+            foreach (GameObject collision in collisions)
             {
-                hitStun = 0;
+                if (collision.gameObject.GetComponent<PlayerController>().isSliding())
+                {
+                    hitStun = 0;
+                }
             }
         }
-    }
 
-    private void FixedUpdate()
-    {
-        if (hitStun < 10)
+        private void FixedUpdate()
         {
-            animator.Play("hit_side");
-            hitStun++;
-            sprite.color = new UnityEngine.Color(0.97f, 0.02f, 0.02f, 1f);
-            if (hitStun == 10)
+            if (hitStun < 10)
             {
-                animator.Play("idle_down");
+                animator.Play("hit_side");
+                hitStun++;
+                sprite.color = new UnityEngine.Color(0.97f, 0.02f, 0.02f, 1f);
+                if (hitStun == 10)
+                {
+                    animator.Play("idle_down");
+
+                }
 
             }
-
+            else
+            {
+                sprite.color = new UnityEngine.Color(1f, 1f, 1f, 1f);
+            }
         }
-        else
-        {
-            sprite.color = new UnityEngine.Color(1f, 1f, 1f, 1f);
-        }
-    }
 
-    void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject.tag == "Player")
+        void OnCollisionEnter2D(Collision2D collision)
         {
-            collisions.Add(collision.gameObject);
+            if (collision.gameObject.tag == "Player")
+            {
+                collisions.Add(collision.gameObject);
+            }
         }
-    }
 
-    void OnCollisionExit2D(Collision2D collision)
-    {
-        if (collision.gameObject.tag == "Player")
+        void OnCollisionExit2D(Collision2D collision)
         {
-            collisions.Remove(collision.gameObject);
+            if (collision.gameObject.tag == "Player")
+            {
+                collisions.Remove(collision.gameObject);
+            }
         }
     }
 }

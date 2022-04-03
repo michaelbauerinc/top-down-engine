@@ -2,41 +2,44 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LayerSwapper : MonoBehaviour
+namespace Core.Utils
 {
-    public List<GameObject> swapObjects = new List<GameObject>();
-    void Awake()
+    public class LayerSwapper : MonoBehaviour
     {
-        var tags = Object.FindObjectsOfType<MultiTag>();
-        foreach (MultiTag tag in tags)
+        public List<GameObject> swapObjects = new List<GameObject>();
+        void Awake()
         {
-            if (tag.HasTag("layer-swap-object"))
+            var tags = Object.FindObjectsOfType<MultiTag>();
+            foreach (MultiTag tag in tags)
             {
-                swapObjects.Add(tag.gameObject);
+                if (tag.HasTag("layer-swap-object"))
+                {
+                    swapObjects.Add(tag.gameObject);
+                }
             }
         }
-    }
-    // Start is called before the first frame update
-    void Start()
-    {
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        swapObjects.Sort(SortByPos);
-        var i = 0;
-        foreach (GameObject toSwap in swapObjects)
+        // Start is called before the first frame update
+        void Start()
         {
-            toSwap.transform.position = new Vector3(toSwap.transform.position.x, toSwap.transform.position.y, i);
-            // toSwap.transform.Find("shadow").gameObject.transform.position = new Vector3(toSwap.transform.Find("shadow").position.x, toSwap.transform.Find("shadow").position.y, i);
-            i++;
         }
-    }
+
+        // Update is called once per frame
+        void Update()
+        {
+            swapObjects.Sort(SortByPos);
+            var i = 0;
+            foreach (GameObject toSwap in swapObjects)
+            {
+                toSwap.transform.position = new Vector3(toSwap.transform.position.x, toSwap.transform.position.y, i);
+                // toSwap.transform.Find("shadow").gameObject.transform.position = new Vector3(toSwap.transform.Find("shadow").position.x, toSwap.transform.Find("shadow").position.y, i);
+                i++;
+            }
+        }
 
 
-    static int SortByPos(GameObject obj1, GameObject obj2)
-    {
-        return obj1.transform.position.y.CompareTo(obj2.transform.position.y);
+        static int SortByPos(GameObject obj1, GameObject obj2)
+        {
+            return obj1.transform.position.y.CompareTo(obj2.transform.position.y);
+        }
     }
 }

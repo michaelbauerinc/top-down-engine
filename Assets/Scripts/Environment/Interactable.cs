@@ -2,26 +2,31 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Interactable : MonoBehaviour
+
+namespace Core.Environment
 {
-    public string interactableName = "sign";
-    public bool canInteract = true;
-    public string toSay = "Hello";
-    public bool canPickUp = false;
-    public Sprite image;
-    // Start is called before the first frame update
-    public virtual void Awake()
+    public class Interactable : MonoBehaviour
     {
-        image = gameObject.GetComponent<SpriteRenderer>().sprite;
-    }
-    void Start()
-    {
+        public string interactableName = "sign";
+        public bool canInteract = true;
+        public string toSay = "Hello";
+        public bool canPickUp = false;
+        public Sprite image;
+        // Start is called before the first frame update
+        public virtual void Awake()
+        {
+            image = gameObject.GetComponent<SpriteRenderer>().sprite;
+        }
+        void Start()
+        {
 
-    }
+        }
 
-    // Update is called once per frame
-    void Update()
-    {
+        // Update is called once per frame
+        void Update()
+        {
 
+        }
     }
 }
+
