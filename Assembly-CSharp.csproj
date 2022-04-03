@@ -36,13 +36,20 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
-     <Compile Include="Assets\ammo.cs" />
-     <Compile Include="Assets\arrow.cs" />
+     <Compile Include="Assets\Scripts\Physics\CollisionPlayer.cs" />
+     <Compile Include="Assets\Scripts\Controllers\UIController.cs" />
+     <Compile Include="Assets\Scripts\Utils\GameManager.cs" />
+     <Compile Include="Assets\Scripts\Physics\CollisionEnv.cs" />
+     <Compile Include="Assets\Scripts\Items\Item.cs" />
+     <Compile Include="Assets\Scripts\Utils\MultiTag.cs" />
+     <Compile Include="Assets\Scripts\Environment\Interactable.cs" />
+     <Compile Include="Assets\Scripts\Physics\CollisionBasic.cs" />
+     <Compile Include="Assets\Scripts\Utils\LayerSwapper.cs" />
+     <Compile Include="Assets\Scripts\Controllers\PlayerController.cs" />
+     <Compile Include="Assets\Scripts\Items\Weapons\Ranged\Ammo.cs" />
      <None Include="Assets\UI\StyleSheets\interaction-window.uss" />
      <None Include="Assets\UI\interaction-window.uxml" />
      <None Include="Assets\UI\StyleSheets\ui.uss" />
-     <None Include="Assets\UI\player_general_ui.uxml" />
-     <None Include="Assets\stylesheets\test.uss" />
      <None Include="Assets\UI\StyleSheets\player-inventory.uss" />
      <None Include="Assets\UI\player-inventory.uxml" />
     <Reference Include="UnityEngine">
@@ -722,10 +729,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="Unity.UIElements.Samples.csproj">
-      <Project>{d186ce0b-768a-27ff-1608-e4130de419cb}</Project>
-      <Name>Unity.UIElements.Samples</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
