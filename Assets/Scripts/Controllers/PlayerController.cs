@@ -150,7 +150,7 @@ namespace Core.Controllers
                         bool isItem = interactionTarget.GetComponent<Item>() != null;
                         if (interactionTarget.canInteract)
                         {
-                            uiController.ToggleInteractionBox(interactionTarget.toSay, interactionTarget.image);
+                            uiController.ToggleInteractionBox(interactionTarget.toSay, interactionTarget.itemRenderer.sprite);
                             if (isItem && interactionTarget.canPickUp)
                             {
                                 uiController.AddItemToInventory(interactionTarget.GetComponent<Item>());

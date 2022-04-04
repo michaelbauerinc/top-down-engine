@@ -12,9 +12,9 @@ GameObject:
   - component: {fileID: 6739969015353888168}
   - component: {fileID: 6739969015353888214}
   - component: {fileID: 6739969015353888170}
-  - component: {fileID: 7830727457217099906}
+  - component: {fileID: 5368234423451451040}
   m_Layer: 0
-  m_Name: weapon_bow_0
+  m_Name: weapon_bow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -130,7 +130,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.83015156, y: 1.3883259}
   m_EdgeRadius: 0
---- !u!114 &7830727457217099906
+--- !u!114 &5368234423451451040
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -139,15 +139,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 6739969015353888215}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c46274b3eb7ddca42afe425aa28ce16f, type: 3}
+  m_Script: {fileID: 11500000, guid: e550b26fe4ead7c479117c08adf68c82, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  animator: {fileID: 0}
+  playerController: {fileID: 0}
+  itemRenderer: {fileID: 0}
   interactableName: bow
   canInteract: 1
-  toSay: You found a bow
   canPickUp: 1
-  image: {fileID: 0}
+  toSay: You found a bow
   pickedUp: 0
+  category: weapon
   isEquipped: 0
-  category: 
   ammo: {fileID: 5867420779026249972, guid: 15fc4a97cc13c1c4892286d91194282b, type: 3}

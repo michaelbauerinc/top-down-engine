@@ -66,7 +66,7 @@ namespace Core.Controllers
         {
 
             var entry = inventoryContent[indexToEquip];
-            Item toUse = entry["item"];
+            var toUse = entry["item"];
             toUse.UseItem();
 
             VisualElement slot = entry["slot"];
@@ -74,7 +74,11 @@ namespace Core.Controllers
             currentWeapon = toUse.category == "weapon" ? toUse : null;
             // toUse.isEquipped = !toUse.isEquipped;
             weaponEquipped = toUse.category == "weapon" ? !weaponEquipped : false;
-            slot.style.unityBackgroundImageTintColor = toUse.isEquipped ? new Color(255, 250, 0, 230) : new Color(0, 0, 0, 0);
+            if (toUse.GetType() == typeof(Equippable))
+            {
+                slot.style.unityBackgroundImageTintColor = toUse.isEquipped ? new Color(255, 250, 0, 230) : new Color(0, 0, 0, 0);
+
+            }
         }
 
         private void MapInventory()
@@ -95,7 +99,7 @@ namespace Core.Controllers
                 }
                 entry.Value["slot"] = slotToFill;
                 // Button backgroundToModify = entry.Value["slot"];
-                button.style.backgroundImage = new StyleBackground(entry.Value["item"].image);
+                button.style.backgroundImage = new StyleBackground(entry.Value["item"].itemRenderer.sprite);
                 j++;
                 if (j == row.childCount)
                 {

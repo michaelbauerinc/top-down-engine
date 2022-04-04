@@ -1,21 +1,27 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Core.Controllers;
 
 
 namespace Core.Environment
 {
     public class Interactable : MonoBehaviour
     {
-        public string interactableName = "sign";
+        public Animator animator;
+        public PlayerController playerController;
+        public SpriteRenderer itemRenderer;
+        public string interactableName = "interactable";
         public bool canInteract = true;
-        public string toSay = "Hello";
         public bool canPickUp = false;
-        public Sprite image;
+
+        public string toSay = "Hello World";
         // Start is called before the first frame update
         public virtual void Awake()
         {
-            image = gameObject.GetComponent<SpriteRenderer>().sprite;
+            animator = GetComponent<Animator>();
+            itemRenderer = GetComponent<SpriteRenderer>();
+            playerController = GameObject.Find("Player").GetComponent<PlayerController>();
         }
         void Start()
         {
