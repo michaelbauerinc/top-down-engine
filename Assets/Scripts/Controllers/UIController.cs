@@ -52,8 +52,7 @@ namespace Core.Controllers
 
         public void AddItemToInventory(Item item)
         {
-            inventoryContent.Add(inventoryContent.Count, new Dictionary<string, dynamic>(){
-        {"item", item}});
+            inventoryContent.Add(inventoryContent.Count, new Dictionary<string, dynamic>() { { "item", item } });
             if (item.canPickUp)
             {
                 item.PickUpItem();

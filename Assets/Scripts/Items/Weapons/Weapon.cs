@@ -6,6 +6,7 @@ namespace Core.Items.Weapons
 {
     public class Weapon : Equippable
     {
+        public string animationString;
         public override void Awake()
         {
             base.Awake();

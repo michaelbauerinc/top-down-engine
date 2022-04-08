@@ -9,7 +9,7 @@ namespace Core.Controllers
     public class PlayerController : MonoBehaviour
     {
         Rigidbody2D body;
-        Animator animator;
+        public Animator animator;
         UIController uiController;
         Interactable interactionTarget = null;
         Dictionary<string, string> animationMappings = new Dictionary<string, string>(){
@@ -47,6 +47,11 @@ namespace Core.Controllers
         {
             string prefix = animationMappings[playerAction];
             string nextDirection = currentDirection;
+            if (currentDirection != "side")
+            {
+                gameObject.GetComponent<SpriteRenderer>().flipX = true;
+
+            }
             if (horizontal == 1f)
             {
                 if (jumpFrames > 30)
@@ -139,6 +144,7 @@ namespace Core.Controllers
 
         void Update()
         {
+            // Debug.Log(gameObject.GetComponent<SpriteRenderer>().sprite);
             // Inventory is not open and we are not interacting
             if (canMove)
             {

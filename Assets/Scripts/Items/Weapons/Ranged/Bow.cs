@@ -27,7 +27,7 @@ namespace Core.Items.Weapons.Ranged
 
                 string currentDirection = playerController.currentDirection;
                 Vector3 playerPos = playerController.gameObject.transform.position;
-                animator.Play("weapon_bow_shoot_" + currentDirection);
+                animator.Play(animationString + currentDirection);
 
                 // Position bow vertically
                 float v = currentDirection == "down" ? .2f : .5f;
