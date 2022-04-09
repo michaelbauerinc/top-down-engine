@@ -2531,7 +2531,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b319c69c251dfb647907e4cb255d9edb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tags: []
+  tags:
+  - layer-swap-object
 --- !u!1 &271656424
 GameObject:
   m_ObjectHideFlags: 0
@@ -8674,7 +8675,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b319c69c251dfb647907e4cb255d9edb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tags: []
+  tags:
+  - layer-swap-object
 --- !u!1 &1013747769
 GameObject:
   m_ObjectHideFlags: 0
@@ -9326,7 +9328,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b319c69c251dfb647907e4cb255d9edb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tags: []
+  tags:
+  - layer-swap-object
 --- !u!1 &1053037632
 GameObject:
   m_ObjectHideFlags: 0
@@ -10973,7 +10976,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b319c69c251dfb647907e4cb255d9edb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tags: []
+  tags:
+  - layer-swap-object
 --- !u!1 &1196426253
 GameObject:
   m_ObjectHideFlags: 0

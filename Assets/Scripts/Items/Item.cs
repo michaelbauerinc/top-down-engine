@@ -9,6 +9,7 @@ namespace Core.Items
     {
         public bool pickedUp = false;
         public string category;
+        public int inventoryIndex;
 
         public override void Awake()
         {
@@ -54,13 +55,11 @@ namespace Core.Items
             pickedUp = true;
             canPickUp = false;
             canInteract = false;
-            gameObject.SetActive(false);
+            gameObject.GetComponent<SpriteRenderer>().enabled = false;
         }
 
         public virtual void UseItem()
         {
-            itemRenderer.enabled = !itemRenderer.enabled;
-            gameObject.SetActive(!gameObject.activeInHierarchy);
         }
     }
 

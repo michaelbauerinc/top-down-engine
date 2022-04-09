@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Codice.Client.Commands;
 using UnityEngine;
 
 namespace Core.Items.Weapons.Melee
@@ -140,7 +139,7 @@ namespace Core.Items.Weapons.Melee
 
         float h;
         float v;
-        Dictionary<string, Dictionary<string, Dictionary<string, float[]>>> bowAnimationMappings = new Dictionary<string, Dictionary<string, Dictionary<string, float[]>>>(){
+        Dictionary<string, Dictionary<string, Dictionary<string, float[]>>> animationMappings = new Dictionary<string, Dictionary<string, Dictionary<string, float[]>>>(){
         {"walking", walkMappings},
         {"idle", idleMappings}};
 
@@ -161,6 +160,10 @@ namespace Core.Items.Weapons.Melee
             {
                 AnimateWeapon();
             }
+            else if (pickedUp)
+            {
+                itemRenderer.enabled = false;
+            }
         }
 
         void FixedUpdate()
@@ -172,15 +175,27 @@ namespace Core.Items.Weapons.Melee
         {
             string playerAction = playerController.playerAction;
 
-            if (playerAction != "jumping" && playerAction != "sliding" && playerAction != "shooting")
+            if (!playerController.isJumping() && !playerController.isSliding() && !playerController.isShooting())
             {
                 string currentDirection = playerController.currentDirection;
                 Vector3 playerPos = playerController.gameObject.transform.position;
 
                 string currentAnim = playerController.gameObject.GetComponent<SpriteRenderer>().sprite.name.Substring(
                 playerController.gameObject.GetComponent<SpriteRenderer>().sprite.name.Length - 2);
-                h = bowAnimationMappings[playerAction][currentDirection][currentAnim][0];
-                v = bowAnimationMappings[playerAction][currentDirection][currentAnim][1];
+
+                try
+                {
+                    h = animationMappings[playerAction][currentDirection][currentAnim][0];
+                    v = animationMappings[playerAction][currentDirection][currentAnim][1];
+                }
+                catch (KeyNotFoundException)
+                {
+                    Debug.Log(playerAction);
+                    Debug.Log(currentDirection);
+                    Debug.Log(currentAnim);
+                    Debug.Log(playerController.gameObject.GetComponent<SpriteRenderer>().sprite.name);
+                }
+
                 if (playerController.gameObject.GetComponent<SpriteRenderer>().flipX && currentDirection == "side")
                 {
                     h = h * -1;
@@ -234,8 +249,6 @@ namespace Core.Items.Weapons.Melee
         public override void UseItem()
         {
             base.UseItem();
-            gameObject.SetActive(true);
         }
     }
-
 }

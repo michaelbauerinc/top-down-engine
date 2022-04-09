@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Core.Items;
 using Core.Environment;
+using Core.Items.Weapons.Ranged;
 
 namespace Core.Controllers
 {
@@ -52,7 +53,12 @@ namespace Core.Controllers
                 gameObject.GetComponent<SpriteRenderer>().flipX = true;
 
             }
-            if (horizontal == 1f)
+            // we will only pivot direction on the first frame of jump
+            if (isJumping() && jumpFrames < 35 || isSliding())
+            {
+                nextDirection = currentDirection;
+            }
+            else if (horizontal == 1f)
             {
                 if (jumpFrames > 30)
                 {
@@ -75,10 +81,6 @@ namespace Core.Controllers
             else if (vertical == -1f)
             {
                 nextDirection = "down";
-            }
-            if (jumpFrames < 30)
-            {
-                nextDirection = currentDirection;
             }
             currentDirection = nextDirection;
             animator.Play(prefix + "_" + currentDirection);
@@ -106,9 +108,12 @@ namespace Core.Controllers
                     {
                         playerAction = "interacting";
                     }
-                    else if (Input.GetKeyDown("1") && !isShooting() && uiController.weaponEquipped)
+                    else if (Input.GetKeyDown("1") && !isShooting() && uiController.currentWeapon != null)
                     {
-                        playerAction = "shooting";
+                        if (uiController.currentWeapon.GetComponent<Bow>() != null && uiController.currentWeapon.isEquipped)
+                        {
+                            playerAction = "shooting";
+                        }
                     }
                     else if (isShooting())
                     {
@@ -144,7 +149,10 @@ namespace Core.Controllers
 
         void Update()
         {
-            // Debug.Log(gameObject.GetComponent<SpriteRenderer>().sprite);
+            if (canMove)
+            {
+                setPlayerAction();
+            }
             // Inventory is not open and we are not interacting
             if (canMove)
             {
@@ -174,7 +182,6 @@ namespace Core.Controllers
                         }
                         break;
                     case "jumping":
-                        slideFrames = 45;
                         break;
                     case "sliding":
                         break;
@@ -195,10 +202,7 @@ namespace Core.Controllers
                 uiController.inventoryOpen = !uiController.inventoryOpen;
                 uiController.ToggleUi();
             }
-            if (slideFrames >= 40)
-            {
-                Animate();
-            }
+            Animate();
         }
 
         private void OnCollisionEnter2D(Collision2D collision)
@@ -227,10 +231,7 @@ namespace Core.Controllers
         private void FixedUpdate()
         {
 
-            if (canMove)
-            {
-                setPlayerAction();
-            }
+
             if (isMoving("diagonally"))
             {
                 // limit movement speed diagonally, so you move at 70% speed
@@ -245,9 +246,10 @@ namespace Core.Controllers
                 float h = Mathf.Sign(horizontal) * (float)modifier;
 
                 vertical -= Mathf.Abs(vertical) > 0 ? v : 0;
-                horizontal -= Mathf.Abs(horizontal) > 0 ? h : 0;
             }
-            if (slideFrames >= 44)
+
+            // lock momentum when sliding
+            if (!isSliding())
             {
                 body.velocity = new Vector2(horizontal * runSpeed, vertical * runSpeed);
             }

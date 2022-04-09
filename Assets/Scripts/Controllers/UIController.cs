@@ -6,6 +6,7 @@ using System.Text.RegularExpressions;
 using UnityEngine;
 using UnityEngine.UIElements;
 using Core.Items;
+using Core.Items.Weapons;
 
 namespace Core.Controllers
 {
@@ -24,10 +25,7 @@ namespace Core.Controllers
         // }
         Dictionary<int, Dictionary<string, dynamic>> inventoryContent = new Dictionary<int, Dictionary<string, dynamic>>();
         public bool inventoryOpen = false;
-        public bool weaponEquipped = false;
-
-        public Item currentWeapon;
-
+        public Weapon currentWeapon;
 
         private void Awake()
         {
@@ -63,20 +61,33 @@ namespace Core.Controllers
 
         public void UseItem(int indexToEquip)
         {
-
-            var entry = inventoryContent[indexToEquip];
-            var toUse = entry["item"];
+            Dictionary<string, dynamic> entry = inventoryContent[indexToEquip];
+            dynamic toUse = entry["item"];
             toUse.UseItem();
 
             VisualElement slot = entry["slot"];
-            // set currentWeapon
-            currentWeapon = toUse.category == "weapon" ? toUse : null;
-            // toUse.isEquipped = !toUse.isEquipped;
-            weaponEquipped = toUse.category == "weapon" ? !weaponEquipped : false;
-            if (toUse.GetType() == typeof(Equippable))
-            {
-                slot.style.unityBackgroundImageTintColor = toUse.isEquipped ? new Color(255, 250, 0, 230) : new Color(0, 0, 0, 0);
+            slot.style.unityBackgroundImageTintColor = toUse.isEquipped ? new Color(255, 250, 0, 230) : new Color(0, 0, 0, 0);
 
+            if (toUse.gameObject.GetComponent<Equippable>() != null)
+            {
+                if (toUse.gameObject.GetComponent<Weapon>() != null)
+                {
+                    if (currentWeapon == toUse)
+                    {
+                        currentWeapon = null;
+                    }
+                    else
+                    {
+                        if (currentWeapon)
+                        {
+                            // unequip weapon and toggle background
+                            currentWeapon.isEquipped = false;
+                            VisualElement currentWeaponSlot = inventoryContent[currentWeapon.inventoryIndex]["slot"];
+                            currentWeaponSlot.style.unityBackgroundImageTintColor = new Color(0, 0, 0, 0);
+                        }
+                        currentWeapon = toUse;
+                    }
+                }
             }
         }
 
@@ -96,9 +107,12 @@ namespace Core.Controllers
                 {
                     button.clicked += delegate { UseItem(entry.Key); };
                 }
+
                 entry.Value["slot"] = slotToFill;
-                // Button backgroundToModify = entry.Value["slot"];
-                button.style.backgroundImage = new StyleBackground(entry.Value["item"].itemRenderer.sprite);
+                Item item = entry.Value["item"];
+                item.inventoryIndex = entry.Key;
+                button.style.backgroundImage = new StyleBackground(item.itemRenderer.sprite);
+
                 j++;
                 if (j == row.childCount)
                 {
