@@ -99,67 +99,69 @@ namespace Core.Controllers
 
         private void setPlayerAction()
         {
-            if (canMove)
+            if (!isInteracting())
             {
-                if (!isJumping())
+                if (!isJumping() && Input.GetKeyDown("space") && !isMeleeing())
                 {
-                    if (Input.GetKeyDown("space"))
-                    {
-                        playerAction = "jumping";
-                    }
-                    else if (!isSliding() && !isJumping() && Input.GetKeyDown("m"))
-                    {
-                        playerAction = "sliding";
-                    }
-                    else if (isSliding() && slideFrames == 0)
-                    {
-                        playerAction = "idle";
-                    }
-                    else if (isMeleeing() && meleeFrames == 0)
-                    {
-                        playerAction = "idle";
-                    }
-                    else if (!isInteracting() && Input.GetKeyDown("n") && interactionTarget)
-                    {
-                        playerAction = "interacting";
-                    }
-                    else if (Input.GetKeyDown("1") && !isShooting() && uiController.currentWeapon != null)
-                    {
-                        if (uiController.currentWeapon.isEquipped)
-                        {
-                            if (uiController.currentWeapon.GetComponent<Bow>() != null)
-                            {
-                                playerAction = "shooting";
-                            }
-                            else if (uiController.currentWeapon.GetComponent<MeleeWeapon>() != null)
-                            {
-                                playerAction = "meleeing";
-                            }
-                        }
-                    }
-                    else if (isShooting())
-                    {
-                        playerAction = shootFrames >= 0 ? "shooting" : "idle";
-
-                    }
-                    else if (isMoving() && !isSliding() && !isShooting())
-                    {
-                        playerAction = "walking";
-
-                    }
-                    else if (!isMoving() && !isSliding() && !isShooting() && !isMeleeing())
-                    {
-                        playerAction = "idle";
-                    }
-
+                    playerAction = "jumping";
                 }
                 else if (isJumping() && jumpFrames == 0)
                 {
                     playerAction = "idle";
                 }
+                else if (!isSliding() && !isMeleeing() && !isJumping() && Input.GetKeyDown("m"))
+                {
+                    playerAction = "sliding";
+                }
+                else if (isSliding() && slideFrames == 0)
+                {
+                    playerAction = "idle";
+                }
+                else if (isMeleeing() && meleeFrames == 0)
+                {
+                    playerAction = "idle";
+                }
+                else if (Input.GetKeyDown("n") && interactionTarget)
+                {
+                    if (interactionTarget.canInteract)
+                    {
+                        uiController.ToggleInteractionBox(interactionTarget.toSay, interactionTarget.itemRenderer.sprite);
+                        playerAction = "interacting";
+                    }
+                }
+                else if (Input.GetKeyDown("1") && !isShooting() && !isJumping() && uiController.currentWeapon != null)
+                {
+                    if (uiController.currentWeapon.isEquipped)
+                    {
+                        if (uiController.currentWeapon.GetComponent<Bow>() != null)
+                        {
+                            playerAction = "shooting";
+                        }
+                        else if (uiController.currentWeapon.GetComponent<MeleeWeapon>() != null)
+                        {
+                            playerAction = "meleeing";
+                        }
+                    }
+                }
+                else if (isShooting())
+                {
+                    playerAction = shootFrames >= 0 ? "shooting" : "idle";
+
+                }
+                else if (isMoving() && !isSliding() && !isShooting() && !isMeleeing() && !isJumping())
+                {
+                    playerAction = "walking";
+
+                }
+                else if (!isMoving() && !isSliding() && !isShooting() && !isMeleeing() && !isJumping())
+                {
+                    playerAction = "idle";
+                }
+
             }
-            else if (!canMove && isInteracting() && Input.GetKeyDown("n"))
+            else if (isInteracting() && Input.GetKeyDown("n"))
             {
+                uiController.ToggleInteractionBox("");
                 playerAction = "idle";
             }
         }
@@ -171,57 +173,48 @@ namespace Core.Controllers
 
         void Update()
         {
-            if (canMove)
-            {
-                setPlayerAction();
-            }
+            setPlayerAction();
             // Inventory is not open and we are not interacting
             if (canMove)
             {
                 horizontal = Input.GetAxisRaw("Horizontal");
                 vertical = Input.GetAxisRaw("Vertical");
-                switch (playerAction)
-                {
-                    case "interacting":
-                        bool isItem = interactionTarget.GetComponent<Item>() != null;
-                        if (interactionTarget.canInteract)
+            }
+            switch (playerAction)
+            {
+                case "interacting":
+                    bool isItem = interactionTarget.GetComponent<Item>() != null;
+                    if (interactionTarget.canInteract)
+                    {
+                        if (isItem && interactionTarget.canPickUp)
                         {
-                            uiController.ToggleInteractionBox(interactionTarget.toSay, interactionTarget.itemRenderer.sprite);
-                            if (isItem && interactionTarget.canPickUp)
-                            {
-                                uiController.AddItemToInventory(interactionTarget.GetComponent<Item>());
-
-                            }
-                            canMove = false;
-                            horizontal = 0;
-                            vertical = 0;
+                            uiController.AddItemToInventory(interactionTarget.GetComponent<Item>());
                         }
-                        break;
-                    case "shooting":
-                        if (shootFrames == 0)
-                        {
-                            ShootWeapon();
-                        }
-                        break;
-                    case "jumping":
-                        break;
-                    case "sliding":
-                        break;
-                    case "meleeing":
+                        canMove = false;
                         horizontal = 0;
                         vertical = 0;
-                        break;
-                    default:
-                        break;
-                }
-            }
-            else if (!canMove)
-            {
-                if (isInteracting() && Input.GetKeyDown("n"))
-                {
-                    uiController.ToggleInteractionBox("");
+                    }
+                    break;
+                case "shooting":
+                    if (shootFrames == 0)
+                    {
+                        ShootWeapon();
+                    }
+                    break;
+                case "jumping":
                     canMove = true;
-                }
+                    break;
+                case "sliding":
+                    canMove = false;
+                    break;
+                case "meleeing":
+                    canMove = false;
+                    break;
+                case "idle":
+                    canMove = true;
+                    break;
+                default:
+                    break;
             }
             if (Input.GetKeyDown("return"))
             {
@@ -257,28 +250,48 @@ namespace Core.Controllers
         private void FixedUpdate()
         {
 
-
-            if (isMoving("diagonally"))
+            // We only want to apply this on the first frame of a melee attack
+            if (isMoving("diagonally") && meleeFrames == 35 && slideFrames == 45)
             {
                 // limit movement speed diagonally, so you move at 70% speed
                 horizontal *= moveLimiter;
                 vertical *= moveLimiter;
             }
-            if (isJumping())
+            // Sliding has inherent momentum is we're not moving, only apply on first frame
+            if (isSliding() && slideFrames == 45 && !isMoving())
             {
-                // Reduce speed by log 
+                switch (currentDirection)
+                {
+                    case "up":
+                        vertical = 1f;
+                        break;
+                    case "down":
+                        vertical = -1f;
+                        break;
+                    default:
+                        horizontal = gameObject.GetComponent<SpriteRenderer>().flipX ? 1f : -1f;
+                        break;
+                }
+            }
+            if (isJumping() || isMeleeing())
+            {
+                // log taper speed 
                 double modifier = 1 - System.Math.Log(jumpFrames, 35) * .95;
                 float v = Mathf.Sign(vertical) * (float)modifier;
                 float h = Mathf.Sign(horizontal) * (float)modifier;
                 horizontal -= Mathf.Abs(horizontal) > 0 ? h : 0;
                 vertical -= Mathf.Abs(vertical) > 0 ? v : 0;
             }
-
-            // lock momentum when sliding
-            if (!isSliding())
+            else if (isSliding())
             {
-                body.velocity = new Vector2(horizontal * runSpeed, vertical * runSpeed);
+                // Initial speed increase with log taper
+                float modifier = (float)System.Math.Log(slideFrames, 45) * 1.05f;
+                float v = Mathf.Sign(vertical) * (float)modifier;
+                float h = Mathf.Sign(horizontal) * (float)modifier;
+                horizontal *= modifier;
+                vertical *= modifier;
             }
+            body.velocity = new Vector2(horizontal * runSpeed, vertical * runSpeed);
             switch (playerAction)
             {
                 case "shooting":

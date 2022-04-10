@@ -27,12 +27,12 @@ namespace Core.Utils
         void Update()
         {
             swapObjects.Sort(SortByPos);
-            var i = 0;
+            float i = 0;
             foreach (GameObject toSwap in swapObjects)
             {
                 toSwap.transform.position = new Vector3(toSwap.transform.position.x, toSwap.transform.position.y, i);
                 // toSwap.transform.Find("shadow").gameObject.transform.position = new Vector3(toSwap.transform.Find("shadow").position.x, toSwap.transform.Find("shadow").position.y, i);
-                i++;
+                i += 0.5f;
             }
         }
 

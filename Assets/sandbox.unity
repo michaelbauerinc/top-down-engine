@@ -6176,6 +6176,20 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 4029708427679277839, guid: ef70c858e74137e4bbc4ef5389b0a35d, type: 3}
   m_PrefabInstance: {fileID: 4029708427209678865}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &652546405
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 652546404}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b319c69c251dfb647907e4cb255d9edb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tags:
+  - 
 --- !u!114 &652546406
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8636,7 +8650,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.101261616, y: -0.1249423}
+  m_Offset: {x: -0.101261616, y: -0.24934366}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -8647,7 +8661,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.6157808, y: 0.94968367}
+  m_Size: {x: 1.6157808, y: 0.98526996}
   m_EdgeRadius: 0
 --- !u!212 &1010096625
 SpriteRenderer:
@@ -9555,6 +9569,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1058334721}
   - component: {fileID: 1058334722}
+  - component: {fileID: 1058334723}
   m_Layer: 0
   m_Name: Bones (3)
   m_TagString: Untagged
@@ -9627,6 +9642,20 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1058334723
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1058334720}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b319c69c251dfb647907e4cb255d9edb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tags:
+  - layer-swap-object
 --- !u!1 &1072365106
 GameObject:
   m_ObjectHideFlags: 0
