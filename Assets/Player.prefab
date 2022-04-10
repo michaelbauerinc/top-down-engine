@@ -8,7 +8,7 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 4753248391869724563}
+  - component: {fileID: 755333437357177682}
   - component: {fileID: 4753248391869724562}
   - component: {fileID: 4753248391869724573}
   - component: {fileID: 5744605414517709835}
@@ -22,15 +22,15 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4753248391869724563
+--- !u!4 &755333437357177682
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4753248391869724572}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -10.150001, y: 5.84, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -10.392912, y: 5.681778, z: 0}
   m_LocalScale: {x: 1.2, y: 1.2, z: 1.2}
   m_Children:
   - {fileID: 4753248392300287685}
@@ -166,6 +166,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ce26b4d1c198bc43bd0f1b08092ef93, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  animator: {fileID: 0}
   playerAction: idle
   currentDirection: down
   canMove: 1
@@ -175,6 +176,7 @@ MonoBehaviour:
   jumpFrames: 35
   slideFrames: 45
   shootFrames: 35
+  meleeFrames: 35
 --- !u!114 &3201791502825458038
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -218,7 +220,7 @@ Transform:
   m_LocalPosition: {x: 0, y: -0.1, z: 0}
   m_LocalScale: {x: 0.4, y: 0.4, z: 0}
   m_Children: []
-  m_Father: {fileID: 4753248391869724563}
+  m_Father: {fileID: 755333437357177682}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &4753248392300287706

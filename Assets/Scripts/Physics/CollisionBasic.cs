@@ -32,6 +32,10 @@ namespace Core.Physics
                 {
                     hitStun = 30;
                 }
+                else if (player.isMeleeing())
+                {
+                    hitStun = 30;
+                }
             }
         }
 

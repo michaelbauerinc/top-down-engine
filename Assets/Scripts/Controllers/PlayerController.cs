@@ -4,6 +4,7 @@ using UnityEngine;
 using Core.Items;
 using Core.Environment;
 using Core.Items.Weapons.Ranged;
+using Core.Items.Weapons.Melee;
 
 namespace Core.Controllers
 {
@@ -14,13 +15,14 @@ namespace Core.Controllers
         UIController uiController;
         Interactable interactionTarget = null;
         Dictionary<string, string> animationMappings = new Dictionary<string, string>(){
-        {"idle", "idle"},
-        {"walking", "walk"},
-        {"jumping", "jump"},
-        {"shooting", "player_bow"},
-        {"sliding", "slide"},
-        {"interacting", "idle"}
-    };
+            {"idle", "idle"},
+            {"walking", "walk"},
+            {"jumping", "jump"},
+            {"shooting", "player_bow"},
+            {"sliding", "slide"},
+            {"interacting", "idle"},
+            {"meleeing", "sword"}
+        };
         public string playerAction = "idle";
         public string currentDirection = "down";
         // Movement
@@ -33,6 +35,7 @@ namespace Core.Controllers
         public int jumpFrames = 35;
         public int slideFrames = 45;
         public int shootFrames = 35;
+        public int meleeFrames = 35;
 
         void Awake()
         {
@@ -50,8 +53,16 @@ namespace Core.Controllers
             string nextDirection = currentDirection;
             if (currentDirection != "side")
             {
-                gameObject.GetComponent<SpriteRenderer>().flipX = true;
+                if (isMeleeing())
+                {
+                    gameObject.GetComponent<SpriteRenderer>().flipX = false;
 
+                }
+                else
+                {
+                    gameObject.GetComponent<SpriteRenderer>().flipX = true;
+
+                }
             }
             // we will only pivot direction on the first frame of jump
             if (isJumping() && jumpFrames < 35 || isSliding())
@@ -104,15 +115,26 @@ namespace Core.Controllers
                     {
                         playerAction = "idle";
                     }
+                    else if (isMeleeing() && meleeFrames == 0)
+                    {
+                        playerAction = "idle";
+                    }
                     else if (!isInteracting() && Input.GetKeyDown("n") && interactionTarget)
                     {
                         playerAction = "interacting";
                     }
                     else if (Input.GetKeyDown("1") && !isShooting() && uiController.currentWeapon != null)
                     {
-                        if (uiController.currentWeapon.GetComponent<Bow>() != null && uiController.currentWeapon.isEquipped)
+                        if (uiController.currentWeapon.isEquipped)
                         {
-                            playerAction = "shooting";
+                            if (uiController.currentWeapon.GetComponent<Bow>() != null)
+                            {
+                                playerAction = "shooting";
+                            }
+                            else if (uiController.currentWeapon.GetComponent<MeleeWeapon>() != null)
+                            {
+                                playerAction = "meleeing";
+                            }
                         }
                     }
                     else if (isShooting())
@@ -125,7 +147,7 @@ namespace Core.Controllers
                         playerAction = "walking";
 
                     }
-                    else if (!isMoving() && !isSliding() && !isShooting())
+                    else if (!isMoving() && !isSliding() && !isShooting() && !isMeleeing())
                     {
                         playerAction = "idle";
                     }
@@ -184,6 +206,10 @@ namespace Core.Controllers
                     case "jumping":
                         break;
                     case "sliding":
+                        break;
+                    case "meleeing":
+                        horizontal = 0;
+                        vertical = 0;
                         break;
                     default:
                         break;
@@ -244,7 +270,7 @@ namespace Core.Controllers
                 double modifier = 1 - System.Math.Log(jumpFrames, 35) * .95;
                 float v = Mathf.Sign(vertical) * (float)modifier;
                 float h = Mathf.Sign(horizontal) * (float)modifier;
-
+                horizontal -= Mathf.Abs(horizontal) > 0 ? h : 0;
                 vertical -= Mathf.Abs(vertical) > 0 ? v : 0;
             }
 
@@ -265,10 +291,15 @@ namespace Core.Controllers
                 case "sliding":
                     slideFrames = slideFrames > 0 ? slideFrames -= 1 : 45;
                     break;
+                case "meleeing":
+                    meleeFrames = meleeFrames > 0 ? meleeFrames -= 1 : 35;
+                    break;
+
                 default:
                     slideFrames = 45;
                     jumpFrames = 35;
                     shootFrames = 35;
+                    meleeFrames = 35;
                     break;
             }
         }
@@ -299,6 +330,11 @@ namespace Core.Controllers
         public bool isShooting()
         {
             return playerAction == "shooting";
+        }
+
+        public bool isMeleeing()
+        {
+            return playerAction == "meleeing";
         }
     }
 }

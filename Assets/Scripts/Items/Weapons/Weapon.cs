@@ -1,15 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Animations;
 
 namespace Core.Items.Weapons
 {
     public class Weapon : Equippable
     {
+        public Animator weaponAnimator;
         public string animationString;
+        public float h;
+        public float v;
+
         public override void Awake()
         {
             base.Awake();
+            weaponAnimator = gameObject.GetComponent<Animator>();
         }
 
         // Start is called before the first frame update
@@ -19,9 +25,6 @@ namespace Core.Items.Weapons
         // Update is called once per frame
         void Update()
         {
-            if (isEquipped)
-            {
-            }
         }
 
         public override void PickUpItem()
