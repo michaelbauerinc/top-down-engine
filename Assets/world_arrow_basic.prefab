@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 3991415595812809218}
   - component: {fileID: 3991415595812809221}
   - component: {fileID: 5867420779026249972}
+  - component: {fileID: 7970569742721674266}
   m_Layer: 0
   m_Name: world_arrow_basic
   m_TagString: Untagged
@@ -145,3 +146,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 10
+--- !u!114 &7970569742721674266
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3991415595812809241}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b319c69c251dfb647907e4cb255d9edb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tags:
+  - hurtbox

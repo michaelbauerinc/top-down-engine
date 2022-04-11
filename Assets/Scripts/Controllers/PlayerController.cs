@@ -173,7 +173,6 @@ namespace Core.Controllers
 
         void Update()
         {
-            setPlayerAction();
             // Inventory is not open and we are not interacting
             if (canMove)
             {
@@ -249,7 +248,7 @@ namespace Core.Controllers
         }
         private void FixedUpdate()
         {
-
+            setPlayerAction();
             // We only want to apply this on the first frame of a melee attack
             if (isMoving("diagonally") && meleeFrames == 35 && slideFrames == 45)
             {
@@ -273,7 +272,7 @@ namespace Core.Controllers
                         break;
                 }
             }
-            if (isJumping() || isMeleeing())
+            if (isJumping() || isMeleeing() || isShooting())
             {
                 // log taper speed 
                 double modifier = 1 - System.Math.Log(jumpFrames, 35) * .95;

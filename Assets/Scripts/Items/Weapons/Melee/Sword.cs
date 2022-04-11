@@ -8,9 +8,12 @@ namespace Core.Items.Weapons.Melee
 {
     public class Sword : MeleeWeapon
     {
+        BoxCollider2D hurtBox;
+
         public override void Awake()
         {
             base.Awake();
+            hurtBox = GameObject.Find("Hurtbox").GetComponent<BoxCollider2D>();
         }
 
         // Start is called before the first frame update
@@ -20,7 +23,7 @@ namespace Core.Items.Weapons.Melee
         // Update is called once per frame
         void Update()
         {
-            // AnimateWeapon();
+
             if (isEquipped && !playerController.isSliding() && !playerController.isJumping())
             {
                 itemRenderer.enabled = true;
@@ -42,9 +45,42 @@ namespace Core.Items.Weapons.Melee
             string currentDirection = playerController.currentDirection;
             Vector3 playerPos = playerController.gameObject.transform.position;
 
+            // handle hurtbox
+            if (currentDirection == "side")
+            {
+                hurtBox.size = new Vector2(1.2f, 1.4f);
+
+                if (playerController.gameObject.GetComponent<SpriteRenderer>().flipX == true)
+                {
+                    hurtBox.offset = new Vector2(0.5f, 0f);
+
+                }
+                else
+                {
+                    hurtBox.offset = new Vector2(-0.5f, 0f);
+
+                }
+                hurtBox.transform.position = new Vector2(playerPos.x, playerPos.y + 0.9f);
+
+            }
+            else if (currentDirection == "up")
+            {
+                hurtBox.transform.position = new Vector2(playerPos.x, playerPos.y);
+                hurtBox.offset = new Vector2(0, 0.8f);
+                hurtBox.size = new Vector2(1, 0.8f);
+
+            }
+            else
+            {
+                hurtBox.transform.position = new Vector2(playerPos.x, playerPos.y);
+                hurtBox.offset = new Vector2(0, -0.2f);
+                hurtBox.size = new Vector2(1, 0.6f);
+            }
+
+            // handle melee attack
             if (playerController.isMeleeing())
             {
-                gameObject.transform.eulerAngles = new Vector3(0, 0, 0);
+                hurtBox.enabled = true;
                 if (currentDirection != "side")
                 {
                     itemRenderer.flipX = false;
@@ -54,9 +90,12 @@ namespace Core.Items.Weapons.Melee
             }
             else
             {
+                hurtBox.enabled = false;
                 weaponAnimator.Play("Empty");
 
                 string playerAction = playerController.playerAction;
+                playerAction = playerAction == "interacting" ? "idle" : playerAction;
+
                 string currentAnim = playerController.gameObject.GetComponent<SpriteRenderer>().sprite.name.Substring(
                 playerController.gameObject.GetComponent<SpriteRenderer>().sprite.name.Length - 2);
 
@@ -114,7 +153,6 @@ namespace Core.Items.Weapons.Melee
         public override void PickUpItem()
         {
             base.PickUpItem();
-
         }
 
         public override void UseItem()

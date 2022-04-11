@@ -1,8 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Core.Items.Weapons.Ranged;
-using Core.Controllers;
+using Core.Utils;
 
 namespace Core.Physics
 {
@@ -11,8 +10,9 @@ namespace Core.Physics
         public Rigidbody2D body;
         public Animator animator;
         public SpriteRenderer sprite;
+        // PlayerController player;
         public int hitStun = 40;
-        List<GameObject> collisions = new List<GameObject>();
+        // List<GameObject> collisions = new List<GameObject>();
 
         // Start is called before the first frame update
         void Start()
@@ -20,23 +20,36 @@ namespace Core.Physics
             sprite = gameObject.GetComponent<SpriteRenderer>();
             animator = gameObject.GetComponent<Animator>();
             body = gameObject.GetComponent<Rigidbody2D>();
+            // player = GameObject.Find("Player").GetComponent<PlayerController>();
         }
 
         // Update is called once per frame
         void Update()
         {
-            foreach (GameObject collision in collisions)
-            {
-                PlayerController player = collision.gameObject.GetComponent<PlayerController>();
-                if (player.isSliding())
-                {
-                    hitStun = 30;
-                }
-                else if (player.isMeleeing())
-                {
-                    hitStun = 30;
-                }
-            }
+
+            // Debug.Log(collisions.AsEnumerable().OfType<GameObject>().Any());
+            // if (collisions.AsEnumerable().OfType<Weapon>().Any())
+            // {
+            //     Debug.Log("hit");
+            // }
+            // foreach (GameObject collision in collisions)
+            // {
+            //     MultiTag tags = collision.gameObject.GetComponent<MultiTag>();
+            //     if (tags.HasTag("hurtbox"))
+            //     {
+            //         hitStun = 30;
+            //     }
+
+            //     // PlayerController player = collision.gameObject.GetComponent<PlayerController>();
+            //     // if (player.isSliding())
+            //     // {
+            //     //     hitStun = 30;
+            //     // }
+            //     // else if ()
+            //     // {
+            //     //     hitStun = 30;
+            //     // }
+            // }
         }
 
         private void FixedUpdate()
@@ -55,37 +68,37 @@ namespace Core.Physics
             }
         }
 
-        void OnCollisionEnter2D(Collision2D collision)
-        {
-            if (collision.gameObject.tag == "Player")
-            {
-                collisions.Add(collision.gameObject);
-            }
-        }
-
-        private void OnTriggerEnter2D(Collider2D other)
-        {
-            bool isAmmo = other.gameObject.GetComponent<Ammo>() != null;
-            if (isAmmo)
-            {
-                hitStun = 0;
-
-            }
-        }
-
-        // void OnTriggerEnter2D(Collision2D collision) {
-        //     if (collision.gameObject.tag == "env") {
-        //         return;
-        //         // collisions.Remove(collision.gameObject);
+        // void OnCollisionEnter2D(Collision2D collision)
+        // {
+        //     if (collision.gameObject.tag == "Player")
+        //     {
+        //         collisions.Add(collision.gameObject);
         //     }
         // }
 
-        void OnCollisionExit2D(Collision2D collision)
+        private void OnTriggerEnter2D(Collider2D other)
         {
-            if (collision.gameObject.tag == "Player")
+            MultiTag tags = other.gameObject.GetComponent<MultiTag>();
+            if (tags.HasTag("hurtbox"))
             {
-                collisions.Remove(collision.gameObject);
+                hitStun = 0;
             }
         }
+
+        // private void OnTriggerExit2D(Collider2D other)
+        // {
+        //     if (collisions.Contains(other.gameObject))
+        //     {
+        //         collisions.Remove(other.gameObject);
+        //     }
+        // }
+
+        // void OnCollisionExit2D(Collision2D collision)
+        // {
+        //     if (collisions.Contains(collision.gameObject))
+        //     {
+        //         collisions.Remove(collision.gameObject);
+        //     }
+        // }
     }
 }
