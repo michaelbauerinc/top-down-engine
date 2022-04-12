@@ -8,12 +8,12 @@ namespace Core.Items.Weapons.Melee
 {
     public class Sword : MeleeWeapon
     {
-        BoxCollider2D hurtBox;
+        CircleCollider2D hurtBox;
 
         public override void Awake()
         {
             base.Awake();
-            hurtBox = GameObject.Find("Hurtbox").GetComponent<BoxCollider2D>();
+            hurtBox = GameObject.Find("Hurtbox").GetComponent<CircleCollider2D>();
         }
 
         // Start is called before the first frame update
@@ -48,16 +48,16 @@ namespace Core.Items.Weapons.Melee
             // handle hurtbox
             if (currentDirection == "side")
             {
-                hurtBox.size = new Vector2(1.2f, 1.4f);
+                hurtBox.radius = 0.8f;
 
                 if (playerController.gameObject.GetComponent<SpriteRenderer>().flipX == true)
                 {
-                    hurtBox.offset = new Vector2(0.5f, 0f);
+                    hurtBox.offset = new Vector2(0.4f, -0.2f);
 
                 }
                 else
                 {
-                    hurtBox.offset = new Vector2(-0.5f, 0f);
+                    hurtBox.offset = new Vector2(-0.4f, -0.2f);
 
                 }
                 hurtBox.transform.position = new Vector2(playerPos.x, playerPos.y + 0.9f);
@@ -67,14 +67,14 @@ namespace Core.Items.Weapons.Melee
             {
                 hurtBox.transform.position = new Vector2(playerPos.x, playerPos.y);
                 hurtBox.offset = new Vector2(0, 0.8f);
-                hurtBox.size = new Vector2(1, 0.8f);
+                hurtBox.radius = 0.6f;
 
             }
             else
             {
                 hurtBox.transform.position = new Vector2(playerPos.x, playerPos.y);
-                hurtBox.offset = new Vector2(0, -0.2f);
-                hurtBox.size = new Vector2(1, 0.6f);
+                hurtBox.offset = new Vector2(0, 0f);
+                hurtBox.radius = 0.6f;
             }
 
             // handle melee attack

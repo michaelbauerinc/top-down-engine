@@ -201,16 +201,12 @@ namespace Core.Controllers
                     }
                     break;
                 case "jumping":
-                    canMove = true;
                     break;
                 case "sliding":
-                    canMove = false;
                     break;
                 case "meleeing":
-                    canMove = false;
                     break;
                 case "idle":
-                    canMove = true;
                     break;
                 default:
                     break;
@@ -248,7 +244,6 @@ namespace Core.Controllers
         }
         private void FixedUpdate()
         {
-            setPlayerAction();
             // We only want to apply this on the first frame of a melee attack
             if (isMoving("diagonally") && meleeFrames == 35 && slideFrames == 45)
             {
@@ -297,23 +292,30 @@ namespace Core.Controllers
                     shootFrames = playerAction == "shooting" ? shootFrames -= 1 : 35;
                     break;
                 case "jumping":
+                    canMove = true;
                     slideFrames = 45;
                     jumpFrames = jumpFrames > 0 ? jumpFrames -= 1 : 35;
                     break;
                 case "sliding":
+                    canMove = false;
                     slideFrames = slideFrames > 0 ? slideFrames -= 1 : 45;
                     break;
                 case "meleeing":
+                    canMove = false;
                     meleeFrames = meleeFrames > 0 ? meleeFrames -= 1 : 35;
                     break;
-
+                case "interacting":
+                    canMove = false;
+                    break;
                 default:
+                    canMove = true;
                     slideFrames = 45;
                     jumpFrames = 35;
                     shootFrames = 35;
                     meleeFrames = 35;
                     break;
             }
+            setPlayerAction();
         }
 
         // Optional arg to get direction
