@@ -218,6 +218,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Sign (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 6581116328536500622, guid: 66ec9c695459a0c4ba15d2d69725b7bc, type: 3}
+      propertyPath: toSay
+      value: Danny is a big fat turd
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 66ec9c695459a0c4ba15d2d69725b7bc, type: 3}
 --- !u!1 &28956768

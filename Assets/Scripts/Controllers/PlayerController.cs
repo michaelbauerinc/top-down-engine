@@ -105,21 +105,9 @@ namespace Core.Controllers
                 {
                     playerAction = "jumping";
                 }
-                else if (isJumping() && jumpFrames == 0)
-                {
-                    playerAction = "idle";
-                }
                 else if (!isSliding() && !isMeleeing() && !isJumping() && Input.GetKeyDown("m"))
                 {
                     playerAction = "sliding";
-                }
-                else if (isSliding() && slideFrames == 0)
-                {
-                    playerAction = "idle";
-                }
-                else if (isMeleeing() && meleeFrames == 0)
-                {
-                    playerAction = "idle";
                 }
                 else if (Input.GetKeyDown("n") && interactionTarget)
                 {
@@ -142,11 +130,6 @@ namespace Core.Controllers
                             playerAction = "meleeing";
                         }
                     }
-                }
-                else if (isShooting())
-                {
-                    playerAction = shootFrames >= 0 ? "shooting" : "idle";
-
                 }
                 else if (isMoving() && !isSliding() && !isShooting() && !isMeleeing() && !isJumping())
                 {
@@ -173,6 +156,7 @@ namespace Core.Controllers
 
         void Update()
         {
+            setPlayerAction();
             // Inventory is not open and we are not interacting
             if (canMove)
             {
@@ -290,19 +274,24 @@ namespace Core.Controllers
             {
                 case "shooting":
                     shootFrames = playerAction == "shooting" ? shootFrames -= 1 : 35;
+                    playerAction = shootFrames >= 0 ? "shooting" : "idle";
                     break;
                 case "jumping":
                     canMove = true;
                     slideFrames = 45;
                     jumpFrames = jumpFrames > 0 ? jumpFrames -= 1 : 35;
+                    playerAction = jumpFrames == 0 ? "idle" : playerAction;
                     break;
                 case "sliding":
                     canMove = false;
                     slideFrames = slideFrames > 0 ? slideFrames -= 1 : 45;
+                    playerAction = slideFrames == 0 ? "idle" : playerAction;
+
                     break;
                 case "meleeing":
                     canMove = false;
                     meleeFrames = meleeFrames > 0 ? meleeFrames -= 1 : 35;
+                    playerAction = meleeFrames == 0 ? "idle" : playerAction;
                     break;
                 case "interacting":
                     canMove = false;
@@ -315,7 +304,6 @@ namespace Core.Controllers
                     meleeFrames = 35;
                     break;
             }
-            setPlayerAction();
         }
 
         // Optional arg to get direction

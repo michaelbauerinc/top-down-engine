@@ -1,3 +1,5 @@
+using System;
+using System.CodeDom;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,7 +11,7 @@ namespace Core.Utils
         public List<GameObject> swapObjects = new List<GameObject>();
         void Awake()
         {
-            var tags = Object.FindObjectsOfType<MultiTag>();
+            var tags = FindObjectsOfType<MultiTag>();
             foreach (MultiTag tag in tags)
             {
                 if (tag.HasTag("layer-swap-object"))
@@ -26,18 +28,32 @@ namespace Core.Utils
         // Update is called once per frame
         void Update()
         {
-            swapObjects.Sort(SortByPos);
-            float i = 0;
-            foreach (GameObject toSwap in swapObjects)
+            try
             {
-                toSwap.transform.position = new Vector3(toSwap.transform.position.x, toSwap.transform.position.y, i);
-                // toSwap.transform.Find("shadow").gameObject.transform.position = new Vector3(toSwap.transform.Find("shadow").position.x, toSwap.transform.Find("shadow").position.y, i);
-                i += 0.5f;
+                swapObjects.Sort(SortByPos);
+            }
+            catch (Exception)
+            {
+                // if something dies or is removed
+            }
+
+            float z = 0;
+            List<GameObject> toSwapTemp = new List<GameObject>(swapObjects);
+            foreach (GameObject toSwap in toSwapTemp)
+            {
+                if (toSwap == null)
+                {
+                    swapObjects.Remove(toSwap);
+                }
+                else
+                {
+                    toSwap.transform.position = new Vector3(toSwap.transform.position.x, toSwap.transform.position.y, z);
+                    z += 0.5f;
+                }
             }
         }
 
-
-        static int SortByPos(GameObject obj1, GameObject obj2)
+        public int SortByPos(GameObject obj1, GameObject obj2)
         {
             return obj1.transform.position.y.CompareTo(obj2.transform.position.y);
         }

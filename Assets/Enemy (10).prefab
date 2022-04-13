@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 4360412673212579223}
   - component: {fileID: 4360412673212579220}
   - component: {fileID: 4360412673212579221}
+  - component: {fileID: 9213307506982015046}
   m_Layer: 0
   m_Name: Enemy (10)
   m_TagString: Untagged
@@ -184,3 +185,16 @@ MonoBehaviour:
   tags:
   - enemy
   - layer-swap-object
+--- !u!114 &9213307506982015046
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4360412673212579218}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f00e7ff5b08052d47b03e28be8ea6a62, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 10
