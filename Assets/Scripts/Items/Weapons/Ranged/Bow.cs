@@ -4,11 +4,8 @@ using UnityEngine;
 
 namespace Core.Items.Weapons.Ranged
 {
-    public class Bow : Weapon
+    public class Bow : RangedWeapon
     {
-
-        public Ammo ammo;
-
         public override void Awake()
         {
             base.Awake();

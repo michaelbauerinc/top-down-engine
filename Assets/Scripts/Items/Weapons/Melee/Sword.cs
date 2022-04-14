@@ -24,7 +24,7 @@ namespace Core.Items.Weapons.Melee
         void Update()
         {
 
-            if (isEquipped && !playerController.isSliding() && !playerController.isJumping())
+            if (isEquipped && !playerController.isSliding() && !playerController.isJumping() && !playerController.isShooting())
             {
                 itemRenderer.enabled = true;
                 AnimateWeapon();

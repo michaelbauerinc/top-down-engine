@@ -3,9 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Core.Items;
 using Core.Environment;
-using Core.Items.Weapons.Ranged;
-using Core.Items.Weapons.Melee;
-
+using UnityEngine.SceneManagement;
 namespace Core.Controllers
 {
     public class PlayerController : MonoBehaviour
@@ -33,9 +31,14 @@ namespace Core.Controllers
         public float runSpeed = 5.0f;
         // Action durations
         public int jumpFrames = 35;
+        public int jumpFramesMax = 35;
         public int slideFrames = 45;
+        public int slideFramesMax = 45;
+
+        public int shootFramesMax = 35;
         public int shootFrames = 35;
         public int meleeFrames = 35;
+        public int meleeFramesMax = 30;
 
         void Awake()
         {
@@ -117,18 +120,18 @@ namespace Core.Controllers
                         playerAction = "interacting";
                     }
                 }
-                else if (Input.GetKeyDown("1") && !isShooting() && !isJumping() && uiController.currentWeapon != null)
+                else if (Input.GetKeyDown("1") && !isMeleeing() && !isShooting() && !isJumping() && uiController.equippedMeleeWeapon != null)
                 {
-                    if (uiController.currentWeapon.isEquipped)
+                    if (uiController.equippedMeleeWeapon.isEquipped)
                     {
-                        if (uiController.currentWeapon.GetComponent<Bow>() != null)
-                        {
-                            playerAction = "shooting";
-                        }
-                        else if (uiController.currentWeapon.GetComponent<MeleeWeapon>() != null)
-                        {
-                            playerAction = "meleeing";
-                        }
+                        playerAction = "meleeing";
+                    }
+                }
+                else if (Input.GetKeyDown("2") && !isShooting() && !isMeleeing() && !isJumping() && uiController.equippedRangedWeapon != null)
+                {
+                    if (uiController.equippedRangedWeapon.isEquipped)
+                    {
+                        playerAction = "shooting";
                     }
                 }
                 else if (isMoving() && !isSliding() && !isShooting() && !isMeleeing() && !isJumping())
@@ -156,6 +159,10 @@ namespace Core.Controllers
 
         void Update()
         {
+            if (Input.GetKeyDown("r"))
+            {
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            }
             setPlayerAction();
             // Inventory is not open and we are not interacting
             if (canMove)
@@ -229,14 +236,14 @@ namespace Core.Controllers
         private void FixedUpdate()
         {
             // We only want to apply this on the first frame of a melee attack
-            if (isMoving("diagonally") && meleeFrames == 35 && slideFrames == 45)
+            if (isMoving("diagonally") && meleeFrames == meleeFramesMax && slideFrames == slideFramesMax)
             {
                 // limit movement speed diagonally, so you move at 70% speed
                 horizontal *= moveLimiter;
                 vertical *= moveLimiter;
             }
             // Sliding has inherent momentum is we're not moving, only apply on first frame
-            if (isSliding() && slideFrames == 45 && !isMoving())
+            if (isSliding() && slideFrames == slideFramesMax && !isMoving())
             {
                 switch (currentDirection)
                 {
@@ -273,24 +280,24 @@ namespace Core.Controllers
             switch (playerAction)
             {
                 case "shooting":
-                    shootFrames = playerAction == "shooting" ? shootFrames -= 1 : 35;
+                    shootFrames = playerAction == "shooting" ? shootFrames -= 1 : shootFramesMax;
                     playerAction = shootFrames >= 0 ? "shooting" : "idle";
                     break;
                 case "jumping":
                     canMove = true;
                     slideFrames = 45;
-                    jumpFrames = jumpFrames > 0 ? jumpFrames -= 1 : 35;
+                    jumpFrames = jumpFrames > 0 ? jumpFrames -= 1 : jumpFramesMax;
                     playerAction = jumpFrames == 0 ? "idle" : playerAction;
                     break;
                 case "sliding":
                     canMove = false;
-                    slideFrames = slideFrames > 0 ? slideFrames -= 1 : 45;
+                    slideFrames = slideFrames > 0 ? slideFrames -= 1 : slideFramesMax;
                     playerAction = slideFrames == 0 ? "idle" : playerAction;
 
                     break;
                 case "meleeing":
                     canMove = false;
-                    meleeFrames = meleeFrames > 0 ? meleeFrames -= 1 : 35;
+                    meleeFrames = meleeFrames > 0 ? meleeFrames -= 1 : meleeFramesMax;
                     playerAction = meleeFrames == 0 ? "idle" : playerAction;
                     break;
                 case "interacting":
@@ -298,10 +305,10 @@ namespace Core.Controllers
                     break;
                 default:
                     canMove = true;
-                    slideFrames = 45;
-                    jumpFrames = 35;
-                    shootFrames = 35;
-                    meleeFrames = 35;
+                    slideFrames = slideFramesMax;
+                    jumpFrames = jumpFramesMax;
+                    shootFrames = shootFramesMax;
+                    meleeFrames = meleeFramesMax;
                     break;
             }
         }

@@ -1,12 +1,12 @@
 using System.Collections;
 using System.Runtime;
-using System.Reflection;
 using System.Collections.Generic;
-using System.Text.RegularExpressions;
 using UnityEngine;
 using UnityEngine.UIElements;
 using Core.Items;
 using Core.Items.Weapons;
+using Core.Items.Weapons.Melee;
+using Core.Items.Weapons.Ranged;
 
 namespace Core.Controllers
 {
@@ -25,7 +25,8 @@ namespace Core.Controllers
         // }
         Dictionary<int, Dictionary<string, dynamic>> inventoryContent = new Dictionary<int, Dictionary<string, dynamic>>();
         public bool inventoryOpen = false;
-        public Weapon currentWeapon;
+        public MeleeWeapon equippedMeleeWeapon;
+        public RangedWeapon equippedRangedWeapon;
 
         private void Awake()
         {
@@ -72,20 +73,41 @@ namespace Core.Controllers
             {
                 if (toUse.gameObject.GetComponent<Weapon>() != null)
                 {
-                    if (currentWeapon == toUse)
+                    if (toUse.gameObject.GetComponent<MeleeWeapon>() != null)
                     {
-                        currentWeapon = null;
-                    }
-                    else
-                    {
-                        if (currentWeapon)
+                        if (equippedMeleeWeapon == toUse)
                         {
-                            // unequip weapon and toggle background
-                            currentWeapon.isEquipped = false;
-                            VisualElement currentWeaponSlot = inventoryContent[currentWeapon.inventoryIndex]["slot"];
-                            currentWeaponSlot.style.unityBackgroundImageTintColor = new Color(0, 0, 0, 0);
+                            equippedMeleeWeapon = null;
                         }
-                        currentWeapon = toUse;
+                        else
+                        {
+                            if (equippedMeleeWeapon)
+                            {
+                                // unequip weapon and toggle background
+                                equippedMeleeWeapon.isEquipped = false;
+                                VisualElement equippedMeleeWeaponSlot = inventoryContent[equippedMeleeWeapon.inventoryIndex]["slot"];
+                                equippedMeleeWeaponSlot.style.unityBackgroundImageTintColor = new Color(0, 0, 0, 0);
+                            }
+                            equippedMeleeWeapon = toUse;
+                        }
+                    }
+                    else if (toUse.gameObject.GetComponent<RangedWeapon>() != null)
+                    {
+                        if (equippedRangedWeapon == toUse)
+                        {
+                            equippedRangedWeapon = null;
+                        }
+                        else
+                        {
+                            if (equippedRangedWeapon)
+                            {
+                                // unequip weapon and toggle background
+                                equippedRangedWeapon.isEquipped = false;
+                                VisualElement equippedRangedWeaponSlot = inventoryContent[equippedRangedWeapon.inventoryIndex]["slot"];
+                                equippedRangedWeaponSlot.style.unityBackgroundImageTintColor = new Color(0, 0, 0, 0);
+                            }
+                            equippedRangedWeapon = toUse;
+                        }
                     }
                 }
             }

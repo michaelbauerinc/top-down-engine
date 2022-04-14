@@ -34,6 +34,7 @@ namespace Core.Utils
             }
             catch (Exception)
             {
+                // ToDo: better error handling
                 // if something dies or is removed
             }
 
