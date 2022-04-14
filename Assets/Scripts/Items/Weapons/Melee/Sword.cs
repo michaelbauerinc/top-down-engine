@@ -13,7 +13,7 @@ namespace Core.Items.Weapons.Melee
         public override void Awake()
         {
             base.Awake();
-            hurtBox = GameObject.Find("Hurtbox").GetComponent<CircleCollider2D>();
+            hurtBox = GetComponent<CircleCollider2D>();
         }
 
         // Start is called before the first frame update
@@ -52,12 +52,12 @@ namespace Core.Items.Weapons.Melee
 
                 if (playerController.gameObject.GetComponent<SpriteRenderer>().flipX == true)
                 {
-                    hurtBox.offset = new Vector2(0.4f, -0.2f);
+                    hurtBox.offset = new Vector2(0.4f, 0.8f);
 
                 }
                 else
                 {
-                    hurtBox.offset = new Vector2(-0.4f, -0.2f);
+                    hurtBox.offset = new Vector2(-0.4f, 0.8f);
 
                 }
                 hurtBox.transform.position = new Vector2(playerPos.x, playerPos.y + 0.9f);
@@ -66,7 +66,7 @@ namespace Core.Items.Weapons.Melee
             else if (currentDirection == "up")
             {
                 hurtBox.transform.position = new Vector2(playerPos.x, playerPos.y);
-                hurtBox.offset = new Vector2(0, 0.8f);
+                hurtBox.offset = new Vector2(-0.5f, 0.8f);
                 hurtBox.radius = 0.6f;
 
             }

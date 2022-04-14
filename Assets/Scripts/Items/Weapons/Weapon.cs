@@ -9,6 +9,7 @@ namespace Core.Items.Weapons
     {
         public Animator weaponAnimator;
         public string animationString;
+        public int weaponPower = 1;
         public float h;
         public float v;
 

@@ -11,9 +11,9 @@ GameObject:
   - component: {fileID: 3991415595812809220}
   - component: {fileID: 3991415595812809223}
   - component: {fileID: 3991415595812809218}
-  - component: {fileID: 3991415595812809221}
   - component: {fileID: 5867420779026249972}
   - component: {fileID: 7970569742721674266}
+  - component: {fileID: 283020462570972493}
   m_Layer: 0
   m_Name: world_arrow_basic
   m_TagString: Untagged
@@ -29,7 +29,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3991415595812809241}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -3.036467, y: 2.0562468, z: 0}
+  m_LocalPosition: {x: -3.072, y: 2.0562468, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -107,32 +107,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!61 &3991415595812809221
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3991415595812809241}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: -0.26931095, y: -0.008943856}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1.2615385, y: 0.2769231}
-    newSize: {x: 1.2615385, y: 0.2769231}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 0.21410704, y: 0.23120987}
-  m_EdgeRadius: 0
 --- !u!114 &5867420779026249972
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -145,6 +119,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c3bc4cd65cbc93e4a9c6d9a9078610bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  animator: {fileID: 0}
+  playerController: {fileID: 0}
+  itemRenderer: {fileID: 0}
+  interactableName: interactable
+  canInteract: 1
+  canPickUp: 0
+  toSay: Hello World
+  pickedUp: 0
+  category: 
+  inventoryIndex: 0
+  isEquipped: 0
+  weaponAnimator: {fileID: 0}
+  animationString: 
+  weaponPower: 2
+  h: 0
+  v: 0
+  ammo: {fileID: 0}
   speed: 10
 --- !u!114 &7970569742721674266
 MonoBehaviour:
@@ -160,3 +151,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tags:
   - hurtbox
+--- !u!58 &283020462570972493
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3991415595812809241}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.3, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.1

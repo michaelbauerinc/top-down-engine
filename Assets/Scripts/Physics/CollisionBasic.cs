@@ -4,6 +4,7 @@ using System;
 using UnityEngine;
 using Core.Utils;
 using Core.Controllers;
+using Core.Items.Weapons;
 
 namespace Core.Physics
 {
@@ -29,21 +30,27 @@ namespace Core.Physics
 
         private void OnTriggerEnter2D(Collider2D other)
         {
-            if (enemyController.health > 0)
+            if (other.GetType() != typeof(BoxCollider2D))
             {
-                try
+                if (enemyController.health > 0)
                 {
-                    MultiTag tags = other.gameObject.GetComponent<MultiTag>();
-                    int damage = 4;
-                    if (tags.HasTag("hurtbox"))
+                    try
                     {
-                        enemyController.hitStun = 0;
-                        enemyController.health -= damage;
+                        MultiTag tags = other.gameObject.GetComponent<MultiTag>();
+                        if (tags.HasTag("hurtbox"))
+                        {
+                            Weapon weapon = other.gameObject.GetComponent<Weapon>();
+                            if (weapon != null)
+                            {
+                                enemyController.hitStun = 0;
+                                enemyController.health -= weapon.weaponPower;
+                            }
+                        }
                     }
-                }
-                catch (NullReferenceException)
-                {
-                    // object is dead/has been destroyed already prob
+                    catch (NullReferenceException)
+                    {
+                        // object is dead/has been destroyed already prob
+                    }
                 }
             }
         }

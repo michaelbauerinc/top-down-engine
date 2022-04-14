@@ -233,6 +233,7 @@ namespace Core.Controllers
         {
             interactionTarget = null;
         }
+
         private void FixedUpdate()
         {
             // We only want to apply this on the first frame of a melee attack

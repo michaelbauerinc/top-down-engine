@@ -5,11 +5,11 @@ using Core.Utils;
 
 namespace Core.Items.Weapons.Ranged
 {
-    public class Ammo : MonoBehaviour
+    public class Ammo : RangedWeapon
     {
         Rigidbody2D body;
         public int speed = 10;
-        void Awake()
+        public override void Awake()
         {
             body = GetComponent<Rigidbody2D>();
         }
