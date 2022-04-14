@@ -33,15 +33,20 @@ namespace Core.Items.Weapons.Ranged
 
                 gameObject.transform.position = new Vector3(playerPos.x + h, playerPos.y + v, currentDirection != "up" ? playerPos.z - 1 : playerPos.z + 1);
                 itemRenderer.flipX = playerController.gameObject.GetComponent<SpriteRenderer>().flipX;
-                if (playerController.shootFrames == 0)
-                {
-                    Instantiate(ammo, new Vector3(transform.position.x, transform.position.y, transform.position.z), Quaternion.identity).gameObject.AddComponent<Ammo>().Shoot(currentDirection, gameObject.GetComponent<SpriteRenderer>().flipX);
-                }
             }
             else if (pickedUp)
             {
                 itemRenderer.enabled = false;
 
+            }
+        }
+
+        void FixedUpdate()
+        {
+            if (playerController.shootFrames == 0)
+            {
+                string currentDirection = playerController.currentDirection;
+                Instantiate(ammo, new Vector3(transform.position.x, transform.position.y, transform.position.z), Quaternion.identity).gameObject.AddComponent<Ammo>().Shoot(currentDirection, gameObject.GetComponent<SpriteRenderer>().flipX);
             }
         }
 
