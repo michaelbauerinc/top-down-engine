@@ -27,9 +27,13 @@ namespace Core.Controllers
         public bool inventoryOpen = false;
         public MeleeWeapon equippedMeleeWeapon;
         public RangedWeapon equippedRangedWeapon;
+        PlayerController playerController;
+        Camera cam;
 
         private void Awake()
         {
+            playerController = GameObject.Find("Player").GetComponent<PlayerController>();
+            cam = GameObject.Find("Camera").GetComponent<Camera>();
             inventory = gameObject.transform.GetChild(0).gameObject.GetComponent<UIDocument>().rootVisualElement.Q<VisualElement>("Root");
             interactionWindow = gameObject.transform.GetChild(1).gameObject.GetComponent<UIDocument>().rootVisualElement.Q<VisualElement>("Root");
         }
@@ -146,6 +150,20 @@ namespace Core.Controllers
 
         void Update()
         {
+
+            Vector3 screenPos = cam.WorldToScreenPoint(playerController.gameObject.transform.position);
+            bool playerUnderUiX = Screen.width - screenPos.x < inventory.localBound.width && Screen.width - screenPos.x > Screen.width * .1;
+            // Buffer frames on top cuz player env collider is on feet
+            bool playerUnderUiY = Screen.height - screenPos.y < Screen.height * .9 + Screen.height * .06 && Screen.height - screenPos.y > inventory.localBound.y - Screen.height * .1;
+
+            if (playerUnderUiX && playerUnderUiY)
+            {
+                inventory.AddToClassList("faded");
+            }
+            else
+            {
+                inventory.RemoveFromClassList("faded");
+            }
         }
     }
 }
