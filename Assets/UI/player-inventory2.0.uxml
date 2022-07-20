@@ -1,0 +1,31 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="/Assets/stylesheets/player-inventory-2.0.uss" />
+    <ui:VisualElement name="Root" class="player-inventory-root">
+        <ui:VisualElement name="Default" class="default">
+            <ui:VisualElement name="PlayerPortraitBox" class="player-portrait player-portrait-box">
+                <ui:VisualElement name="PlayerPortraitContent" class="player-portrait-content" />
+            </ui:VisualElement>
+            <ui:VisualElement name="PlayerStats" class="player-stats">
+                <ui:VisualElement name="PlayerHealthContainer" class="player-health-container">
+                    <ui:VisualElement name="PlayerHealthGraphic" class="player-health-graphic" />
+                    <ui:VisualElement name="PlayerHealthBar" class="player-health-bar" />
+                </ui:VisualElement>
+                <ui:VisualElement name="PlayerMoneyContainer" class="player-money-container">
+                    <ui:VisualElement name="PlayerMoneyGraphic" class="player-money-graphic" />
+                    <ui:Label text="500" display-tooltip-when-elided="true" name="PlayerMoneyValue" class="player-money-value" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:VisualElement name="Items" class="items hidden">
+            <ui:VisualElement name="ItemSlot0" class="item-slot" style="background-color: rgba(255, 0, 0, 0);">
+                <ui:VisualElement name="ItemSlotContent" class="item-slot-content" />
+            </ui:VisualElement>
+            <ui:VisualElement name="ItemSlot1" class="item-slot" style="background-color: rgba(255, 0, 0, 0);">
+                <ui:VisualElement name="ItemSlotContent" class="item-slot-content" />
+            </ui:VisualElement>
+            <ui:VisualElement name="ItemSlot2" class="item-slot" style="background-color: rgba(255, 0, 0, 0);">
+                <ui:VisualElement name="ItemSlotContent" class="item-slot-content" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

@@ -1,8 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
-using Core.Items;
 using Core.Environment;
+using Core.Items;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 namespace Core.Controllers
 {
@@ -28,6 +28,8 @@ namespace Core.Controllers
         float moveLimiter = 0.7f;
         public float horizontal;
         public float vertical;
+        public float rHorizontal;
+        public float rVertical;
         public float runSpeed = 5.0f;
         // Action durations
         public int jumpFrames = 35;
@@ -39,6 +41,10 @@ namespace Core.Controllers
         public int shootFrames = 35;
         public int meleeFrames = 35;
         public int meleeFramesMax = 30;
+        // stats
+        public int health = 10;
+        public int maxHealth = 10;
+        public int currency = 100;
 
         void Awake()
         {
@@ -169,6 +175,25 @@ namespace Core.Controllers
             {
                 horizontal = Input.GetAxisRaw("Horizontal");
                 vertical = Input.GetAxisRaw("Vertical");
+
+                if (Input.GetKey("left") || Input.GetKey("right"))
+                {
+                    rHorizontal = Input.GetKey("left") ? -1 : 1;
+                }
+                else
+                {
+                    rHorizontal = 0;
+                }
+                if (Input.GetKey("up") || Input.GetKey("down"))
+                {
+                    rVertical = Input.GetKey("down") ? -1 : 1;
+                }
+                else
+                {
+                    rVertical = 0;
+                }
+
+
             }
             switch (playerAction)
             {
@@ -178,7 +203,7 @@ namespace Core.Controllers
                     {
                         if (isItem && interactionTarget.canPickUp)
                         {
-                            uiController.AddItemToInventory(interactionTarget.GetComponent<Item>());
+                            uiController.PickUpItem(interactionTarget.GetComponent<Item>());
                         }
                         canMove = false;
                         horizontal = 0;
@@ -202,7 +227,7 @@ namespace Core.Controllers
                 default:
                     break;
             }
-            if (Input.GetKeyDown("return"))
+            if (Input.GetKeyDown("tab"))
             {
                 uiController.inventoryOpen = !uiController.inventoryOpen;
                 uiController.ToggleUi();

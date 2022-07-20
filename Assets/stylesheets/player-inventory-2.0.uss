@@ -1,0 +1,160 @@
+.player-inventory-root {
+    width: 25%;
+    height: 15%;
+    position: absolute;
+    background-color: rgb(82, 255, 0);
+    bottom: 1%;
+    right: 1%;
+    background-image: url('/Assets/Simple Fantasy GUI/PNG/Inventory/inventory_border.png');
+    -unity-background-scale-mode: stretch-to-fill;
+    -unity-slice-left: 0;
+    -unity-slice-right: 0;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    -unity-background-image-tint-color: rgb(241, 241, 241);
+}
+
+.default {
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0);
+    flex-direction: row;
+}
+
+.player-portrait-box {
+    background-color: rgba(255, 0, 0, 0);
+    width: 35%;
+    height: 100%;
+    background-image: url('/Assets/Simple Fantasy GUI/PNG/Character Panel/Character_Box.png');
+    -unity-background-scale-mode: scale-to-fit;
+}
+
+.player-portrait-content {
+    width: 100%;
+    height: 100%;
+    background-image: none;
+    background-color: rgba(0, 0, 0, 0);
+    -unity-background-scale-mode: scale-to-fit;
+}
+
+.player-stats {
+    background-color: rgba(0, 25, 255, 0);
+    width: 65%;
+    height: 100%;
+    align-items: center;
+    justify-content: space-around;
+    background-image: none;
+    -unity-background-scale-mode: stretch-to-fill;
+    border-left-width: 0;
+    border-right-width: 0;
+    border-top-width: 0;
+    border-bottom-width: 0;
+    border-left-color: rgb(0, 0, 0);
+    border-right-color: rgb(0, 0, 0);
+    border-top-color: rgb(0, 0, 0);
+    border-bottom-color: rgb(0, 0, 0);
+}
+
+.player-health-container {
+    width: 90%;
+    background-color: rgba(255, 255, 255, 0);
+    height: 30%;
+    top: 0;
+    flex-direction: row;
+    border-left-width: 10px;
+    border-right-width: 10px;
+    border-top-width: 10px;
+    border-bottom-width: 10px;
+    border-left-color: rgb(48, 48, 48);
+    border-right-color: rgb(48, 48, 48);
+    border-top-color: rgb(48, 48, 48);
+    border-bottom-color: rgb(48, 48, 48);
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+
+.player-health-graphic {
+    background-image: url('/Assets/UI/heart.png');
+    width: 20%;
+    height: 100%;
+    background-color: rgba(0, 255, 21, 0);
+    -unity-background-scale-mode: scale-to-fit;
+}
+
+.player-health-bar {
+    background-color: rgb(255, 0, 0);
+    width: 80%;
+    height: 100%;
+}
+
+.player-money-container {
+    width: 90%;
+    height: 30%;
+    background-color: rgba(255, 255, 255, 0);
+    bottom: auto;
+    top: auto;
+    flex-direction: row;
+    align-items: stretch;
+    justify-content: flex-start;
+}
+
+.player-money-graphic {
+    width: 20%;
+    height: 100%;
+    background-color: rgba(255, 69, 1, 0);
+    background-image: url('/Assets/UI/c.png');
+}
+
+.player-money-value {
+    width: 80%;
+    height: 100%;
+    justify-content: flex-start;
+    font-size: 300%;
+    align-items: stretch;
+    flex-direction: column-reverse;
+    -unity-text-align: upper-center;
+    background-color: rgba(0, 0, 0, 0);
+}
+
+.hidden {
+    opacity: 0;
+    width: 0;
+    height: 0;
+    position: absolute;
+}
+
+.items {
+    width: 100%;
+    height: 100%;
+    background-color: rgba(92, 255, 0, 0);
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.item-slot {
+    background-color: rgba(255, 0, 0, 0);
+    height: 100%;
+    width: 30%;
+    background-image: url('/Assets/Simple Fantasy GUI/PNG/Character Panel/Character_Box.png');
+    -unity-background-scale-mode: stretch-to-fill;
+    -unity-slice-left: 0;
+    -unity-slice-top: 0;
+    -unity-slice-right: 0;
+    -unity-slice-bottom: 0;
+}
+
+.item-slot-content {
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 0, 0, 0);
+    background-image: none;
+    -unity-background-scale-mode: scale-to-fit;
+}
+
+.item-slot-selected {
+    -unity-background-image-tint-color: rgba(255, 255, 0, 255);
+}

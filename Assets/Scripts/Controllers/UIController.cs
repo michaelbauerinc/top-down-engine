@@ -1,29 +1,29 @@
 using System.Collections;
-using System.Runtime;
 using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UIElements;
+using System.Runtime;
 using Core.Items;
 using Core.Items.Weapons;
 using Core.Items.Weapons.Melee;
 using Core.Items.Weapons.Ranged;
+using UnityEngine;
+using UnityEngine.UIElements;
 
 namespace Core.Controllers
 {
     public class UIController : MonoBehaviour
     {
         VisualElement rootContainer;
-        VisualElement inventory;
+        VisualElement playerUi;
         VisualElement interactionWindow;
-        // List<Item> inventoryContent = new List<Item>();
+        VisualElement inventoryUi;
+        VisualElement defaultUi;
+        VisualElement playerHealthBar;
+        Label playerCurrencyValue;
 
-        // {
-        //     0: {
-        //         'item': <Item>,
-        //         'slot': <Button>
-        //     }
-        // }
-        Dictionary<int, Dictionary<string, dynamic>> inventoryContent = new Dictionary<int, Dictionary<string, dynamic>>();
+        public List<Item> inventoryContent = new List<Item>();
+        public int selectedItem = 0;
+        private int selectItemInputBuffer = 10;
+        private int selectItemInputBufferMax = 10;
         public bool inventoryOpen = false;
         public MeleeWeapon equippedMeleeWeapon;
         public RangedWeapon equippedRangedWeapon;
@@ -34,8 +34,22 @@ namespace Core.Controllers
         {
             playerController = GameObject.Find("Player").GetComponent<PlayerController>();
             cam = GameObject.Find("Camera").GetComponent<Camera>();
-            inventory = gameObject.transform.GetChild(0).gameObject.GetComponent<UIDocument>().rootVisualElement.Q<VisualElement>("Root");
+            playerUi = gameObject.transform.GetChild(0).gameObject.GetComponent<UIDocument>().rootVisualElement.Q<VisualElement>("Root");
+            defaultUi = playerUi.Q<VisualElement>("Default");
+            inventoryUi = playerUi.Q<VisualElement>("Items");
+
+            VisualElement playerPortraitContent = playerUi.Q<VisualElement>("PlayerPortraitContent");
+            playerPortraitContent.style.backgroundImage = new StyleBackground(playerController.gameObject.GetComponent<SpriteRenderer>().sprite);
+
             interactionWindow = gameObject.transform.GetChild(1).gameObject.GetComponent<UIDocument>().rootVisualElement.Q<VisualElement>("Root");
+
+            playerHealthBar = playerUi.Q<VisualElement>("PlayerHealthBar");
+            float healthPercent = (float)playerController.health / playerController.maxHealth * 80;
+            playerHealthBar.style.width = new Length(healthPercent, LengthUnit.Percent);
+
+            playerCurrencyValue = playerUi.Q<Label>("PlayerMoneyValue");
+            playerCurrencyValue.text = playerController.currency.ToString();
+            GetSelectedItem();
         }
 
         void Start()
@@ -44,126 +58,122 @@ namespace Core.Controllers
 
         public void ToggleUi()
         {
-            inventory.ToggleInClassList("hidden");
+            defaultUi.ToggleInClassList("hidden");
+            inventoryUi.ToggleInClassList("hidden");
         }
-        public void ToggleInteractionBox(string interactionText = "", Sprite interactionImage = null)
+
+        public void ToggleInteractionBox(
+            string interactionText = "",
+            Sprite interactionImage = null
+        )
         {
-            interactionWindow.ElementAt(0).style.backgroundImage = new StyleBackground(interactionImage);
-            interactionWindow.ElementAt(1).Q<Label>("Text").text = interactionText;
+            interactionWindow.ElementAt(0).style.backgroundImage =
+                new StyleBackground(interactionImage);
+            interactionWindow.ElementAt(1).Q<Label>("Text").text =
+                interactionText;
             interactionWindow.ToggleInClassList("hidden");
         }
 
-        public void AddItemToInventory(Item item)
+        public void PickUpItem(Item item)
         {
-            inventoryContent.Add(inventoryContent.Count, new Dictionary<string, dynamic>() { { "item", item } });
             if (item.canPickUp)
             {
-                item.PickUpItem();
-
+                Weapon weapon = item.gameObject.GetComponent<Weapon>();
+                if (weapon != null)
+                {
+                    EquipWeapon(weapon);
+                }
+                else if (inventoryContent.Count < 3)
+                {
+                    item.PickUpItem();
+                    inventoryContent.Add(item);
+                }
             }
             MapInventory();
         }
 
-        public void UseItem(int indexToEquip)
+        public void EquipWeapon(Weapon weapon)
         {
-            Dictionary<string, dynamic> entry = inventoryContent[indexToEquip];
-            dynamic toUse = entry["item"];
-            toUse.UseItem();
+            weapon.PickUpItem();
+            weapon.isEquipped = true;
+            MeleeWeapon meleeWeapon = weapon.gameObject.GetComponent<MeleeWeapon>();
+            RangedWeapon rangedWeapon = weapon.gameObject.GetComponent<RangedWeapon>();
 
-            VisualElement slot = entry["slot"];
-            slot.style.unityBackgroundImageTintColor = toUse.isEquipped ? new Color(255, 250, 0, 230) : new Color(0, 0, 0, 0);
-
-            if (toUse.gameObject.GetComponent<Equippable>() != null)
+            if (meleeWeapon != null)
             {
-                if (toUse.gameObject.GetComponent<Weapon>() != null)
-                {
-                    if (toUse.gameObject.GetComponent<MeleeWeapon>() != null)
-                    {
-                        if (equippedMeleeWeapon == toUse)
-                        {
-                            equippedMeleeWeapon = null;
-                        }
-                        else
-                        {
-                            if (equippedMeleeWeapon)
-                            {
-                                // unequip weapon and toggle background
-                                equippedMeleeWeapon.isEquipped = false;
-                                VisualElement equippedMeleeWeaponSlot = inventoryContent[equippedMeleeWeapon.inventoryIndex]["slot"];
-                                equippedMeleeWeaponSlot.style.unityBackgroundImageTintColor = new Color(0, 0, 0, 0);
-                            }
-                            equippedMeleeWeapon = toUse;
-                        }
-                    }
-                    else if (toUse.gameObject.GetComponent<RangedWeapon>() != null)
-                    {
-                        if (equippedRangedWeapon == toUse)
-                        {
-                            equippedRangedWeapon = null;
-                        }
-                        else
-                        {
-                            if (equippedRangedWeapon)
-                            {
-                                // unequip weapon and toggle background
-                                equippedRangedWeapon.isEquipped = false;
-                                VisualElement equippedRangedWeaponSlot = inventoryContent[equippedRangedWeapon.inventoryIndex]["slot"];
-                                equippedRangedWeaponSlot.style.unityBackgroundImageTintColor = new Color(0, 0, 0, 0);
-                            }
-                            equippedRangedWeapon = toUse;
-                        }
-                    }
-                }
+                equippedMeleeWeapon =
+                    weapon.gameObject.GetComponent<MeleeWeapon>();
+            }
+            else if (rangedWeapon != null)
+            {
+                equippedRangedWeapon = rangedWeapon;
             }
         }
 
         private void MapInventory()
         {
-            VisualElement inventoryContainer = inventory.Q<VisualElement>("InventoryContainer");
-            int i = 0;
-            int j = 0;
-            foreach (KeyValuePair<int, Dictionary<string, dynamic>> entry in inventoryContent)
+            for (int i = 0; i < inventoryContent.Count; i++)
             {
-                VisualElement row = inventoryContainer.ElementAt(i);
-                Button button = row.ElementAt(j).Q<Button>("InventoryContent");
-                VisualElement slotToFill = row.ElementAt(j);
-
-                // Only delegate the clickhandler when a new item is added to the inventory
-                if (!entry.Value.ContainsKey("slot"))
+                VisualElement toHighlight = inventoryUi.Q<VisualElement>($"ItemSlot{i}");
+                VisualElement toMap = toHighlight.Q<VisualElement>("ItemSlotContent");
+                toMap.style.backgroundImage = new StyleBackground(inventoryContent[i].itemRenderer.sprite);
+                if (i == selectedItem)
                 {
-                    button.clicked += delegate { UseItem(entry.Key); };
+                    toHighlight.AddToClassList("item-slot-selected");
+
                 }
-
-                entry.Value["slot"] = slotToFill;
-                Item item = entry.Value["item"];
-                item.inventoryIndex = entry.Key;
-                button.style.backgroundImage = new StyleBackground(item.itemRenderer.sprite);
-
-                j++;
-                if (j == row.childCount)
+                else
                 {
-                    i++;
-                    j = 0;
+                    toHighlight.RemoveFromClassList("item-slot-selected");
                 }
             }
         }
 
-        void Update()
+        private void GetSelectedItem()
         {
-
-            Vector3 screenPos = cam.WorldToScreenPoint(playerController.gameObject.transform.position);
-            bool playerUnderUiX = Screen.width - screenPos.x < inventory.localBound.width && Screen.width - screenPos.x > Screen.width * .1;
-            // Buffer frames on top cuz player env collider is on feet
-            bool playerUnderUiY = Screen.height - screenPos.y < Screen.height * .9 + Screen.height * .06 && Screen.height - screenPos.y > inventory.localBound.y - Screen.height * .1;
-
-            if (playerUnderUiX && playerUnderUiY)
+            if (Mathf.Abs(playerController.rHorizontal) > 0)
             {
-                inventory.AddToClassList("faded");
+                if (selectItemInputBuffer == selectItemInputBufferMax || selectItemInputBuffer < 0)
+                {
+                    selectedItem += (int)playerController.rHorizontal;
+                    if (selectedItem < 0)
+                    {
+                        selectedItem = 2;
+                    }
+                    else if (selectedItem > 2)
+                    {
+                        selectedItem = 0;
+                    }
+                    MapInventory();
+                }
+                selectItemInputBuffer--;
             }
             else
             {
-                inventory.RemoveFromClassList("faded");
+                selectItemInputBuffer = selectItemInputBufferMax;
             }
+        }
+        void FixedUpdate()
+        {
+            GetSelectedItem();
+        }
+        void Update()
+        {
+
+
+            // GetSelectedItem()
+            // Vector3 screenPos = cam.WorldToScreenPoint(playerController.gameObject.transform.position);
+            // bool playerUnderUiX = Screen.width - screenPos.x < playerUi.localBound.width && Screen.width - screenPos.x > Screen.width * .1;
+            // // Buffer frames on top cuz player env collider is on feet
+            // bool playerUnderUiY = Screen.height - screenPos.y < Screen.height * .9 + Screen.height * .06 && Screen.height - screenPos.y > playerUi.localBound.y - Screen.height * .1;
+            // if (playerUnderUiX && playerUnderUiY)
+            // {
+            //     playerUi.AddToClassList("faded");
+            // }
+            // else
+            // {
+            //     playerUi.RemoveFromClassList("faded");
+            // }
         }
     }
 }
