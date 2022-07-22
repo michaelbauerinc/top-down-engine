@@ -198,8 +198,8 @@ namespace Core.Controllers
             switch (playerAction)
             {
                 case "interacting":
-                    bool isItem = interactionTarget.GetComponent<Item>() != null;
-                    if (interactionTarget.canInteract)
+                    bool isItem = interactionTarget != null && interactionTarget.GetComponent<Item>() != null;
+                    if (interactionTarget != null && interactionTarget.canInteract)
                     {
                         if (isItem && interactionTarget.canPickUp)
                         {
@@ -370,6 +370,16 @@ namespace Core.Controllers
         public bool isMeleeing()
         {
             return playerAction == "meleeing";
+        }
+
+        public bool IsFacingRight()
+        {
+            return gameObject.GetComponent<SpriteRenderer>().flipX == true;
+        }
+
+        public bool IsFacingLeft()
+        {
+            return gameObject.GetComponent<SpriteRenderer>().flipX == false;
         }
     }
 }

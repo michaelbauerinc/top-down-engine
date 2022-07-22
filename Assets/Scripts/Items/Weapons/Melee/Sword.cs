@@ -1,8 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 using Core.Libraries.AnimationMappings;
+using UnityEngine;
 
 namespace Core.Items.Weapons.Melee
 {
@@ -50,7 +50,7 @@ namespace Core.Items.Weapons.Melee
             {
                 hurtBox.radius = 0.8f;
 
-                if (playerController.gameObject.GetComponent<SpriteRenderer>().flipX == true)
+                if (playerController.IsFacingLeft())
                 {
                     hurtBox.offset = new Vector2(0.4f, 0.8f);
 

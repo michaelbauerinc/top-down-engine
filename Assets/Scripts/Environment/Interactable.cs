@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 using Core.Controllers;
+using UnityEngine;
 
 
 namespace Core.Environment
@@ -11,6 +11,7 @@ namespace Core.Environment
         public Animator animator;
         public PlayerController playerController;
         public SpriteRenderer itemRenderer;
+        public BoxCollider2D boxCollider;
         public string interactableName = "interactable";
         public bool canInteract = true;
         public bool canPickUp = false;
@@ -21,6 +22,7 @@ namespace Core.Environment
         {
             animator = GetComponent<Animator>();
             itemRenderer = GetComponent<SpriteRenderer>();
+            boxCollider = GetComponent<BoxCollider2D>();
             playerController = GameObject.Find("Player").GetComponent<PlayerController>();
         }
         void Start()

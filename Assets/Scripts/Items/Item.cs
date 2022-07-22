@@ -1,7 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
+using Core.Controllers;
 using Core.Environment;
+using UnityEngine;
 
 namespace Core.Items
 {
@@ -31,6 +32,32 @@ namespace Core.Items
             canPickUp = false;
             canInteract = false;
             itemRenderer.enabled = false;
+            boxCollider.enabled = false;
+        }
+        public virtual void DropItem()
+        {
+            string playerDir = GameObject.Find("Player").GetComponent<PlayerController>().currentDirection;
+            Vector3 dropLocation = GameObject.Find("Player").transform.position;
+            switch (playerDir)
+            {
+                case "up":
+                    dropLocation.y += 1;
+                    break;
+                case "down":
+                    dropLocation.y -= 0.5f;
+                    break;
+                case "side":
+                    dropLocation.x = playerController.IsFacingLeft() ? dropLocation.x -= 1 : dropLocation.x += 1;
+                    break;
+                default:
+                    break;
+            }
+            transform.position = dropLocation;
+            pickedUp = false;
+            canPickUp = true;
+            canInteract = true;
+            itemRenderer.enabled = true;
+            boxCollider.enabled = true;
         }
 
         public virtual void UseItem()

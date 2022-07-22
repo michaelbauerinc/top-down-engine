@@ -20,8 +20,18 @@ namespace Core.Controllers
         VisualElement playerHealthBar;
         Label playerCurrencyValue;
 
-        public List<Item> inventoryContent = new List<Item>();
-        public int selectedItem = 0;
+        // public List<Item> inventoryContent = new List<Item>();
+        // List<Item> inventoryContent = new List<Item>();
+
+        // {
+        //     0: {
+        //         'item': <Item>,
+        //         'slot': <VisualElement>,
+        //         'slotContent': <VisualElement>
+        //     }
+        // }
+        Dictionary<int, Dictionary<string, dynamic>> inventoryContent = new Dictionary<int, Dictionary<string, dynamic>>();
+        public int selectedItemIndex = 0;
         private int selectItemInputBuffer = 10;
         private int selectItemInputBufferMax = 10;
         public bool inventoryOpen = false;
@@ -49,7 +59,8 @@ namespace Core.Controllers
 
             playerCurrencyValue = playerUi.Q<Label>("PlayerMoneyValue");
             playerCurrencyValue.text = playerController.currency.ToString();
-            GetSelectedItem();
+            InitInventory();
+            GetSelectedItemIndex();
         }
 
         void Start()
@@ -83,10 +94,17 @@ namespace Core.Controllers
                 {
                     EquipWeapon(weapon);
                 }
-                else if (inventoryContent.Count < 3)
+                else
                 {
-                    item.PickUpItem();
-                    inventoryContent.Add(item);
+                    for (int i = 0; i < inventoryContent.Count; i++)
+                    {
+                        item.PickUpItem();
+                        if (inventoryContent[i]["item"] == null)
+                        {
+                            inventoryContent[i]["item"] = item;
+                            break;
+                        }
+                    }
                 }
             }
             MapInventory();
@@ -110,39 +128,93 @@ namespace Core.Controllers
             }
         }
 
+        private void UseItem(int indexToDrop)
+        {
+            Item toUse = inventoryContent[indexToDrop]["item"];
+            toUse.UseItem();
+
+        }
+
+        private void DropItem(int indexToDrop)
+        {
+            Item itemToDrop = inventoryContent[indexToDrop]["item"];
+            Dictionary<string, dynamic> toDrop = inventoryContent[indexToDrop];
+            itemToDrop.DropItem();
+            toDrop["item"] = null;
+        }
+
         private void MapInventory()
         {
             for (int i = 0; i < inventoryContent.Count; i++)
             {
-                VisualElement toHighlight = inventoryUi.Q<VisualElement>($"ItemSlot{i}");
-                VisualElement toMap = toHighlight.Q<VisualElement>("ItemSlotContent");
-                toMap.style.backgroundImage = new StyleBackground(inventoryContent[i].itemRenderer.sprite);
-                if (i == selectedItem)
-                {
-                    toHighlight.AddToClassList("item-slot-selected");
+                Dictionary<string, dynamic> toMap = inventoryContent[i];
 
+                VisualElement slot = toMap["itemSlot"];
+                VisualElement slotContent = toMap["itemSlotContent"];
+
+                toMap["itemSlot"].RemoveFromClassList("item-slot-selected");
+                if (toMap["item"] != null)
+                {
+                    slotContent.style.backgroundImage = new StyleBackground(toMap["item"].itemRenderer.sprite);
                 }
                 else
                 {
-                    toHighlight.RemoveFromClassList("item-slot-selected");
+                    slotContent.style.backgroundImage = null;
+
+                }
+
+                if (i == selectedItemIndex)
+                {
+                    slot.AddToClassList("item-slot-selected");
+                }
+                else
+                {
+                    slot.RemoveFromClassList("item-slot-selected");
                 }
             }
         }
 
-        private void GetSelectedItem()
+        private void InitInventory()
         {
-            if (Mathf.Abs(playerController.rHorizontal) > 0)
+            for (int i = 0; i < 3; i++)
+            {
+                VisualElement slot = inventoryUi.Q<VisualElement>($"ItemSlot{i}");
+                VisualElement slotContent = slot.Q<VisualElement>("ItemSlotContent");
+                Dictionary<string, dynamic> toAdd = new Dictionary<string, dynamic>(){
+                    {"item", null},
+                    {"itemSlot", slot},
+                    {"itemSlotContent", slotContent}
+                };
+                inventoryContent[i] = toAdd;
+            }
+        }
+
+        private void GetSelectedItemIndex()
+        {
+            if (Mathf.Abs(playerController.rVertical) > 0 && inventoryContent.Count == 3 && inventoryContent[selectedItemIndex]["item"] != null)
+            {
+                if (playerController.rVertical > 0)
+                {
+                    UseItem(selectedItemIndex);
+                }
+                else if (playerController.rVertical < 0)
+                {
+                    DropItem(selectedItemIndex);
+                }
+                MapInventory();
+            }
+            else if (Mathf.Abs(playerController.rHorizontal) > 0)
             {
                 if (selectItemInputBuffer == selectItemInputBufferMax || selectItemInputBuffer < 0)
                 {
-                    selectedItem += (int)playerController.rHorizontal;
-                    if (selectedItem < 0)
+                    selectedItemIndex += (int)playerController.rHorizontal;
+                    if (selectedItemIndex < 0)
                     {
-                        selectedItem = 2;
+                        selectedItemIndex = inventoryContent.Count - 1;
                     }
-                    else if (selectedItem > 2)
+                    else if (selectedItemIndex > inventoryContent.Count - 1)
                     {
-                        selectedItem = 0;
+                        selectedItemIndex = 0;
                     }
                     MapInventory();
                 }
@@ -155,25 +227,10 @@ namespace Core.Controllers
         }
         void FixedUpdate()
         {
-            GetSelectedItem();
+            GetSelectedItemIndex();
         }
         void Update()
         {
-
-
-            // GetSelectedItem()
-            // Vector3 screenPos = cam.WorldToScreenPoint(playerController.gameObject.transform.position);
-            // bool playerUnderUiX = Screen.width - screenPos.x < playerUi.localBound.width && Screen.width - screenPos.x > Screen.width * .1;
-            // // Buffer frames on top cuz player env collider is on feet
-            // bool playerUnderUiY = Screen.height - screenPos.y < Screen.height * .9 + Screen.height * .06 && Screen.height - screenPos.y > playerUi.localBound.y - Screen.height * .1;
-            // if (playerUnderUiX && playerUnderUiY)
-            // {
-            //     playerUi.AddToClassList("faded");
-            // }
-            // else
-            // {
-            //     playerUi.RemoveFromClassList("faded");
-            // }
         }
     }
 }
