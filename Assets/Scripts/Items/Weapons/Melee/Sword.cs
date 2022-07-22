@@ -50,7 +50,7 @@ namespace Core.Items.Weapons.Melee
             {
                 hurtBox.radius = 0.8f;
 
-                if (playerController.IsFacingLeft())
+                if (!playerController.IsFacingLeft())
                 {
                     hurtBox.offset = new Vector2(0.4f, 0.8f);
 
@@ -85,7 +85,7 @@ namespace Core.Items.Weapons.Melee
                 {
                     itemRenderer.flipX = false;
                 }
-                gameObject.transform.position = new Vector3(playerPos.x, playerPos.y, currentDirection != "up" ? playerPos.z - 0.25f : playerPos.z + 0.25f);
+                gameObject.transform.position = new Vector3(currentDirection != "down" ? playerPos.x : playerPos.x + 0.5f, playerPos.y, currentDirection != "up" ? playerPos.z - 0.25f : playerPos.z + 0.25f);
                 weaponAnimator.Play("weapon_sword_" + currentDirection);
             }
             else

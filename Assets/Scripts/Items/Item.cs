@@ -48,6 +48,7 @@ namespace Core.Items
                     break;
                 case "side":
                     dropLocation.x = playerController.IsFacingLeft() ? dropLocation.x -= 1 : dropLocation.x += 1;
+                    dropLocation.y += 0.5f;
                     break;
                 default:
                     break;
