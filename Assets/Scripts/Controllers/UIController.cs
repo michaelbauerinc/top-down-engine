@@ -54,11 +54,9 @@ namespace Core.Controllers
             interactionWindow = gameObject.transform.GetChild(1).gameObject.GetComponent<UIDocument>().rootVisualElement.Q<VisualElement>("Root");
 
             playerHealthBar = playerUi.Q<VisualElement>("PlayerHealthBar");
-            float healthPercent = (float)playerController.health / playerController.maxHealth * 80;
-            playerHealthBar.style.width = new Length(healthPercent, LengthUnit.Percent);
-
             playerCurrencyValue = playerUi.Q<Label>("PlayerMoneyValue");
-            playerCurrencyValue.text = playerController.currency.ToString();
+
+            UpdateDefaultWindow();
             InitInventory();
             GetSelectedItemIndex();
         }
@@ -83,6 +81,24 @@ namespace Core.Controllers
             interactionWindow.ElementAt(1).Q<Label>("Text").text =
                 interactionText;
             interactionWindow.ToggleInClassList("hidden");
+        }
+
+        public void UpdateDefaultWindow()
+        {
+            UpdatePlayerHealthBar();
+            UpdatePlayerCurrency();
+        }
+
+        public void UpdatePlayerCurrency()
+        {
+            playerCurrencyValue.text = playerController.currency.ToString();
+
+        }
+
+        public void UpdatePlayerHealthBar()
+        {
+            float healthPercent = (float)playerController.health / playerController.maxHealth * 80;
+            playerHealthBar.style.width = new Length(healthPercent, LengthUnit.Percent);
         }
 
         public void PickUpItem(Item item)
@@ -131,7 +147,12 @@ namespace Core.Controllers
         private void UseItem(int indexToDrop)
         {
             Item toUse = inventoryContent[indexToDrop]["item"];
+            if (toUse.destroyedOnUse == true)
+            {
+                inventoryContent[indexToDrop]["item"] = null;
+            }
             toUse.UseItem();
+            UpdateDefaultWindow();
 
         }
 
@@ -151,8 +172,6 @@ namespace Core.Controllers
 
                 VisualElement slot = toMap["itemSlot"];
                 VisualElement slotContent = toMap["itemSlotContent"];
-
-                toMap["itemSlot"].RemoveFromClassList("item-slot-selected");
                 if (toMap["item"] != null)
                 {
                     slotContent.style.backgroundImage = new StyleBackground(toMap["item"].itemRenderer.sprite);

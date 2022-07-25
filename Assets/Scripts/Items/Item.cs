@@ -9,8 +9,8 @@ namespace Core.Items
     public class Item : Interactable
     {
         public bool pickedUp = false;
+        public bool destroyedOnUse = false;
         public string category;
-        public int inventoryIndex;
 
         public override void Awake()
         {
@@ -63,6 +63,11 @@ namespace Core.Items
 
         public virtual void UseItem()
         {
+            if (destroyedOnUse)
+            {
+                Destroy(gameObject);
+
+            }
         }
     }
 
