@@ -145,12 +145,18 @@ MonoBehaviour:
   animator: {fileID: 0}
   playerController: {fileID: 0}
   itemRenderer: {fileID: 0}
+  boxCollider: {fileID: 0}
   interactableName: bow
   canInteract: 1
   canPickUp: 1
   toSay: You found a bow
   pickedUp: 0
+  destroyedOnUse: 0
   category: weapon
   isEquipped: 0
+  weaponAnimator: {fileID: 0}
   animationString: weapon_bow_
+  weaponPower: 1
+  h: 0
+  v: 0
   ammo: {fileID: 5867420779026249972, guid: 15fc4a97cc13c1c4892286d91194282b, type: 3}

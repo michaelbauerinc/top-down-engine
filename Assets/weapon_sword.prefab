@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 3622921940689103794}
   - component: {fileID: 5518933184335923743}
   - component: {fileID: 2061507277056293480}
+  - component: {fileID: 2943909152965052637}
   m_Layer: 0
   m_Name: weapon_sword
   m_TagString: Untagged
@@ -121,13 +122,14 @@ MonoBehaviour:
   animator: {fileID: 0}
   playerController: {fileID: 0}
   itemRenderer: {fileID: 0}
+  boxCollider: {fileID: 0}
   interactableName: interactable
   canInteract: 1
   canPickUp: 1
   toSay: You found a sword
   pickedUp: 0
+  destroyedOnUse: 0
   category: weapon
-  inventoryIndex: 0
   isEquipped: 0
   weaponAnimator: {fileID: 0}
   animationString: weapon_sword_
@@ -190,3 +192,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tags:
   - hurtbox
+--- !u!114 &2943909152965052637
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2347787095971897026}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e70d764da8692e446ac7e7125634dcbe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _allStats:
+  - name: power
+    value: 8

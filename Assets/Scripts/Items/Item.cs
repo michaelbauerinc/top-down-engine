@@ -66,7 +66,6 @@ namespace Core.Items
             if (destroyedOnUse)
             {
                 Destroy(gameObject);
-
             }
         }
     }

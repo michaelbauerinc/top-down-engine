@@ -73,7 +73,7 @@ namespace Core.Items.Weapons.Melee
             else
             {
                 hurtBox.transform.position = new Vector2(playerPos.x, playerPos.y);
-                hurtBox.offset = new Vector2(0, 0f);
+                hurtBox.offset = new Vector2(-0.5f, 0f);
                 hurtBox.radius = 0.6f;
             }
 

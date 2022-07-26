@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 5744605414517709828}
   - component: {fileID: 7418140207077613520}
   - component: {fileID: 3201791502825458038}
+  - component: {fileID: 4138460680073561898}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -172,11 +173,21 @@ MonoBehaviour:
   canMove: 1
   horizontal: 0
   vertical: 0
+  rHorizontal: 0
+  rVertical: 0
   runSpeed: 5
   jumpFrames: 35
+  jumpFramesMax: 35
   slideFrames: 45
+  slideFramesMax: 45
+  shootFramesMax: 35
   shootFrames: 35
   meleeFrames: 35
+  meleeFramesMax: 30
+  health: 10
+  maxHealth: 10
+  currency: 100
+  hitStun: 40
 --- !u!114 &3201791502825458038
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -192,6 +203,18 @@ MonoBehaviour:
   tags:
   - player
   - layer-swap-object
+--- !u!114 &4138460680073561898
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4753248391869724572}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d131d58df7129a04c80bace0c48dd9c7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4753248392300287684
 GameObject:
   m_ObjectHideFlags: 0

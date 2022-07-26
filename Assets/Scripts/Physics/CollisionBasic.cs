@@ -1,10 +1,11 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
-using System;
-using UnityEngine;
-using Core.Utils;
 using Core.Controllers;
 using Core.Items.Weapons;
+using Core.Utils;
+using Core.Utils.Stats;
+using UnityEngine;
 
 namespace Core.Physics
 {
@@ -39,11 +40,12 @@ namespace Core.Physics
                         MultiTag tags = other.gameObject.GetComponent<MultiTag>();
                         if (tags.HasTag("hurtbox"))
                         {
-                            Weapon weapon = other.gameObject.GetComponent<Weapon>();
-                            if (weapon != null)
+                            StatMap statMap = other.gameObject.GetComponent<StatMap>();
+                            int damageToDo = statMap.allStats["power"];
+                            if (damageToDo > 0)
                             {
                                 enemyController.hitStun = 0;
-                                enemyController.health -= weapon.weaponPower;
+                                enemyController.health -= damageToDo;
                             }
                         }
                     }

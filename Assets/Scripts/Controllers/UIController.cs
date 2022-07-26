@@ -130,6 +130,7 @@ namespace Core.Controllers
         {
             weapon.PickUpItem();
             weapon.isEquipped = true;
+            weapon.gameObject.transform.SetParent(playerController.gameObject.transform);
             MeleeWeapon meleeWeapon = weapon.gameObject.GetComponent<MeleeWeapon>();
             RangedWeapon rangedWeapon = weapon.gameObject.GetComponent<RangedWeapon>();
 

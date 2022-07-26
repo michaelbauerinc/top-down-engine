@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using Core.Environment;
 using Core.Items;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 namespace Core.Controllers
 {
     public class PlayerController : MonoBehaviour
@@ -11,18 +10,23 @@ namespace Core.Controllers
         Rigidbody2D body;
         public Animator animator;
         UIController uiController;
+        SpriteRenderer playerRenderer;
         Interactable interactionTarget = null;
         Dictionary<string, string> animationMappings = new Dictionary<string, string>(){
             {"idle", "idle"},
+            {"hit", "hit"},
             {"walking", "walk"},
             {"jumping", "jump"},
             {"shooting", "player_bow"},
             {"sliding", "slide"},
             {"interacting", "idle"},
-            {"meleeing", "sword"}
+            {"meleeing", "sword"},
+            {"dead", "dead"}
         };
         public string playerAction = "idle";
         public string currentDirection = "down";
+        public string deathSprite = "vanish_31";
+
         // Movement
         public bool canMove = true;
         float moveLimiter = 0.7f;
@@ -45,12 +49,17 @@ namespace Core.Controllers
         public int health = 10;
         public int maxHealth = 10;
         public int currency = 100;
+        public int hitStun = 40;
+        public int hitStunMax = 40;
+
 
         void Awake()
         {
             body = GetComponent<Rigidbody2D>();
             animator = GetComponent<Animator>();
             uiController = GameObject.Find("UI").GetComponent<UIController>();
+            playerRenderer = gameObject.GetComponent<SpriteRenderer>();
+
         }
         void Start()
         {
@@ -64,13 +73,12 @@ namespace Core.Controllers
             {
                 if (isMeleeing())
                 {
-                    gameObject.GetComponent<SpriteRenderer>().flipX = false;
+                    playerRenderer.flipX = false;
 
                 }
                 else
                 {
-                    gameObject.GetComponent<SpriteRenderer>().flipX = true;
-
+                    playerRenderer.flipX = true;
                 }
             }
             // we will only pivot direction on the first frame of jump
@@ -82,7 +90,7 @@ namespace Core.Controllers
             {
                 if (jumpFrames > 30)
                 {
-                    gameObject.GetComponent<SpriteRenderer>().flipX = true;
+                    playerRenderer.flipX = true;
                 }
                 nextDirection = "side";
             }
@@ -90,7 +98,7 @@ namespace Core.Controllers
             {
                 if (jumpFrames > 30)
                 {
-                    gameObject.GetComponent<SpriteRenderer>().flipX = false;
+                    playerRenderer.flipX = false;
                 }
                 nextDirection = "side";
             }
@@ -102,13 +110,34 @@ namespace Core.Controllers
             {
                 nextDirection = "down";
             }
+            if (prefix == "hit")
+            {
+                playerRenderer.color = new UnityEngine.Color(0.97f, 0.02f, 0.02f, 1f);
+            }
+            else
+            {
+                playerRenderer.color = new UnityEngine.Color(1f, 1f, 1f, 1f);
+            }
+            if (prefix == "dead")
+            {
+                animator.Play("vanish");
+                return;
+            }
             currentDirection = nextDirection;
             animator.Play(prefix + "_" + currentDirection);
         }
 
         private void setPlayerAction()
         {
-            if (!isInteracting())
+            if (health <= 0 && hitStun == hitStunMax)
+            {
+                playerAction = "dead";
+            }
+            else if (hitStun < hitStunMax)
+            {
+                playerAction = "hit";
+            }
+            else if (!isInteracting())
             {
                 if (!isJumping() && Input.GetKeyDown("space") && !isMeleeing())
                 {
@@ -165,10 +194,6 @@ namespace Core.Controllers
 
         void Update()
         {
-            if (Input.GetKeyDown("r"))
-            {
-                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-            }
             setPlayerAction();
             // Inventory is not open and we are not interacting
             if (canMove)
@@ -223,6 +248,10 @@ namespace Core.Controllers
                 case "meleeing":
                     break;
                 case "idle":
+                    break;
+                case "hit":
+                    break;
+                case "dead":
                     break;
                 default:
                     break;
@@ -280,7 +309,7 @@ namespace Core.Controllers
                         vertical = -1f;
                         break;
                     default:
-                        horizontal = gameObject.GetComponent<SpriteRenderer>().flipX ? 1f : -1f;
+                        horizontal = playerRenderer.flipX ? 1f : -1f;
                         break;
                 }
             }
@@ -329,12 +358,26 @@ namespace Core.Controllers
                 case "interacting":
                     canMove = false;
                     break;
+                case "hit":
+                    hitStun++;
+                    horizontal = 0;
+                    vertical = 0;
+                    canMove = false;
+                    break;
+                case "dead":
+                    canMove = false;
+                    if (playerRenderer.sprite.name == deathSprite)
+                    {
+                        Destroy(gameObject);
+                    }
+                    break;
                 default:
                     canMove = true;
                     slideFrames = slideFramesMax;
                     jumpFrames = jumpFramesMax;
                     shootFrames = shootFramesMax;
                     meleeFrames = meleeFramesMax;
+                    hitStun = hitStunMax;
                     break;
             }
         }
@@ -374,12 +417,12 @@ namespace Core.Controllers
 
         public bool IsFacingRight()
         {
-            return gameObject.GetComponent<SpriteRenderer>().flipX == true;
+            return playerRenderer.flipX == true;
         }
 
         public bool IsFacingLeft()
         {
-            return gameObject.GetComponent<SpriteRenderer>().flipX == false;
+            return playerRenderer.flipX == false;
         }
     }
 }

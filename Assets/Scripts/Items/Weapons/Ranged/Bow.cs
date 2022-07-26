@@ -46,7 +46,22 @@ namespace Core.Items.Weapons.Ranged
             if (playerController.shootFrames == 0)
             {
                 string currentDirection = playerController.currentDirection;
-                Instantiate(ammo, new Vector3(transform.position.x, transform.position.y, transform.position.z), Quaternion.identity).gameObject.AddComponent<Ammo>().Shoot(currentDirection, gameObject.GetComponent<SpriteRenderer>().flipX);
+                Vector3 spawnLocation = transform.position;
+                switch (currentDirection)
+                {
+                    case "up":
+                        spawnLocation.y += 1;
+                        break;
+                    case "down":
+                        spawnLocation.y -= 0.5f;
+                        break;
+                    case "side":
+                        spawnLocation.x = playerController.IsFacingLeft() ? spawnLocation.x -= 1 : spawnLocation.x += 1;
+                        break;
+                    default:
+                        break;
+                }
+                Instantiate(ammo, spawnLocation, Quaternion.identity).gameObject.AddComponent<Ammo>().Shoot(currentDirection, gameObject.GetComponent<SpriteRenderer>().flipX);
             }
         }
 
