@@ -1,9 +1,12 @@
 {
     "name": "Core",
+    "rootNamespace": "",
     "references": [
         "UnityEngine.UIElementsModule",
         "UnityEngine.UIElementsGameObjectsModule",
-        "UnityEngine"
+        "UnityEngine",
+        "//blow is UnityEngine.InputSystem//",
+        "GUID:75469ad4d38634e559750d17036d5f7c"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

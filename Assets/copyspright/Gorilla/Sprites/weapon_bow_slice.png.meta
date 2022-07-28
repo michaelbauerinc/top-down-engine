@@ -87,6 +87,7 @@ TextureImporter:
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -616,6 +617,28 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
+    nameFileIdTable:
+      weapon_bow_slice_9: 6830340315000609295
+      weapon_bow_slice_20: -3134228150317961942
+      weapon_bow_slice_6: -5687565735010107250
+      weapon_bow_slice_13: -251273866480592843
+      weapon_bow_slice_7: -49796197459445276
+      weapon_bow_slice_19: 430892712843772032
+      weapon_bow_slice_11: -5593470484168258943
+      weapon_bow_slice_5: 937311083878367351
+      weapon_bow_slice_0: 6775981183174495567
+      weapon_bow_slice_4: -5364680407113255204
+      weapon_bow_slice_16: 796482875947809603
+      weapon_bow_slice_1: 8541143220603000499
+      weapon_bow_slice_8: -1001663464325605451
+      weapon_bow_slice_14: 2846235038884387953
+      weapon_bow_slice_10: -4901119290381942880
+      weapon_bow_slice_3: 4459293353652961918
+      weapon_bow_slice_15: 4645968765378641401
+      weapon_bow_slice_18: 1617237363523019863
+      weapon_bow_slice_17: 417930225646755207
+      weapon_bow_slice_12: -896922037742398779
+      weapon_bow_slice_2: -1757593963284620351
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
