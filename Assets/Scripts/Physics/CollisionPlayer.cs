@@ -33,7 +33,7 @@ namespace Core.Physics
 
         private void OnTriggerEnter2D(Collider2D other)
         {
-            if (other.GetType() != typeof(BoxCollider2D) && !other.gameObject.transform.IsChildOf(playerController.gameObject.transform))
+            if (other.GetType() == typeof(CircleCollider2D) && !other.gameObject.transform.IsChildOf(playerController.gameObject.transform))
             {
                 if (playerController.health > 0)
                 {
@@ -44,7 +44,7 @@ namespace Core.Physics
                         {
                             StatMap statMap = other.gameObject.GetComponent<StatMap>();
                             int damageToDo = statMap.allStats["power"];
-                            if (damageToDo > 0)
+                            if (damageToDo > 0 && !playerController.hasInvincibilityFrames)
                             {
                                 playerController.hitStun = 0;
                                 playerController.health -= damageToDo;
@@ -57,6 +57,14 @@ namespace Core.Physics
                         // object is dead/has been destroyed already prob
                     }
                 }
+            }
+        }
+
+        private void OnTriggerStay2D(Collider2D other)
+        {
+            if (!playerController.IsInHitstun() && !playerController.hasInvincibilityFrames)
+            {
+                OnTriggerEnter2D(other);
             }
         }
     }

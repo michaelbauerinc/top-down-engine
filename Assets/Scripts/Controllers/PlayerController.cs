@@ -4,6 +4,8 @@ using Core.Environment;
 using Core.Items;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
+
 namespace Core.Controllers
 {
     public class PlayerController : MonoBehaviour
@@ -12,6 +14,7 @@ namespace Core.Controllers
         public Animator animator;
         UIController uiController;
         SpriteRenderer playerRenderer;
+        BoxCollider2D playerCollider;
         Interactable interactionTarget = null;
         Dictionary<string, string> animationMappings = new Dictionary<string, string>(){
             {"idle", "idle"},
@@ -30,6 +33,7 @@ namespace Core.Controllers
 
         // Movement
         public bool canMove = true;
+        public bool hasInvincibilityFrames = false;
         public float horizontalInput;
         public float verticalInput;
         public float horizontal;
@@ -47,12 +51,15 @@ namespace Core.Controllers
         public int shootFrames = 35;
         public int meleeFrames = 35;
         public int meleeFramesMax = 30;
+
         // stats
         public int health = 10;
         public int maxHealth = 10;
         public int currency = 100;
         public int hitStun = 40;
         public int hitStunMax = 40;
+        public int invincibilityFrames = 40;
+        public int invincibilityFramesMax = 40;
 
 
         void Awake()
@@ -61,6 +68,7 @@ namespace Core.Controllers
             animator = GetComponent<Animator>();
             uiController = GameObject.Find("UI").GetComponent<UIController>();
             playerRenderer = gameObject.GetComponent<SpriteRenderer>();
+            BoxCollider2D playerCollider = gameObject.GetComponent<BoxCollider2D>();
         }
         void Start()
         {
@@ -75,7 +83,6 @@ namespace Core.Controllers
                 if (isMeleeing())
                 {
                     playerRenderer.flipX = false;
-
                 }
                 else
                 {
@@ -83,7 +90,7 @@ namespace Core.Controllers
                 }
             }
             // we will only pivot direction on the first frame of jump
-            if (isJumping() && jumpFrames < 35 || isSliding())
+            if (isJumping() && jumpFrames < 35 || isSliding() || IsInHitstun())
             {
                 nextDirection = currentDirection;
             }
@@ -111,7 +118,11 @@ namespace Core.Controllers
             {
                 nextDirection = "down";
             }
-            if (prefix == "hit")
+            if (hasInvincibilityFrames)
+            {
+                playerRenderer.color = new UnityEngine.Color(1f, 1f, 1f, .75f);
+            }
+            else if (prefix == "hit")
             {
                 playerRenderer.color = new UnityEngine.Color(0.97f, 0.02f, 0.02f, 1f);
             }
@@ -151,14 +162,13 @@ namespace Core.Controllers
             }
         }
 
-        void ShootWeapon()
-        {
-            // var test = uiController.currentWeapon.ammo;
-        }
-
         void Update()
         {
             setPlayerAction();
+            if (!isInteracting())
+            {
+                uiController.ToggleInteractionBox("", null, true);
+            }
             switch (playerAction)
             {
                 case "interacting":
@@ -175,10 +185,6 @@ namespace Core.Controllers
                     }
                     break;
                 case "shooting":
-                    if (shootFrames == 0)
-                    {
-                        ShootWeapon();
-                    }
                     break;
                 case "jumping":
                     break;
@@ -233,7 +239,7 @@ namespace Core.Controllers
 
         public void Slide()
         {
-            if (!isSliding() && !isMeleeing() && !isJumping())
+            if (!isSliding() && !isMeleeing() && !isJumping() && !isShooting())
             {
                 playerAction = "sliding";
 
@@ -276,7 +282,7 @@ namespace Core.Controllers
 
         public void Shoot()
         {
-            if (!isShooting() && !isMeleeing() && !isJumping() && uiController.equippedRangedWeapon != null)
+            if (shootFrames == shootFramesMax && !isShooting() && !isMeleeing() && !isJumping() && uiController.equippedRangedWeapon != null)
             {
                 playerAction = "shooting";
             }
@@ -292,7 +298,6 @@ namespace Core.Controllers
             else if (canMove)
             {
                 Vector2 vector = value.ReadValue<Vector2>();
-                // Debug.Log(vector);
                 horizontalInput = vector.x;
                 verticalInput = vector.y;
             }
@@ -308,8 +313,28 @@ namespace Core.Controllers
             }
         }
 
+        public void ReloadScene(InputAction.CallbackContext value)
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+
+        }
+
         private void FixedUpdate()
         {
+            if (hitStun == hitStunMax - 1)
+            {
+                hasInvincibilityFrames = true;
+            }
+            else if (hasInvincibilityFrames && invincibilityFrames == 0)
+            {
+                invincibilityFrames = invincibilityFramesMax;
+                hasInvincibilityFrames = false;
+            }
+            else if (hasInvincibilityFrames)
+            {
+                invincibilityFrames--;
+            }
+
             // Sliding has inherent momentum is we're not moving, only apply on first frame
             if (isSliding() && slideFrames == slideFramesMax && !isMoving())
             {

@@ -72,15 +72,26 @@ namespace Core.Controllers
         }
 
         public void ToggleInteractionBox(
+            // TODO: clean this spaghetti up
             string interactionText = "",
-            Sprite interactionImage = null
+            Sprite interactionImage = null,
+            bool hide = false
+
         )
         {
-            interactionWindow.ElementAt(0).style.backgroundImage =
-                new StyleBackground(interactionImage);
-            interactionWindow.ElementAt(1).Q<Label>("Text").text =
-                interactionText;
-            interactionWindow.ToggleInClassList("hidden");
+            if (hide == true)
+            {
+                interactionWindow.AddToClassList("hidden");
+
+            }
+            else
+            {
+                interactionWindow.ElementAt(0).style.backgroundImage =
+                    new StyleBackground(interactionImage);
+                interactionWindow.ElementAt(1).Q<Label>("Text").text =
+                    interactionText;
+                interactionWindow.ToggleInClassList("hidden");
+            }
         }
 
         public void UpdateDefaultWindow()

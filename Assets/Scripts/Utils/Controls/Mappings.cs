@@ -31,9 +31,9 @@ namespace Utils.Controls.Mappings
             ""actions"": [
                 {
                     ""name"": ""Melee"",
-                    ""type"": ""PassThrough"",
+                    ""type"": ""Button"",
                     ""id"": ""7f1fc63a-ad98-4acb-965e-e129caf4f9ae"",
-                    ""expectedControlType"": ""Axis"",
+                    ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
@@ -42,7 +42,7 @@ namespace Utils.Controls.Mappings
                     ""name"": ""Movement"",
                     ""type"": ""Value"",
                     ""id"": ""4ba52b6a-9e12-4294-9f02-3aff41685937"",
-                    ""expectedControlType"": ""Axis"",
+                    ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
@@ -85,17 +85,26 @@ namespace Utils.Controls.Mappings
                 },
                 {
                     ""name"": ""Shoot"",
-                    ""type"": ""Button"",
+                    ""type"": ""Value"",
                     ""id"": ""d78560a5-d843-4c9e-b810-75d6c8800dfe"",
-                    ""expectedControlType"": ""Button"",
+                    ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
-                    ""initialStateCheck"": false
+                    ""initialStateCheck"": true
                 },
                 {
                     ""name"": ""Interact"",
                     ""type"": ""Button"",
                     ""id"": ""4465f356-59a3-4367-8910-d8581251ca31"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Reload"",
+                    ""type"": ""Button"",
+                    ""id"": ""2beee304-fa33-46f0-98d8-9642d5dc1a74"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -105,8 +114,8 @@ namespace Utils.Controls.Mappings
             ""bindings"": [
                 {
                     ""name"": """",
-                    ""id"": ""e1971026-de32-475c-9bfb-5cde31bead35"",
-                    ""path"": """",
+                    ""id"": ""e4ae9bec-9990-4959-8c11-a7329bcdd77c"",
+                    ""path"": ""<Keyboard>/1"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -116,8 +125,8 @@ namespace Utils.Controls.Mappings
                 },
                 {
                     ""name"": """",
-                    ""id"": ""e4ae9bec-9990-4959-8c11-a7329bcdd77c"",
-                    ""path"": ""<Keyboard>/1"",
+                    ""id"": ""ad77d897-529e-47ab-b306-3a58b76e0eff"",
+                    ""path"": ""<Gamepad>/buttonWest"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -181,9 +190,75 @@ namespace Utils.Controls.Mappings
                     ""isPartOfComposite"": true
                 },
                 {
+                    ""name"": ""2D Vector"",
+                    ""id"": ""0a0f2b77-3c06-4137-b003-a9aa97bc7559"",
+                    ""path"": ""2DVector"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Movement"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""up"",
+                    ""id"": ""9836393c-c855-4324-ae71-5f82ca9e188f"",
+                    ""path"": ""<Gamepad>/leftStick/up"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Movement"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""down"",
+                    ""id"": ""f478fa66-3b70-4d09-8729-42e72e2add80"",
+                    ""path"": ""<Gamepad>/leftStick/down"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Movement"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""81d4c38a-fcda-42fa-a477-7e61f4a33681"",
+                    ""path"": ""<Gamepad>/leftStick/left"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Movement"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""1f78b52f-a5ce-4dd9-a78e-6b8ac73f7fb3"",
+                    ""path"": ""<Gamepad>/leftStick/right"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Movement"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
                     ""name"": """",
                     ""id"": ""75d5fe4f-012f-41a8-b486-1c960e1d78b1"",
                     ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Jump"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""00c9195e-7f31-4cdd-8e1a-b80dc0f75933"",
+                    ""path"": ""<Gamepad>/buttonSouth"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -204,8 +279,30 @@ namespace Utils.Controls.Mappings
                 },
                 {
                     ""name"": """",
+                    ""id"": ""4eff4465-afa1-4274-b51c-6394b33809bf"",
+                    ""path"": ""<Gamepad>/rightShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Slide"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""4010f176-5d74-4022-a9ac-48c6268fcfff"",
                     ""path"": ""<Keyboard>/tab"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ToggleUi"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""7558fa13-c309-4375-851a-469998ba5a01"",
+                    ""path"": ""<Gamepad>/leftShoulder"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -226,8 +323,30 @@ namespace Utils.Controls.Mappings
                 },
                 {
                     ""name"": """",
+                    ""id"": ""c09c5f59-e4a5-4bca-991c-f042c23cd2c7"",
+                    ""path"": ""<Gamepad>/buttonNorth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Shoot"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""4513dcc6-e44b-4772-bc84-6d03f9eee33e"",
                     ""path"": ""<Keyboard>/n"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Interact"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ebaff748-9695-44cf-8678-d124538f7358"",
+                    ""path"": ""<Gamepad>/buttonEast"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -289,6 +408,83 @@ namespace Utils.Controls.Mappings
                     ""action"": ""RightStick"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""2D Vector"",
+                    ""id"": ""ca8b2d17-599e-43d3-aeb8-49d0003dc056"",
+                    ""path"": ""2DVector"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""RightStick"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""up"",
+                    ""id"": ""46ed1177-6c5e-44cb-8608-48157c724b91"",
+                    ""path"": ""<Gamepad>/rightStick/up"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""RightStick"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""down"",
+                    ""id"": ""3e7a6430-55d2-4543-9267-9f4751cf8a5f"",
+                    ""path"": ""<Gamepad>/rightStick/down"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""RightStick"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""59467eff-7818-4ac6-aa64-5f3753cf2097"",
+                    ""path"": ""<Gamepad>/rightStick/left"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""RightStick"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""51967d89-bf86-488d-be1c-cbb8de4e8657"",
+                    ""path"": ""<Gamepad>/rightStick/right"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""RightStick"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""627ea697-7fd0-48ff-a568-250e1ed65575"",
+                    ""path"": ""<Keyboard>/r"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Reload"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e81bbbcf-0d8c-42a6-b8df-f0111505aa33"",
+                    ""path"": ""<Gamepad>/start"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Reload"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -305,6 +501,7 @@ namespace Utils.Controls.Mappings
             m_PlayerControls_ToggleUi = m_PlayerControls.FindAction("ToggleUi", throwIfNotFound: true);
             m_PlayerControls_Shoot = m_PlayerControls.FindAction("Shoot", throwIfNotFound: true);
             m_PlayerControls_Interact = m_PlayerControls.FindAction("Interact", throwIfNotFound: true);
+            m_PlayerControls_Reload = m_PlayerControls.FindAction("Reload", throwIfNotFound: true);
         }
 
         public void Dispose()
@@ -372,6 +569,7 @@ namespace Utils.Controls.Mappings
         private readonly InputAction m_PlayerControls_ToggleUi;
         private readonly InputAction m_PlayerControls_Shoot;
         private readonly InputAction m_PlayerControls_Interact;
+        private readonly InputAction m_PlayerControls_Reload;
         public struct PlayerControlsActions
         {
             private @PlayerControlMappings m_Wrapper;
@@ -384,6 +582,7 @@ namespace Utils.Controls.Mappings
             public InputAction @ToggleUi => m_Wrapper.m_PlayerControls_ToggleUi;
             public InputAction @Shoot => m_Wrapper.m_PlayerControls_Shoot;
             public InputAction @Interact => m_Wrapper.m_PlayerControls_Interact;
+            public InputAction @Reload => m_Wrapper.m_PlayerControls_Reload;
             public InputActionMap Get() { return m_Wrapper.m_PlayerControls; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
@@ -417,6 +616,9 @@ namespace Utils.Controls.Mappings
                     @Interact.started -= m_Wrapper.m_PlayerControlsActionsCallbackInterface.OnInteract;
                     @Interact.performed -= m_Wrapper.m_PlayerControlsActionsCallbackInterface.OnInteract;
                     @Interact.canceled -= m_Wrapper.m_PlayerControlsActionsCallbackInterface.OnInteract;
+                    @Reload.started -= m_Wrapper.m_PlayerControlsActionsCallbackInterface.OnReload;
+                    @Reload.performed -= m_Wrapper.m_PlayerControlsActionsCallbackInterface.OnReload;
+                    @Reload.canceled -= m_Wrapper.m_PlayerControlsActionsCallbackInterface.OnReload;
                 }
                 m_Wrapper.m_PlayerControlsActionsCallbackInterface = instance;
                 if (instance != null)
@@ -445,6 +647,9 @@ namespace Utils.Controls.Mappings
                     @Interact.started += instance.OnInteract;
                     @Interact.performed += instance.OnInteract;
                     @Interact.canceled += instance.OnInteract;
+                    @Reload.started += instance.OnReload;
+                    @Reload.performed += instance.OnReload;
+                    @Reload.canceled += instance.OnReload;
                 }
             }
         }
@@ -459,6 +664,7 @@ namespace Utils.Controls.Mappings
             void OnToggleUi(InputAction.CallbackContext context);
             void OnShoot(InputAction.CallbackContext context);
             void OnInteract(InputAction.CallbackContext context);
+            void OnReload(InputAction.CallbackContext context);
         }
     }
 }
