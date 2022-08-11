@@ -49,7 +49,7 @@ namespace Core.Controllers
 
         public int shootFramesMax = 35;
         public int shootFrames = 35;
-        public int meleeFrames = 35;
+        public int meleeFrames = 30;
         public int meleeFramesMax = 30;
 
         // stats
@@ -94,7 +94,7 @@ namespace Core.Controllers
             {
                 nextDirection = currentDirection;
             }
-            else if (horizontal > 0 && !isMeleeing() && !isShooting())
+            else if (horizontal > 0 && meleeFrames == meleeFramesMax && shootFrames == shootFramesMax)
             {
                 if (jumpFrames > 30)
                 {
@@ -102,7 +102,7 @@ namespace Core.Controllers
                 }
                 nextDirection = "side";
             }
-            else if (horizontal < 0 && !isMeleeing() && !isShooting())
+            else if (horizontal < 0 && meleeFrames == meleeFramesMax && shootFrames == shootFramesMax)
             {
                 if (jumpFrames > 30)
                 {
@@ -139,7 +139,7 @@ namespace Core.Controllers
             animator.Play(prefix + "_" + currentDirection);
         }
 
-        private void setPlayerAction()
+        private void SetPlayerAction()
         {
             if (health <= 0 && hitStun == hitStunMax)
             {
@@ -164,7 +164,7 @@ namespace Core.Controllers
 
         void Update()
         {
-            setPlayerAction();
+            SetPlayerAction();
             if (!isInteracting())
             {
                 uiController.ToggleInteractionBox("", null, true);
