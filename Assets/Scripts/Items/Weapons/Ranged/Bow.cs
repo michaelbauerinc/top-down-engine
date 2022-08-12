@@ -43,7 +43,7 @@ namespace Core.Items.Weapons.Ranged
 
         void FixedUpdate()
         {
-            if (playerController.shootFrames == 0)
+            if (playerController.shootFrames == 0 && playerController.playerAction == "shooting")
             {
                 string currentDirection = playerController.currentDirection;
                 Vector3 spawnLocation = transform.position;

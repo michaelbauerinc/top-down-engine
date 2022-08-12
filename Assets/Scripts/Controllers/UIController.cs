@@ -162,6 +162,7 @@ namespace Core.Controllers
             if (toUse.destroyedOnUse == true)
             {
                 inventoryContent[indexToDrop]["item"] = null;
+                GoToNextNextAvailableItem();
             }
             toUse.UseItem();
             UpdateDefaultWindow();
@@ -174,6 +175,7 @@ namespace Core.Controllers
             Dictionary<string, dynamic> toDrop = inventoryContent[indexToDrop];
             itemToDrop.DropItem();
             toDrop["item"] = null;
+            GoToNextNextAvailableItem();
         }
 
         private void MapInventory()
@@ -222,22 +224,22 @@ namespace Core.Controllers
 
         private void GetSelectedItemIndex()
         {
-            if (Mathf.Abs(playerController.rVertical) > 0 && inventoryContent.Count == 3 && inventoryContent[selectedItemIndex]["item"] != null)
-            {
-                if (playerController.rVertical > 0)
-                {
-                    UseItem(selectedItemIndex);
-                }
-                else if (playerController.rVertical < 0)
-                {
-                    DropItem(selectedItemIndex);
-                }
-                MapInventory();
-            }
-            else if (Mathf.Abs(playerController.rHorizontal) > 0)
+            if (Mathf.Abs(playerController.rHorizontal) + Mathf.Abs(playerController.rVertical) != 0)
             {
                 if (selectItemInputBuffer == selectItemInputBufferMax || selectItemInputBuffer < 0)
                 {
+                    if (Mathf.Abs(playerController.rVertical) > 0 && inventoryContent.Count == 3 && inventoryContent[selectedItemIndex]["item"] != null)
+                    {
+                        if (playerController.rVertical > 0)
+                        {
+                            UseItem(selectedItemIndex);
+                        }
+                        else if (playerController.rVertical < 0)
+                        {
+                            DropItem(selectedItemIndex);
+                        }
+                        MapInventory();
+                    }
                     selectedItemIndex += (int)playerController.rHorizontal;
                     if (selectedItemIndex < 0)
                     {
@@ -249,11 +251,28 @@ namespace Core.Controllers
                     }
                     MapInventory();
                 }
+
                 selectItemInputBuffer--;
             }
             else
             {
                 selectItemInputBuffer = selectItemInputBufferMax;
+            }
+        }
+
+        private void GoToNextNextAvailableItem()
+        {
+            for (int i = selectedItemIndex + 1; i != selectedItemIndex; i++)
+            {
+                if (i >= inventoryContent.Count)
+                {
+                    i = 0;
+                }
+                if (inventoryContent[i]["item"] != null)
+                {
+                    selectedItemIndex = i;
+                    break;
+                }
             }
         }
         void FixedUpdate()

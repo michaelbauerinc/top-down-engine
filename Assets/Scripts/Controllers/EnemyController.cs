@@ -37,6 +37,7 @@ namespace Core.Controllers
         public int invincibilityFramesMax = 40;
         public string currentDirection = "down";
         public int actionSleepTime = 0;
+        public bool moveEnabled = true;
 
 
         // Start is called before the first frame update
@@ -74,8 +75,11 @@ namespace Core.Controllers
             {
                 invincibilityFrames--;
             }
-            DoRandomMovement();
-            body.velocity = new Vector2(runSpeed * horizontal, runSpeed * vertical);
+            if (moveEnabled)
+            {
+                DoRandomMovement();
+                body.velocity = new Vector2(runSpeed * horizontal, runSpeed * vertical);
+            }
 
             switch (enemyAction)
             {
@@ -109,6 +113,7 @@ namespace Core.Controllers
                     break;
                 case "dead":
                     // canMove = false;
+                    body.velocity = new Vector2(0, 0);
                     if (enemyRenderer.sprite.name == deathSprite)
                     {
                         Destroy(gameObject);
@@ -236,7 +241,6 @@ namespace Core.Controllers
             {
                 vertical = Random.Range(-1, 2);
                 horizontal = Random.Range(-1, 2);
-                Debug.Log(vertical + " | " + horizontal);
                 actionSleepTime = Random.Range(30, 120);
                 if (isMoving("diagonally"))
                 {

@@ -311,6 +311,11 @@ namespace Core.Controllers
                 rHorizontal = vector.x;
                 rVertical = vector.y;
             }
+            else
+            {
+                rHorizontal = 0;
+                rVertical = 0;
+            }
         }
 
         public void ReloadScene(InputAction.CallbackContext value)
@@ -412,6 +417,7 @@ namespace Core.Controllers
                     break;
                 case "dead":
                     canMove = false;
+                    body.velocity = new Vector2(0, 0);
                     if (playerRenderer.sprite.name == deathSprite)
                     {
                         Destroy(gameObject);
