@@ -253,11 +253,17 @@ namespace Core.Controllers
                     uiController.ToggleInteractionBox("");
                     playerAction = "idle";
                 }
-                else if (interactionTarget)
+                else if (interactionTarget && !isInteracting())
                 {
                     if (interactionTarget.canInteract)
                     {
-                        uiController.ToggleInteractionBox(interactionTarget.toSay, interactionTarget.itemRenderer.sprite);
+                        string toSay = interactionTarget.toSay;
+                        bool isItem = interactionTarget.GetComponent<Item>() != null;
+                        if (isItem && uiController.totalHeldItems == 3)
+                        {
+                            toSay += "\n... but you're already carrying 3 items";
+                        }
+                        uiController.ToggleInteractionBox(toSay, interactionTarget.itemRenderer.sprite);
                         playerAction = "interacting";
                     }
                 }

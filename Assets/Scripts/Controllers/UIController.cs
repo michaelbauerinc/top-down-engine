@@ -34,6 +34,7 @@ namespace Core.Controllers
         public int selectedItemIndex = 0;
         private int selectItemInputBuffer = 10;
         private int selectItemInputBufferMax = 10;
+        public int totalHeldItems = 0;
         public bool inventoryOpen = false;
         public MeleeWeapon equippedMeleeWeapon;
         public RangedWeapon equippedRangedWeapon;
@@ -114,8 +115,11 @@ namespace Core.Controllers
 
         public void PickUpItem(Item item)
         {
-            if (item.canPickUp)
+            if (item.canPickUp && totalHeldItems < inventoryContent.Count)
             {
+                totalHeldItems++;
+                item.PickUpItem();
+
                 Weapon weapon = item.gameObject.GetComponent<Weapon>();
                 if (weapon != null)
                 {
@@ -125,7 +129,6 @@ namespace Core.Controllers
                 {
                     for (int i = 0; i < inventoryContent.Count; i++)
                     {
-                        item.PickUpItem();
                         if (inventoryContent[i]["item"] == null)
                         {
                             inventoryContent[i]["item"] = item;
@@ -175,6 +178,7 @@ namespace Core.Controllers
             Dictionary<string, dynamic> toDrop = inventoryContent[indexToDrop];
             itemToDrop.DropItem();
             toDrop["item"] = null;
+            totalHeldItems--;
             GoToNextNextAvailableItem();
         }
 
