@@ -42,6 +42,13 @@ namespace Core.Physics
                         MultiTag tags = other.gameObject.GetComponent<MultiTag>();
                         if (tags.HasTag("hurtbox"))
                         {
+                            if (tags.HasTag("jumpable-hurtbox"))
+                            {
+                                if (playerController.isJumping())
+                                {
+                                    return;
+                                }
+                            }
                             StatMap statMap = other.gameObject.GetComponent<StatMap>();
                             int damageToDo = statMap.allStats["power"];
                             if (damageToDo > 0 && !playerController.hasInvincibilityFrames)

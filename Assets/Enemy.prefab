@@ -182,7 +182,6 @@ GameObject:
   - component: {fileID: 8858654998713670700}
   - component: {fileID: 8858654998713670691}
   - component: {fileID: 1812628004594682193}
-  - component: {fileID: 8412264250228832068}
   - component: {fileID: 8412264250228832069}
   m_Layer: 0
   m_Name: Enemy
@@ -342,18 +341,6 @@ MonoBehaviour:
   tags:
   - enemy
   - layer-swap-object
---- !u!114 &8412264250228832068
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8412264250228832187}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7f7a96a4776fc63428d1c7296bdd68d8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &8412264250228832069
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -382,3 +369,4 @@ MonoBehaviour:
   invincibilityFramesMax: 40
   currentDirection: down
   actionSleepTime: 0
+  moveEnabled: 1

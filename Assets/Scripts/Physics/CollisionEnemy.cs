@@ -16,7 +16,7 @@ namespace Core.Physics
         // Start is called before the first frame update
         void Start()
         {
-            enemyController = gameObject.GetComponent<EnemyController>();
+            enemyController = transform.root.gameObject.GetComponent<EnemyController>();
         }
 
         // Update is called once per frame

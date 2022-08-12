@@ -47,6 +47,7 @@ namespace Core.Items.Weapons.Ranged
             {
                 string currentDirection = playerController.currentDirection;
                 Vector3 spawnLocation = transform.position;
+                spawnLocation.z = 0;
                 switch (currentDirection)
                 {
                     case "up":

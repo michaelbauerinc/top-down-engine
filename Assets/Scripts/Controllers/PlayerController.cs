@@ -164,7 +164,6 @@ namespace Core.Controllers
 
         void Update()
         {
-            SetPlayerAction();
             if (!isInteracting())
             {
                 uiController.ToggleInteractionBox("", null, true);
@@ -201,7 +200,6 @@ namespace Core.Controllers
                 default:
                     break;
             }
-            Animate();
         }
 
         private void OnCollisionEnter2D(Collision2D collision)
@@ -326,6 +324,7 @@ namespace Core.Controllers
 
         private void FixedUpdate()
         {
+            SetPlayerAction();
             if (hitStun == hitStunMax - 1)
             {
                 hasInvincibilityFrames = true;
@@ -432,6 +431,7 @@ namespace Core.Controllers
                     hitStun = hitStunMax;
                     break;
             }
+            Animate();
         }
 
         // Optional arg to get direction

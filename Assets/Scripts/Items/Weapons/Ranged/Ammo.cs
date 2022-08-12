@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 using Core.Utils;
+using UnityEngine;
 
 namespace Core.Items.Weapons.Ranged
 {
@@ -45,7 +45,7 @@ namespace Core.Items.Weapons.Ranged
         private void OnTriggerEnter2D(Collider2D other)
         {
             bool hasTags = other.gameObject.GetComponent<MultiTag>() != null;
-            if (hasTags && other.gameObject.GetComponent<MultiTag>().HasTag("enemy"))
+            if (hasTags && other.gameObject.GetComponent<MultiTag>().HasTag("enemy") || hasTags && other.gameObject.GetComponent<MultiTag>().HasTag("ammo-breaker"))
             {
                 Destroy(gameObject);
             }
