@@ -126,6 +126,5 @@ namespace Core.Libraries.AnimationMappings
         public static Dictionary<string, Dictionary<string, Dictionary<string, float[]>>> animationMappings = new Dictionary<string, Dictionary<string, Dictionary<string, float[]>>>(){
         {"walking", walkMappings},
         {"idle", idleMappings}};
-
     }
 }
