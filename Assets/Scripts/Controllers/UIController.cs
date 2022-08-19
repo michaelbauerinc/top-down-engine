@@ -115,17 +115,17 @@ namespace Core.Controllers
 
         public void PickUpItem(Item item)
         {
-            if (item.canPickUp && totalHeldItems < inventoryContent.Count)
+            if (item.canPickUp)
             {
-                item.PickUpItem();
-
                 Weapon weapon = item.gameObject.GetComponent<Weapon>();
                 if (weapon != null)
                 {
+                    item.PickUpItem();
                     EquipWeapon(weapon);
                 }
-                else
+                else if (totalHeldItems < inventoryContent.Count)
                 {
+                    item.PickUpItem();
                     totalHeldItems++;
                     for (int i = 0; i < inventoryContent.Count; i++)
                     {

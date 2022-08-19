@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Core.Environment;
 using Core.Items;
+using Core.Items.Weapons;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
@@ -41,21 +42,19 @@ namespace Core.Controllers
         public float rHorizontal;
         public float rVertical;
         public float runSpeed = 5.0f;
-        // Action durations
-        public int jumpFrames = 35;
-        public int jumpFramesMax = 35;
-        public int slideFrames = 45;
-        public int slideFramesMax = 45;
-
-        public int shootFramesMax = 35;
-        public int shootFrames = 35;
-        public int meleeFrames = 30;
-        public int meleeFramesMax = 30;
-
         // stats
         public int health = 10;
         public int maxHealth = 10;
         public int currency = 100;
+        // Action durations/frame data
+        public int jumpFrames = 35;
+        public int jumpFramesMax = 35;
+        public int slideFrames = 45;
+        public int slideFramesMax = 45;
+        public int shootFramesMax = 35;
+        public int shootFrames = 35;
+        public int meleeFrames = 30;
+        public int meleeFramesMax = 30;
         public int hitStun = 40;
         public int hitStunMax = 40;
         public int invincibilityFrames = 40;
@@ -78,6 +77,7 @@ namespace Core.Controllers
         {
             string prefix = animationMappings[playerAction];
             string nextDirection = currentDirection;
+            // this is a hack for the top VS bottom sprites of the character being whack
             if (currentDirection != "side")
             {
                 if (isMeleeing())
@@ -94,6 +94,7 @@ namespace Core.Controllers
             {
                 nextDirection = currentDirection;
             }
+            // this protects against random flipx after melee/shoot + not allowing character direction change 5 frames into a jump
             else if (horizontal > 0 && meleeFrames == meleeFramesMax && shootFrames == shootFramesMax)
             {
                 if (jumpFrames > 30)
@@ -110,6 +111,7 @@ namespace Core.Controllers
                 }
                 nextDirection = "side";
             }
+            // if none of that fancy stuff is going on, just get the direction
             else if (vertical == 1f)
             {
                 nextDirection = "up";
@@ -118,6 +120,7 @@ namespace Core.Controllers
             {
                 nextDirection = "down";
             }
+            // handle animations for invincibility/hitstun/death
             if (hasInvincibilityFrames)
             {
                 playerRenderer.color = new UnityEngine.Color(1f, 1f, 1f, .75f);
@@ -126,15 +129,16 @@ namespace Core.Controllers
             {
                 playerRenderer.color = new UnityEngine.Color(0.97f, 0.02f, 0.02f, 1f);
             }
-            else
-            {
-                playerRenderer.color = new UnityEngine.Color(1f, 1f, 1f, 1f);
-            }
-            if (prefix == "dead")
+            else if (prefix == "dead")
             {
                 animator.Play("vanish");
                 return;
             }
+            else
+            {
+                playerRenderer.color = new UnityEngine.Color(1f, 1f, 1f, 1f);
+            }
+
             currentDirection = nextDirection;
             animator.Play(prefix + "_" + currentDirection);
         }
@@ -164,10 +168,6 @@ namespace Core.Controllers
 
         void Update()
         {
-            if (!isInteracting())
-            {
-                uiController.ToggleInteractionBox("", null, true);
-            }
             switch (playerAction)
             {
                 case "interacting":
@@ -217,68 +217,67 @@ namespace Core.Controllers
 
         public void Jump()
         {
-            if (!isJumping() && !isMeleeing())
+            if (!isInteracting() && !isJumping() && !isMeleeing())
             {
                 playerAction = "jumping";
-
+                jumpFrames--;
             }
         }
 
         public void Slide()
         {
-            if (!isSliding() && !isMeleeing() && !isJumping() && !isShooting())
+            if (!isInteracting() && !isSliding() && !isMeleeing() && !isJumping() && !isShooting())
             {
                 playerAction = "sliding";
+                slideFrames--;
+            }
+        }
 
+        public void Melee()
+        {
+            if (!isInteracting() && !isMeleeing() && !isShooting() && !isJumping() && uiController.equippedMeleeWeapon != null)
+            {
+                playerAction = "meleeing";
+                meleeFrames--;
+            }
+        }
+
+        public void Shoot()
+        {
+            if (!isShooting() && !isMeleeing() && !isJumping() && uiController.equippedRangedWeapon != null)
+            {
+                playerAction = "shooting";
+                shootFrames--;
             }
         }
 
         public void Interact(InputAction.CallbackContext value)
         {
-            if (value.started)
+            if (isInteracting())
             {
-                if (isInteracting())
-                {
-                    uiController.ToggleInteractionBox("");
-                    playerAction = "idle";
-                }
-                else if (interactionTarget && !isInteracting())
-                {
-                    if (interactionTarget.canInteract)
-                    {
-                        string toSay = interactionTarget.toSay;
-                        bool isItem = interactionTarget.GetComponent<Item>() != null;
-                        if (isItem && uiController.totalHeldItems == 3)
-                        {
-                            toSay += "\n... but you're already carrying 3 items";
-                        }
-                        uiController.ToggleInteractionBox(toSay, interactionTarget.itemRenderer.sprite);
-                        playerAction = "interacting";
-                    }
-                }
+                uiController.ToggleInteractionBox("");
+                playerAction = "idle";
             }
-
-        }
-
-        public void Melee()
-        {
-            if (!isMeleeing() && !isShooting() && !isJumping() && uiController.equippedMeleeWeapon != null)
+            else if (interactionTarget && !isInteracting())
             {
-                playerAction = "meleeing";
+                if (interactionTarget.canInteract)
+                {
+                    string toSay = interactionTarget.toSay;
+                    bool isItem = interactionTarget.GetComponent<Item>() != null;
+                    bool isWeapon = interactionTarget.GetComponent<Weapon>() != null;
+                    if (isItem && !isWeapon && uiController.totalHeldItems == 3)
+                    {
+                        toSay += "\n... but you're already carrying 3 items";
+                    }
+                    uiController.ToggleInteractionBox(toSay, interactionTarget.itemRenderer.sprite);
+                    playerAction = "interacting";
+                }
             }
         }
 
         public void ToggleUi()
         {
             uiController.ToggleUi();
-        }
-
-        public void Shoot()
-        {
-            if (shootFrames == shootFramesMax && !isShooting() && !isMeleeing() && !isJumping() && uiController.equippedRangedWeapon != null)
-            {
-                playerAction = "shooting";
-            }
         }
 
         public void GetMovement(InputAction.CallbackContext value)
@@ -317,14 +316,9 @@ namespace Core.Controllers
 
         }
 
-        private void FixedUpdate()
+        private void HandleInvincibilityFrames()
         {
-            SetPlayerAction();
-            if (hitStun == hitStunMax - 1)
-            {
-                hasInvincibilityFrames = true;
-            }
-            else if (hasInvincibilityFrames && invincibilityFrames == 0)
+            if (hasInvincibilityFrames && invincibilityFrames == 0)
             {
                 invincibilityFrames = invincibilityFramesMax;
                 hasInvincibilityFrames = false;
@@ -333,7 +327,10 @@ namespace Core.Controllers
             {
                 invincibilityFrames--;
             }
+        }
 
+        private void HandlePlayerMomentum()
+        {
             // Sliding has inherent momentum is we're not moving, only apply on first frame
             if (isSliding() && slideFrames == slideFramesMax && !isMoving())
             {
@@ -379,6 +376,13 @@ namespace Core.Controllers
                 vertical = verticalInput;
             }
             body.velocity = new Vector2(horizontal * runSpeed, vertical * runSpeed);
+        }
+
+        private void FixedUpdate()
+        {
+            SetPlayerAction();
+            HandleInvincibilityFrames();
+            HandlePlayerMomentum();
             switch (playerAction)
             {
                 case "shooting":
@@ -417,9 +421,13 @@ namespace Core.Controllers
                     break;
                 case "hit":
                     hitStun++;
-                    // canMove = false;
+                    if (hitStun == hitStunMax)
+                    {
+                        hasInvincibilityFrames = true;
+                    }
                     break;
                 case "dead":
+                    hasInvincibilityFrames = false;
                     canMove = false;
                     body.velocity = new Vector2(0, 0);
                     if (playerRenderer.sprite.name == deathSprite)
@@ -449,12 +457,12 @@ namespace Core.Controllers
 
         public bool isJumping()
         {
-            return playerAction == "jumping";
+            return playerAction == "jumping" && jumpFrames < jumpFramesMax;
         }
 
         public bool isSliding()
         {
-            return playerAction == "sliding";
+            return playerAction == "sliding" && slideFrames < slideFramesMax;
         }
 
         public bool isInteracting()
@@ -464,17 +472,17 @@ namespace Core.Controllers
 
         public bool isShooting()
         {
-            return playerAction == "shooting";
+            return playerAction == "shooting" && shootFrames < shootFramesMax;
         }
 
         public bool isMeleeing()
         {
-            return playerAction == "meleeing";
+            return playerAction == "meleeing" && meleeFrames < meleeFramesMax;
         }
 
         public bool IsInHitstun()
         {
-            return playerAction == "hit";
+            return playerAction == "hit" && hitStun < hitStunMax;
         }
 
         public bool IsFacingRight()
