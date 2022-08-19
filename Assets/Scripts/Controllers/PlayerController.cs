@@ -17,6 +17,7 @@ namespace Core.Controllers
         SpriteRenderer playerRenderer;
         BoxCollider2D playerCollider;
         Interactable interactionTarget = null;
+        SpriteRenderer coverRenderer;
         Dictionary<string, string> animationMappings = new Dictionary<string, string>(){
             {"idle", "idle"},
             {"hit", "hit"},
@@ -68,6 +69,7 @@ namespace Core.Controllers
             uiController = GameObject.Find("UI").GetComponent<UIController>();
             playerRenderer = gameObject.GetComponent<SpriteRenderer>();
             BoxCollider2D playerCollider = gameObject.GetComponent<BoxCollider2D>();
+            coverRenderer = gameObject.transform.GetChild(1).GetComponent<SpriteRenderer>();
         }
         void Start()
         {
@@ -75,6 +77,7 @@ namespace Core.Controllers
 
         void Animate()
         {
+            coverRenderer.flipX = playerRenderer.flipX;
             string prefix = animationMappings[playerAction];
             string nextDirection = currentDirection;
             // this is a hack for the top VS bottom sprites of the character being whack

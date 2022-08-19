@@ -31,7 +31,7 @@ namespace Core.Items.Weapons.Melee
 
         void FixedUpdate()
         {
-            if (isEquipped && !playerController.isSliding() && !playerController.isJumping() && !playerController.isShooting())
+            if (isEquipped && !playerController.isSliding() && !playerController.isJumping() && !playerController.isShooting() && !playerController.IsInHitstun())
             {
                 itemRenderer.enabled = true;
                 HandleHurtBox();

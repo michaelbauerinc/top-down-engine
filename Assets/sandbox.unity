@@ -10423,7 +10423,7 @@ GameObject:
   - component: {fileID: 1034404692}
   - component: {fileID: 1034404694}
   m_Layer: 0
-  m_Name: PlayerBottom
+  m_Name: PlayerCover
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -10437,7 +10437,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1034404691}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 5}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -11608,6 +11608,14 @@ PrefabInstance:
       propertyPath: currentDirection
       value: down
       objectReference: {fileID: 0}
+    - target: {fileID: 7418140207077613520, guid: a5efacba4ead1b749b5aa585956d95f3, type: 3}
+      propertyPath: playerCoverSprites.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7418140207077613520, guid: a5efacba4ead1b749b5aa585956d95f3, type: 3}
+      propertyPath: playerCoverSprites.Array.data[0]
+      value: 
+      objectReference: {fileID: 8952162787185664858, guid: 640aea87f09740a9a6e309a6b708bc39, type: 3}
     m_RemovedComponents:
     - {fileID: 6587445262009507079, guid: a5efacba4ead1b749b5aa585956d95f3, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: a5efacba4ead1b749b5aa585956d95f3, type: 3}
@@ -21629,7 +21637,7 @@ PrefabInstance:
     - target: {fileID: 701459862249534966, guid: 6b6b2ef466bf1184f96632f8d9ff4a4f, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 1131549020000966294, guid: a31d47d90cd74a5a88c7c5e6f96eef33, type: 3}
+      objectReference: {fileID: 4459293353652961918, guid: 1129d256411e833448e8a5b8fba3c51e, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6b6b2ef466bf1184f96632f8d9ff4a4f, type: 3}
 --- !u!1001 &7385967354950391360

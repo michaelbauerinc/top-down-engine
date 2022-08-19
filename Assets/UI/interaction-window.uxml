@@ -1,5 +1,5 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
-    <Style src="StyleSheets/interaction-window.uss" />
+    <Style src="project://database/Assets/UI/StyleSheets/interaction-window.uss?fileID=7433441132597879392&amp;guid=c344e8c839648bf48b4cf37998aaece6&amp;type=3#interaction-window" />
     <ui:VisualElement name="Root" class="interaction-window-container hidden">
         <ui:VisualElement class="interaction-window-picture" style="background-image: none;" />
         <ui:VisualElement class="interaction-window-text-container">
