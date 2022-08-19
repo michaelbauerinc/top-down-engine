@@ -244,7 +244,7 @@ namespace Core.Controllers
 
         public void Shoot()
         {
-            if (!isShooting() && !isMeleeing() && !isJumping() && uiController.equippedRangedWeapon != null)
+            if (!isInteracting() && !isShooting() && !isMeleeing() && !isJumping() && uiController.equippedRangedWeapon != null)
             {
                 playerAction = "shooting";
                 shootFrames--;
@@ -265,7 +265,7 @@ namespace Core.Controllers
                     string toSay = interactionTarget.toSay;
                     bool isItem = interactionTarget.GetComponent<Item>() != null;
                     bool isWeapon = interactionTarget.GetComponent<Weapon>() != null;
-                    if (isItem && !isWeapon && uiController.totalHeldItems == 3)
+                    if (isItem && !isWeapon && uiController.inventory.totalHeldItems == 3)
                     {
                         toSay += "\n... but you're already carrying 3 items";
                     }

@@ -20,21 +20,15 @@ namespace Core.Controllers
         VisualElement playerHealthBar;
         Label playerCurrencyValue;
 
-        // public List<Item> inventoryContent = new List<Item>();
-        // List<Item> inventoryContent = new List<Item>();
-
-        // {
-        //     0: {
-        //         'item': <Item>,
-        //         'slot': <VisualElement>,
-        //         'slotContent': <VisualElement>
-        //     }
-        // }
-        Dictionary<int, Dictionary<string, dynamic>> inventoryContent = new Dictionary<int, Dictionary<string, dynamic>>();
+        public struct Inventory
+        {
+            public int totalHeldItems;
+            public Dictionary<int, Dictionary<string, dynamic>> content;
+        }
+        public Inventory inventory;
         public int selectedItemIndex = 0;
         private int selectItemInputBuffer = 10;
         private int selectItemInputBufferMax = 10;
-        public int totalHeldItems = 0;
         public bool inventoryOpen = false;
         public MeleeWeapon equippedMeleeWeapon;
         public RangedWeapon equippedRangedWeapon;
@@ -73,26 +67,15 @@ namespace Core.Controllers
         }
 
         public void ToggleInteractionBox(
-            // TODO: clean this spaghetti up
             string interactionText = "",
-            Sprite interactionImage = null,
-            bool hide = false
-
+            Sprite interactionImage = null
         )
         {
-            if (hide == true)
-            {
-                interactionWindow.AddToClassList("hidden");
-
-            }
-            else
-            {
-                interactionWindow.ElementAt(0).style.backgroundImage =
-                    new StyleBackground(interactionImage);
-                interactionWindow.ElementAt(1).Q<Label>("Text").text =
-                    interactionText;
-                interactionWindow.ToggleInClassList("hidden");
-            }
+            interactionWindow.ElementAt(0).style.backgroundImage =
+                new StyleBackground(interactionImage);
+            interactionWindow.ElementAt(1).Q<Label>("Text").text =
+                interactionText;
+            interactionWindow.ToggleInClassList("hidden");
         }
 
         public void UpdateDefaultWindow()
@@ -123,15 +106,15 @@ namespace Core.Controllers
                     item.PickUpItem();
                     EquipWeapon(weapon);
                 }
-                else if (totalHeldItems < inventoryContent.Count)
+                else if (inventory.totalHeldItems < inventory.content.Count)
                 {
                     item.PickUpItem();
-                    totalHeldItems++;
-                    for (int i = 0; i < inventoryContent.Count; i++)
+                    inventory.totalHeldItems++;
+                    for (int i = 0; i < inventory.content.Count; i++)
                     {
-                        if (inventoryContent[i]["item"] == null)
+                        if (inventory.content[i]["item"] == null)
                         {
-                            inventoryContent[i]["item"] = item;
+                            inventory.content[i]["item"] = item;
                             break;
                         }
                     }
@@ -161,12 +144,12 @@ namespace Core.Controllers
 
         private void UseItem(int indexToDrop)
         {
-            Item toUse = inventoryContent[indexToDrop]["item"];
+            Item toUse = inventory.content[indexToDrop]["item"];
             if (toUse.destroyedOnUse == true)
             {
-                inventoryContent[indexToDrop]["item"] = null;
+                inventory.content[indexToDrop]["item"] = null;
                 GoToNextNextAvailableItem();
-                totalHeldItems--;
+                inventory.totalHeldItems--;
             }
             toUse.UseItem();
             UpdateDefaultWindow();
@@ -175,22 +158,22 @@ namespace Core.Controllers
 
         private void DropItem(int indexToDrop)
         {
-            Item itemToDrop = inventoryContent[indexToDrop]["item"];
-            Dictionary<string, dynamic> toDrop = inventoryContent[indexToDrop];
+            Item itemToDrop = inventory.content[indexToDrop]["item"];
+            Dictionary<string, dynamic> toDrop = inventory.content[indexToDrop];
             itemToDrop.DropItem();
             toDrop["item"] = null;
-            totalHeldItems--;
+            inventory.totalHeldItems--;
             GoToNextNextAvailableItem();
         }
 
         private void MapInventory()
         {
-            for (int i = 0; i < inventoryContent.Count; i++)
+            for (int i = 0; i < inventory.content.Count; i++)
             {
-                Dictionary<string, dynamic> toMap = inventoryContent[i];
-
+                Dictionary<string, dynamic> toMap = inventory.content[i];
                 VisualElement slot = toMap["itemSlot"];
                 VisualElement slotContent = toMap["itemSlotContent"];
+
                 if (toMap["item"] != null)
                 {
                     slotContent.style.backgroundImage = new StyleBackground(toMap["item"].itemRenderer.sprite);
@@ -223,7 +206,7 @@ namespace Core.Controllers
                     {"itemSlot", slot},
                     {"itemSlotContent", slotContent}
                 };
-                inventoryContent[i] = toAdd;
+                inventory.content[i] = toAdd;
             }
         }
 
@@ -233,7 +216,7 @@ namespace Core.Controllers
             {
                 if (selectItemInputBuffer == selectItemInputBufferMax || selectItemInputBuffer < 0)
                 {
-                    if (Mathf.Abs(playerController.rVertical) > 0 && inventoryContent.Count == 3 && inventoryContent[selectedItemIndex]["item"] != null)
+                    if (Mathf.Abs(playerController.rVertical) > 0 && inventory.content[selectedItemIndex]["item"] != null)
                     {
                         if (playerController.rVertical > 0)
                         {
@@ -248,9 +231,9 @@ namespace Core.Controllers
                     selectedItemIndex += (int)playerController.rHorizontal;
                     if (selectedItemIndex < 0)
                     {
-                        selectedItemIndex = inventoryContent.Count - 1;
+                        selectedItemIndex = inventory.content.Count - 1;
                     }
-                    else if (selectedItemIndex > inventoryContent.Count - 1)
+                    else if (selectedItemIndex > inventory.content.Count - 1)
                     {
                         selectedItemIndex = 0;
                     }
@@ -268,9 +251,9 @@ namespace Core.Controllers
         private void GoToNextNextAvailableItem()
         {
             selectedItemIndex = 0;
-            for (int i = 0; i < inventoryContent.Count; i++)
+            for (int i = 0; i < inventory.content.Count; i++)
             {
-                if (inventoryContent[i]["item"] != null)
+                if (inventory.content[i]["item"] != null)
                 {
                     selectedItemIndex = i;
                     break;
