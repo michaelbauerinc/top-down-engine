@@ -45,7 +45,7 @@ namespace Core.Items.Weapons.Ranged
         private void OnTriggerEnter2D(Collider2D other)
         {
             bool hasTags = other.gameObject.GetComponent<MultiTag>() != null;
-            if (hasTags && other.gameObject.GetComponent<MultiTag>().HasTag("enemy") || hasTags && other.gameObject.GetComponent<MultiTag>().HasTag("ammo-breaker"))
+            if (hasTags && other.gameObject.GetComponent<MultiTag>().HasTag("ammo-breaker"))
             {
                 Destroy(gameObject);
             }

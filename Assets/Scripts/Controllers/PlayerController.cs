@@ -171,17 +171,6 @@ namespace Core.Controllers
             switch (playerAction)
             {
                 case "interacting":
-                    bool isItem = interactionTarget != null && interactionTarget.GetComponent<Item>() != null;
-                    if (interactionTarget != null && interactionTarget.canInteract)
-                    {
-                        if (isItem && interactionTarget.canPickUp)
-                        {
-                            uiController.PickUpItem(interactionTarget.GetComponent<Item>());
-                        }
-                        canMove = false;
-                        horizontal = 0;
-                        vertical = 0;
-                    }
                     break;
                 case "shooting":
                     break;
@@ -414,7 +403,17 @@ namespace Core.Controllers
                     playerAction = meleeFrames == 0 ? "idle" : playerAction;
                     break;
                 case "interacting":
-                    canMove = false;
+                    bool isItem = interactionTarget != null && interactionTarget.GetComponent<Item>() != null;
+                    if (interactionTarget != null && interactionTarget.canInteract)
+                    {
+                        if (isItem && interactionTarget.canPickUp)
+                        {
+                            uiController.PickUpItem(interactionTarget.GetComponent<Item>());
+                        }
+                        canMove = false;
+                        horizontal = 0;
+                        vertical = 0;
+                    }
                     break;
                 case "hit":
                     hitStun++;

@@ -117,7 +117,6 @@ namespace Core.Controllers
         {
             if (item.canPickUp && totalHeldItems < inventoryContent.Count)
             {
-                totalHeldItems++;
                 item.PickUpItem();
 
                 Weapon weapon = item.gameObject.GetComponent<Weapon>();
@@ -127,6 +126,7 @@ namespace Core.Controllers
                 }
                 else
                 {
+                    totalHeldItems++;
                     for (int i = 0; i < inventoryContent.Count; i++)
                     {
                         if (inventoryContent[i]["item"] == null)
@@ -166,6 +166,7 @@ namespace Core.Controllers
             {
                 inventoryContent[indexToDrop]["item"] = null;
                 GoToNextNextAvailableItem();
+                totalHeldItems--;
             }
             toUse.UseItem();
             UpdateDefaultWindow();
@@ -266,12 +267,9 @@ namespace Core.Controllers
 
         private void GoToNextNextAvailableItem()
         {
-            for (int i = selectedItemIndex + 1; i != selectedItemIndex; i++)
+            selectedItemIndex = 0;
+            for (int i = 0; i < inventoryContent.Count; i++)
             {
-                if (i >= inventoryContent.Count)
-                {
-                    i = 0;
-                }
                 if (inventoryContent[i]["item"] != null)
                 {
                     selectedItemIndex = i;
