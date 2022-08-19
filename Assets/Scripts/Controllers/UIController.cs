@@ -197,6 +197,7 @@ namespace Core.Controllers
 
         private void InitInventory()
         {
+            Dictionary<int, Dictionary<string, dynamic>> content = new Dictionary<int, Dictionary<string, dynamic>>();
             for (int i = 0; i < 3; i++)
             {
                 VisualElement slot = inventoryUi.Q<VisualElement>($"ItemSlot{i}");
@@ -206,8 +207,9 @@ namespace Core.Controllers
                     {"itemSlot", slot},
                     {"itemSlotContent", slotContent}
                 };
-                inventory.content[i] = toAdd;
+                content[i] = toAdd;
             }
+            inventory.content = content;
         }
 
         private void GetSelectedItemIndex()

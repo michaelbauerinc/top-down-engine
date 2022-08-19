@@ -25,6 +25,7 @@
     background-color: rgba(243, 255, 0, 0);
     width: 33%;
     height: 100%;
+    -unity-background-scale-mode: scale-to-fit;
 }
 
 .interaction-window-text-container {
