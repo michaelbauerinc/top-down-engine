@@ -21,7 +21,7 @@ namespace Core.Physics
 
         void OnCollisionEnter2D(Collision2D collision)
         {
-            if (collision.gameObject.tag == "env" | collision.gameObject.tag == "Player")
+            if (collision.gameObject.tag == "env" | collision.gameObject.tag == "Player1")
             {
                 Physics2D.IgnoreCollision(collision.collider, envCollider);
             }

@@ -34,7 +34,7 @@ namespace Core.Items.Consumables
 
         public override void UseItem()
         {
-            PlayerController player = GameObject.Find("Player").GetComponent<PlayerController>();
+            PlayerController player = GameObject.FindGameObjectsWithTag("Player1")[0].GetComponent<PlayerController>();
             int healthToHeal = player.health + healingPower;
             int newHealth = healthToHeal < player.maxHealth ? healthToHeal : player.maxHealth;
             player.health = newHealth;

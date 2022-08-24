@@ -11,6 +11,10 @@ namespace Core.Utils
         public List<GameObject> swapObjects = new List<GameObject>();
         void Awake()
         {
+        }
+        // Start is called before the first frame update
+        void Start()
+        {
             var tags = FindObjectsOfType<MultiTag>();
             foreach (MultiTag tag in tags)
             {
@@ -19,10 +23,6 @@ namespace Core.Utils
                     swapObjects.Add(tag.gameObject);
                 }
             }
-        }
-        // Start is called before the first frame update
-        void Start()
-        {
         }
 
         // Update is called once per frame

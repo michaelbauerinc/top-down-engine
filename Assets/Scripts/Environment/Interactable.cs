@@ -23,7 +23,7 @@ namespace Core.Environment
             animator = GetComponent<Animator>();
             itemRenderer = GetComponent<SpriteRenderer>();
             boxCollider = GetComponent<BoxCollider2D>();
-            playerController = GameObject.Find("Player").GetComponent<PlayerController>();
+            playerController = GameObject.FindGameObjectsWithTag("Player1")[0].GetComponent<PlayerController>();
         }
         void Start()
         {

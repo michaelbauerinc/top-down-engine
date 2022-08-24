@@ -36,8 +36,8 @@ namespace Core.Items
         }
         public virtual void DropItem()
         {
-            string playerDir = GameObject.Find("Player").GetComponent<PlayerController>().currentDirection;
-            Vector3 dropLocation = GameObject.Find("Player").transform.position;
+            string playerDir = GameObject.FindGameObjectsWithTag("Player1")[0].GetComponent<PlayerController>().currentDirection;
+            Vector3 dropLocation = GameObject.FindGameObjectsWithTag("Player1")[0].transform.position;
             switch (playerDir)
             {
                 case "up":

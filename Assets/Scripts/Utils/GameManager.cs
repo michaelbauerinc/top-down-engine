@@ -6,6 +6,14 @@ namespace Core.Utils
 {
     public class GameManager : MonoBehaviour
     {
+
+        public GameObject gorilla;
+        public GameObject cat;
+
+        void Awake()
+        {
+            Instantiate(gorilla, new Vector3(-10, 5, 0), Quaternion.identity);
+        }
         // Start is called before the first frame update
         void Start()
         {

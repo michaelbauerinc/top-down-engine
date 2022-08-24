@@ -37,7 +37,7 @@ namespace Core.Controllers
 
         private void Awake()
         {
-            playerController = GameObject.Find("Player").GetComponent<PlayerController>();
+            playerController = GameObject.FindGameObjectsWithTag("Player1")[0].GetComponent<PlayerController>();
             cam = GameObject.Find("Camera").GetComponent<Camera>();
             playerUi = gameObject.transform.GetChild(0).gameObject.GetComponent<UIDocument>().rootVisualElement.Q<VisualElement>("Root");
             defaultUi = playerUi.Q<VisualElement>("Default");
