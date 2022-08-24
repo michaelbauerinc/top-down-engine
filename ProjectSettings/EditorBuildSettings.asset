@@ -11,4 +11,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/sandbox.unity
     guid: aa0fc5d8d0ef443eb896b672bf769b20
+  - enabled: 1
+    path: Assets/char_sel.unity
+    guid: 9d8a8833382661c4ebc54106e81b6300
   m_configObjects: {}

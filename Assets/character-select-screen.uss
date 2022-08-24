@@ -1,0 +1,46 @@
+.character-select-container {
+    width: 100%;
+    height: 100%;
+    background-color: rgb(137, 113, 113);
+    justify-content: flex-end;
+}
+
+.character-container {
+    background-color: rgb(33, 73, 108);
+    padding-top: 0;
+    padding-bottom: 0;
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.character-row {
+    background-color: rgb(255, 0, 0);
+    width: 100%;
+    height: 25%;
+    padding-bottom: 0;
+    padding-top: 0;
+    padding-left: 0;
+    padding-right: 0;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    flex-direction: row;
+    background-image: url('project://database/Assets/Simple%20Fantasy%20GUI/PNG/Inventory/inventory_border.png?fileID=2800000&guid=4ee7f57c4a9942e4cacd4c938f58baf9&type=3#inventory_border');
+}
+
+.character-box {
+    background-color: rgba(241, 255, 0, 0);
+    width: 20%;
+    background-image: url('project://database/Assets/Simple%20Fantasy%20GUI/PNG/Character%20Panel/Character_Box.png?fileID=2800000&guid=81c655d952ad6ca498cc4b1491740ee0&type=3#Character_Box');
+    justify-content: center;
+    align-items: center;
+}
+
+.character-portrait {
+    width: 80%;
+    height: 80%;
+    -unity-background-scale-mode: scale-to-fit;
+}
+
+.slot-selected {
+    -unity-background-image-tint-color: rgb(249, 255, 0);
+}

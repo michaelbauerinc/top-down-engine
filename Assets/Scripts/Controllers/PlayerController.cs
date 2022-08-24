@@ -315,8 +315,7 @@ namespace Core.Controllers
 
         public void ReloadScene(InputAction.CallbackContext value)
         {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-
+            SceneManager.LoadScene("char_sel");
         }
 
         private void HandleInvincibilityFrames()

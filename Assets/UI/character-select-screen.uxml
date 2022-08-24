@@ -1,0 +1,49 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/character-select-screen.uss?fileID=7433441132597879392&amp;guid=ff575434d6c12a348b57d0354f0f99c7&amp;type=3#character-select-screen" />
+    <ui:VisualElement name="Root" class="character-select-container">
+        <ui:VisualElement name="CharacterContainer" class="character-container" style="height: 80%; padding-top: 0; padding-left: 0; padding-right: 0; padding-bottom: 0;">
+            <ui:VisualElement name="CharacterRow" class="character-row" style="padding-left: 0; padding-right: 0; padding-top: 0; padding-bottom: 0; justify-content: space-around;">
+                <ui:VisualElement name="CharacterBox" class="character-box">
+                    <ui:VisualElement name="CharacterPortrait" class="character-portrait" style="background-image: url(&apos;project://database/Assets/UI/gorilla_portrait.png?fileID=2800000&amp;guid=eb69731b2368b544987b97bc3b5c43ff&amp;type=3#gorilla_portrait&apos;); -unity-background-scale-mode: scale-to-fit;" />
+                </ui:VisualElement>
+                <ui:VisualElement name="CharacterBox" class="character-box">
+                    <ui:VisualElement name="CharacterPortrait" class="character-portrait" style="background-image: url(&apos;project://database/Assets/UI/cat-portrait.png?fileID=2800000&amp;guid=7f937d06329a6e74c8d667a5cfe883d9&amp;type=3#cat-portrait&apos;);" />
+                </ui:VisualElement>
+                <ui:VisualElement name="CharacterBox" class="character-box">
+                    <ui:VisualElement name="CharacterPortrait" class="character-portrait" />
+                </ui:VisualElement>
+                <ui:VisualElement name="CharacterBox" class="character-box">
+                    <ui:VisualElement name="CharacterPortrait" class="character-portrait" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+            <ui:VisualElement name="CharacterRow" class="character-row" style="padding-left: 0; padding-right: 0; padding-top: 0; padding-bottom: 0; justify-content: space-around;">
+                <ui:VisualElement name="CharacterBox" class="character-box">
+                    <ui:VisualElement name="CharacterPortrait" class="character-portrait" style="background-image: none; -unity-background-scale-mode: scale-to-fit;" />
+                </ui:VisualElement>
+                <ui:VisualElement name="CharacterBox" class="character-box">
+                    <ui:VisualElement name="CharacterPortrait" class="character-portrait" style="background-image: none;" />
+                </ui:VisualElement>
+                <ui:VisualElement name="CharacterBox" class="character-box">
+                    <ui:VisualElement name="CharacterPortrait" class="character-portrait" />
+                </ui:VisualElement>
+                <ui:VisualElement name="CharacterBox" class="character-box">
+                    <ui:VisualElement name="CharacterPortrait" class="character-portrait" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+            <ui:VisualElement name="CharacterRow" class="character-row" style="padding-left: 0; padding-right: 0; padding-top: 0; padding-bottom: 0; justify-content: space-around;">
+                <ui:VisualElement name="CharacterBox" class="character-box">
+                    <ui:VisualElement name="CharacterPortrait" class="character-portrait" style="background-image: none; -unity-background-scale-mode: scale-to-fit;" />
+                </ui:VisualElement>
+                <ui:VisualElement name="CharacterBox" class="character-box">
+                    <ui:VisualElement name="CharacterPortrait" class="character-portrait" style="background-image: none;" />
+                </ui:VisualElement>
+                <ui:VisualElement name="CharacterBox" class="character-box">
+                    <ui:VisualElement name="CharacterPortrait" class="character-portrait" />
+                </ui:VisualElement>
+                <ui:VisualElement name="CharacterBox" class="character-box">
+                    <ui:VisualElement name="CharacterPortrait" class="character-portrait" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

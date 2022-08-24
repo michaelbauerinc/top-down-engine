@@ -23,10 +23,10 @@ namespace Core.Environment
             animator = GetComponent<Animator>();
             itemRenderer = GetComponent<SpriteRenderer>();
             boxCollider = GetComponent<BoxCollider2D>();
-            playerController = GameObject.FindGameObjectsWithTag("Player1")[0].GetComponent<PlayerController>();
         }
-        void Start()
+        public virtual void Start()
         {
+            playerController = GameObject.FindGameObjectWithTag("Player1").GetComponent<PlayerController>();
         }
 
         // Update is called once per frame
