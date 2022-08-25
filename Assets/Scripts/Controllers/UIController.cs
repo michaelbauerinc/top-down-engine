@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Runtime;
 using Core.Items;
+using Core.Items.Carryables;
 using Core.Items.Weapons;
 using Core.Items.Weapons.Melee;
 using Core.Items.Weapons.Ranged;
@@ -151,18 +152,59 @@ namespace Core.Controllers
                 GoToNextNextAvailableItem();
                 inventory.totalHeldItems--;
             }
-            toUse.UseItem();
-            UpdateDefaultWindow();
 
+            bool isCarryable = toUse.GetComponent<Carryable>();
+            if (isCarryable)
+            {
+                Carryable carryable = toUse.GetComponent<Carryable>();
+                if (playerController.isCarryingOrHolding())
+                {
+                    toUse.UseItem();
+                    inventory.content[indexToDrop]["item"] = null;
+                    GoToNextNextAvailableItem();
+                    inventory.totalHeldItems--;
+                    playerController.playerAction = "idle";
+                }
+                else if (playerController.CanAct())
+                {
+                    playerController.playerAction = "holding";
+                    carryable.beingCarried = true;
+                }
+            }
+            else
+            {
+                toUse.UseItem();
+            }
+
+            UpdateDefaultWindow();
         }
 
         private void DropItem(int indexToDrop)
         {
             Item itemToDrop = inventory.content[indexToDrop]["item"];
             Dictionary<string, dynamic> toDrop = inventory.content[indexToDrop];
-            itemToDrop.DropItem();
-            toDrop["item"] = null;
-            inventory.totalHeldItems--;
+            bool isCarryable = itemToDrop.GetComponent<Carryable>();
+            if (isCarryable)
+            {
+                playerController.playerAction = "idle";
+                Carryable carryable = itemToDrop.GetComponent<Carryable>();
+                if (carryable.beingCarried)
+                {
+                    carryable.beingCarried = false;
+                }
+                else
+                {
+                    itemToDrop.DropItem();
+                    toDrop["item"] = null;
+                    inventory.totalHeldItems--;
+                }
+            }
+            else
+            {
+                itemToDrop.DropItem();
+                toDrop["item"] = null;
+                inventory.totalHeldItems--;
+            }
             GoToNextNextAvailableItem();
         }
 

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Core.Environment;
 using Core.Items;
+using Core.Items.Carryables;
 using Core.Items.Weapons;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -14,7 +15,7 @@ namespace Core.Controllers
         Rigidbody2D body;
         public Animator animator;
         UIController uiController;
-        SpriteRenderer playerRenderer;
+        public SpriteRenderer playerRenderer;
         BoxCollider2D playerCollider;
         Interactable interactionTarget = null;
         SpriteRenderer coverRenderer;
@@ -27,7 +28,9 @@ namespace Core.Controllers
             {"sliding", "slide"},
             {"interacting", "idle"},
             {"meleeing", "sword"},
-            {"dead", "dead"}
+            {"dead", "dead"},
+            {"carrying", "carry"},
+            {"holding", "hold"}
         };
         public string playerAction = "idle";
         public string currentDirection = "down";
@@ -160,11 +163,25 @@ namespace Core.Controllers
             {
                 if (canMove && isMoving())
                 {
-                    playerAction = "walking";
+                    if (isCarryingOrHolding())
+                    {
+                        playerAction = "carrying";
+                    }
+                    else
+                    {
+                        playerAction = "walking";
+                    }
                 }
                 else if (!isMoving())
                 {
-                    playerAction = "idle";
+                    if (isCarryingOrHolding())
+                    {
+                        playerAction = "holding";
+                    }
+                    else
+                    {
+                        playerAction = "idle";
+                    }
                 }
             }
         }
@@ -220,7 +237,7 @@ namespace Core.Controllers
 
         public void Jump()
         {
-            if (!isInteracting() && !isJumping() && !isMeleeing())
+            if (!isInteracting() && !isJumping() && !isMeleeing() && !isCarryingOrHolding())
             {
                 playerAction = "jumping";
                 jumpFrames--;
@@ -229,7 +246,7 @@ namespace Core.Controllers
 
         public void Slide()
         {
-            if (!isInteracting() && !isSliding() && !isMeleeing() && !isJumping() && !isShooting())
+            if (!isInteracting() && !isSliding() && !isMeleeing() && !isJumping() && !isShooting() && !isCarryingOrHolding())
             {
                 playerAction = "sliding";
                 slideFrames--;
@@ -238,7 +255,7 @@ namespace Core.Controllers
 
         public void Melee()
         {
-            if (!isInteracting() && !isMeleeing() && !isShooting() && !isJumping() && uiController.equippedMeleeWeapon != null)
+            if (!isInteracting() && !isMeleeing() && !isShooting() && !isJumping() && !isCarryingOrHolding() && uiController.equippedMeleeWeapon != null)
             {
                 playerAction = "meleeing";
                 meleeFrames--;
@@ -247,7 +264,7 @@ namespace Core.Controllers
 
         public void Shoot()
         {
-            if (!isInteracting() && !isShooting() && !isMeleeing() && !isJumping() && uiController.equippedRangedWeapon != null)
+            if (!isInteracting() && !isShooting() && !isMeleeing() && !isJumping() && !isCarryingOrHolding() && uiController.equippedRangedWeapon != null)
             {
                 playerAction = "shooting";
                 shootFrames--;
@@ -256,6 +273,10 @@ namespace Core.Controllers
 
         public void Interact(InputAction.CallbackContext value)
         {
+            if (isCarryingOrHolding())
+            {
+                return;
+            }
             if (isInteracting())
             {
                 uiController.ToggleInteractionBox("");
@@ -487,6 +508,23 @@ namespace Core.Controllers
             return playerAction == "hit" && hitStun < hitStunMax;
         }
 
+        public bool isCarryingOrHolding()
+        {
+            // check for item first cuz errors
+            if (uiController.inventory.content[uiController.selectedItemIndex]["item"] == null)
+            {
+                return false;
+            }
+
+            bool isCarryable = uiController.inventory.content[uiController.selectedItemIndex]["item"].GetType().ToString().Contains("Carryables");
+            Carryable carryable = uiController.inventory.content[uiController.selectedItemIndex]["item"];
+            if (isCarryable)
+            {
+                return carryable.beingCarried;
+            }
+            return false;
+        }
+
         public bool IsFacingRight()
         {
             return playerRenderer.flipX == true;
@@ -495,6 +533,11 @@ namespace Core.Controllers
         public bool IsFacingLeft()
         {
             return playerRenderer.flipX == false;
+        }
+
+        public bool CanAct()
+        {
+            return !isMeleeing() && !isShooting() && !IsInHitstun() && !isJumping() && !isInteracting();
         }
     }
 }

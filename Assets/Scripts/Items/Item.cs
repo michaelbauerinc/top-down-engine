@@ -39,6 +39,7 @@ namespace Core.Items
         {
             string playerDir = GameObject.FindGameObjectsWithTag("Player1")[0].GetComponent<PlayerController>().currentDirection;
             Vector3 dropLocation = GameObject.FindGameObjectsWithTag("Player1")[0].transform.position;
+            dropLocation.z = 99;
             switch (playerDir)
             {
                 case "up":

@@ -32,7 +32,7 @@ namespace Core.Items.Weapons.Melee
         {
             playerDirection = playerController.currentDirection;
             playerPos = playerController.gameObject.transform.position;
-            if (isEquipped && !playerController.isSliding() && !playerController.isJumping() && !playerController.isShooting() && !playerController.IsInHitstun())
+            if (isEquipped && !playerController.isSliding() && !playerController.isJumping() && !playerController.isShooting() && !playerController.IsInHitstun() && !playerController.isCarryingOrHolding())
             {
                 itemRenderer.enabled = true;
                 HandleHurtBox();

@@ -46,7 +46,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playableCharacters:
-  - {fileID: 5541012203015934264, guid: 4ce6af1fe1f6162499494b52b62c08cd, type: 3}
+  - {fileID: 4629791178860491426, guid: 4ce6af1fe1f6162499494b52b62c08cd, type: 3}
   - {fileID: 8281236252987703661, guid: 987bc75d6a8c64942b468638cf551ef9, type: 3}
 --- !u!114 &2189290176634288555
 MonoBehaviour:
