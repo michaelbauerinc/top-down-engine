@@ -52,8 +52,6 @@ namespace Core.Controllers
         // Update is called once per frame
         void Update()
         {
-            SetEnemyAction();
-            Animate();
             // if (health <= 0 && enemyRenderer.sprite.name == deathSprite)
             // {
             //     Destroy(gameObject);
@@ -62,6 +60,8 @@ namespace Core.Controllers
 
         void FixedUpdate()
         {
+            SetEnemyAction();
+            Animate();
             if (hitStun == hitStunMax - 1)
             {
                 hasInvincibilityFrames = true;

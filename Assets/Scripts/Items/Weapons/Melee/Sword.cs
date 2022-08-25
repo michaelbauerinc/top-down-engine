@@ -26,12 +26,12 @@ namespace Core.Items.Weapons.Melee
         // Update is called once per frame
         void Update()
         {
-            playerDirection = playerController.currentDirection;
-            playerPos = playerController.gameObject.transform.position;
         }
 
         void FixedUpdate()
         {
+            playerDirection = playerController.currentDirection;
+            playerPos = playerController.gameObject.transform.position;
             if (isEquipped && !playerController.isSliding() && !playerController.isJumping() && !playerController.isShooting() && !playerController.IsInHitstun())
             {
                 itemRenderer.enabled = true;
